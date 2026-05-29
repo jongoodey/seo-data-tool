@@ -81,6 +81,8 @@ def _kind_for(annotation: Any) -> tuple[str, Any]:
 def fields_for(model: type) -> list[FieldSpec]:
     specs: list[FieldSpec] = []
     for fname, finfo in model.model_fields.items():
+        if fname == "additional_properties":
+            continue  # pydantic catch-all on every SDK model, not a real API field
         desc = finfo.description or ""
         default = finfo.default
         kind, _inner = _kind_for(finfo.annotation)

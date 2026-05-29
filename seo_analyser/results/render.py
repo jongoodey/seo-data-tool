@@ -4,7 +4,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from seo_analyser.results.detect import items_table, parse_response
+from seo_analyser.results.detect import extract_message_text, items_table, parse_response
 
 # Columns that, when present, read best left-to-right.
 _PRIORITY_COLS = [
@@ -40,6 +40,12 @@ def render_result(resp: dict) -> None:
     ]
     if meta_bits:
         st.caption("  ·  ".join(meta_bits))
+
+    # LLM / AI overview answers nest their text — surface it prominently.
+    answer = extract_message_text(parsed.items)
+    if answer:
+        st.markdown("#### Response")
+        st.markdown(answer)
 
     rows = items_table(parsed.items)
     if rows:

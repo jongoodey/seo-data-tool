@@ -40,3 +40,13 @@ def test_fields_for_kinds():
 def test_fieldspec_carries_description():
     specs = {f.name: f for f in fields_for(_Sample)}
     assert "required" in specs["keyword"].description
+
+
+def test_additional_properties_excluded():
+    class _WithCatchAll(BaseModel):
+        keyword: Optional[StrictStr] = Field(default=None)
+        additional_properties: Optional[StrictStr] = Field(default=None)
+
+    names = [f.name for f in fields_for(_WithCatchAll)]
+    assert "keyword" in names
+    assert "additional_properties" not in names

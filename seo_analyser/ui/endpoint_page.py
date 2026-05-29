@@ -10,6 +10,7 @@ from seo_analyser.registry import catalogue
 from seo_analyser.results.render import render_result
 from seo_analyser.runner.errors import RunError
 from seo_analyser.runner.live import run_live
+from seo_analyser.runner.lookups import llm_model_choices
 
 
 def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) -> None:
@@ -30,9 +31,22 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         st.warning("This endpoint takes no inputs and isn't runnable yet.")
         return
 
-    payload = render_form(meta.request_model, key_prefix=f"{family}.{endpoint_name}")
+    dynamic_choices: dict[str, list[str]] = {}
+    with st.spinner("Loading model options..."):
+        model_choices = llm_model_choices(meta, creds)
+    if model_choices:
+        dynamic_choices["model_name"] = model_choices
+
+    payload = render_form(
+        meta.request_model,
+        key_prefix=f"{family}.{endpoint_name}",
+        dynamic_choices=dynamic_choices,
+    )
 
     if st.button("Run", type="primary"):
+        if "model_name" in dynamic_choices and not payload.get("model_name"):
+            st.warning("Please choose a model from the dropdown before running.")
+            return
         with st.spinner("Calling DataForSEO..."):
             try:
                 result = run_live(meta, payload, creds)

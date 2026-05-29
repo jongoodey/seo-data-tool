@@ -1,4 +1,4 @@
-from seo_analyser.results.detect import items_table, parse_response
+from seo_analyser.results.detect import extract_message_text, items_table, parse_response
 
 OK_RESPONSE = {
     "status_code": 20000,
@@ -60,3 +60,18 @@ def test_items_table_drops_nested():
 def test_parse_non_dict():
     p = parse_response("oops")
     assert p.ok is False
+
+
+def test_extract_message_text_sections():
+    items = [
+        {"type": "reasoning"},
+        {"type": "message", "sections": [{"type": "text", "text": "Salomon"},
+                                          {"type": "text", "text": "Hoka"}]},
+    ]
+    assert extract_message_text(items) == "Salomon\n\nHoka"
+
+
+def test_extract_message_text_plain_and_none():
+    assert extract_message_text([{"text": "hello"}]) == "hello"
+    assert extract_message_text([{"message": "hi"}]) == "hi"
+    assert extract_message_text([{"type": "organic", "title": "x"}]) == ""

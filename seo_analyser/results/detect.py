@@ -80,3 +80,28 @@ def parse_response(resp: dict) -> ParsedResult:
 def items_table(items: list[dict]) -> list[dict]:
     """Reduce each item to its scalar fields so it renders as a flat table."""
     return [_scalars(it) for it in items]
+
+
+def extract_message_text(items: list[dict]) -> str:
+    """Pull readable answer text out of LLM-response items.
+
+    LLM endpoints (ChatGPT/Claude/Gemini/Perplexity, AI overview/mode) nest the
+    answer as items[].sections[].text (or content.sections, or a plain text/
+    message string). Returns the concatenated text, or "" if none.
+    """
+    parts: list[str] = []
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        sections = it.get("sections")
+        if sections is None and isinstance(it.get("content"), dict):
+            sections = it["content"].get("sections")
+        if isinstance(sections, list):
+            for sec in sections:
+                if isinstance(sec, dict) and sec.get("text"):
+                    parts.append(str(sec["text"]))
+        elif isinstance(it.get("text"), str):
+            parts.append(it["text"])
+        elif isinstance(it.get("message"), str):
+            parts.append(it["message"])
+    return "\n\n".join(p for p in parts if p)

@@ -12,15 +12,23 @@ from seo_analyser.labels import humanize
 _COMMON_FIELDS = {
     "keyword", "keywords", "target", "domain", "url",
     "location_name", "language_name", "location_code", "language_code",
-    "device", "depth", "limit", "prompt",
+    "device", "depth", "limit",
+    "prompt", "user_prompt", "message", "model_name",
 }
 
 
-def render_form(model: type, key_prefix: str) -> dict[str, Any]:
+def render_form(
+    model: type,
+    key_prefix: str,
+    dynamic_choices: dict[str, list[str]] | None = None,
+) -> dict[str, Any]:
     """Render common fields up front and the rest behind an expander.
 
+    `dynamic_choices` maps a field name to a list of options sourced at runtime
+    (e.g. model_name from the models endpoint); such fields render as dropdowns.
     Returns {field_name: value} with empty values dropped.
     """
+    dynamic_choices = dynamic_choices or {}
     specs = fields_for(model)
     common = [s for s in specs if s.name in _COMMON_FIELDS]
     advanced = [s for s in specs if s.name not in _COMMON_FIELDS]
@@ -29,25 +37,52 @@ def render_form(model: type, key_prefix: str) -> dict[str, Any]:
 
     payload: dict[str, Any] = {}
     for spec in common:
-        _collect(spec, key_prefix, payload)
+        _collect(spec, key_prefix, payload, dynamic_choices)
     if advanced:
         with st.expander(f"Advanced options ({len(advanced)})"):
             for spec in advanced:
-                _collect(spec, key_prefix, payload)
+                _collect(spec, key_prefix, payload, dynamic_choices)
     return payload
 
 
-def _collect(spec: FieldSpec, key_prefix: str, payload: dict[str, Any]) -> None:
-    value = _render_field(spec, key=f"{key_prefix}.{spec.name}")
+def _collect(
+    spec: FieldSpec,
+    key_prefix: str,
+    payload: dict[str, Any],
+    dynamic_choices: dict[str, list[str]],
+) -> None:
+    value = _render_field(
+        spec,
+        key=f"{key_prefix}.{spec.name}",
+        choices_override=dynamic_choices.get(spec.name),
+    )
     if value not in (None, "", []):
         payload[spec.name] = value
 
 
-def _render_field(spec: FieldSpec, key: str) -> Any:
+_BOOL_OPTIONS = ["", "true", "false"]
+
+
+def bool_from_choice(choice: str) -> bool | None:
+    """Map a tri-state dropdown choice to a bool or None (unset).
+
+    Optional API booleans must NOT be sent when untouched — DataForSEO rejects
+    conditionally-valid fields (e.g. force_web_search) when sent as a bare false.
+    """
+    if choice == "true":
+        return True
+    if choice == "false":
+        return False
+    return None
+
+
+def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None) -> Any:
     help_text = spec.description or None
     label = humanize(spec.name)
+    if choices_override:
+        return st.selectbox(label, [""] + list(choices_override), help=help_text, key=key) or None
     if spec.kind == "bool":
-        return st.checkbox(label, value=bool(spec.default), help=help_text, key=key)
+        return bool_from_choice(st.selectbox(label, _BOOL_OPTIONS, help=help_text, key=key))
     if spec.kind == "select":
         options = [""] + spec.choices
         return st.selectbox(label, options, help=help_text, key=key) or None
