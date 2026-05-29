@@ -18,19 +18,38 @@ class Credentials:
         return bool(self.login and self.password)
 
 
+# Accept the project's existing .env.local convention (user_name/password) as
+# well as the DATAFORSEO_* names, so credentials load without reconfiguration.
+_LOGIN_KEYS = ("DATAFORSEO_LOGIN", "user_name", "login")
+_PASSWORD_KEYS = ("DATAFORSEO_PASSWORD", "password")
+
+
+def _read_env_file() -> dict[str, str]:
+    values: dict[str, str] = {}
+    if not _ENV_FILE.exists():
+        return values
+    for raw in _ENV_FILE.read_text().splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, val = line.partition("=")
+        values[key.strip()] = val.strip().strip('"').strip("'")
+    return values
+
+
 def from_env() -> Credentials:
-    """Best-effort read of DATAFORSEO_LOGIN / DATAFORSEO_PASSWORD from env or .env.local."""
-    login = os.environ.get("DATAFORSEO_LOGIN", "")
-    password = os.environ.get("DATAFORSEO_PASSWORD", "")
-    if (not login or not password) and _ENV_FILE.exists():
-        for raw in _ENV_FILE.read_text().splitlines():
-            line = raw.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, _, val = line.partition("=")
-            key, val = key.strip(), val.strip().strip('"').strip("'")
-            if key == "DATAFORSEO_LOGIN" and not login:
-                login = val
-            elif key == "DATAFORSEO_PASSWORD" and not password:
-                password = val
-    return Credentials(login=login, password=password)
+    """Read credentials from environment or .env.local.
+
+    Supports DATAFORSEO_LOGIN/DATAFORSEO_PASSWORD and the project's existing
+    user_name/password convention.
+    """
+    file_values = _read_env_file()
+
+    def _first(keys: tuple[str, ...]) -> str:
+        for key in keys:
+            val = os.environ.get(key) or file_values.get(key)
+            if val:
+                return val
+        return ""
+
+    return Credentials(login=_first(_LOGIN_KEYS), password=_first(_PASSWORD_KEYS))
