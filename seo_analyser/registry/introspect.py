@@ -26,7 +26,31 @@ class EndpointMeta:
     name: str            # SDK method name, e.g. "google_organic_live_advanced"
     family: str          # e.g. "serp"
     request_model: type | None   # Pydantic request model class, or None for GET-only
-    is_task_based: bool  # True when this is a *_task_post method
+    is_task_based: bool  # True when this represents a task-based operation
+    kind: str = "live"           # "live" | "task" | "support"
+    task_methods: tuple = ()     # (post, ready, get) method names for kind == "task"
+
+
+def group_task_methods(method_names: list[str]) -> dict[str, dict[str, str]]:
+    """Group {base}_task_post / _tasks_ready / _task_get_* triplets by base name."""
+    names = set(method_names)
+    groups: dict[str, dict[str, str]] = {}
+    for name in method_names:
+        if not name.endswith("_task_post"):
+            continue
+        base = name[: -len("_task_post")]
+        ready = f"{base}_tasks_ready"
+        get = ""
+        for suffix in ("_task_get_advanced", "_task_get_regular", "_task_get_html", "_task_get"):
+            if f"{base}{suffix}" in names:
+                get = f"{base}{suffix}"
+                break
+        groups[base] = {
+            "post": name,
+            "ready": ready if ready in names else "",
+            "get": get,
+        }
+    return groups
 
 
 def _api_class(module) -> type:
@@ -99,8 +123,36 @@ def build_catalogue() -> dict[str, list[EndpointMeta]]:
                     is_task_based=method_name.endswith("_task_post"),
                 )
             )
-        catalogue[family] = endpoints
+        catalogue[family] = _fold_task_triplets(endpoints, family)
     return catalogue
+
+
+def _fold_task_triplets(endpoints: list[EndpointMeta], family: str) -> list[EndpointMeta]:
+    """Collapse each task triplet into one logical 'task' endpoint named after its base."""
+    names = [e.name for e in endpoints]
+    groups = group_task_methods(names)
+    absorbed: set[str] = set()
+    for base in groups:
+        # Fold every ready/get variant of this base into the task endpoint; the
+        # *_task_post entry stays as the carrier (transformed below).
+        for n in names:
+            if n == f"{base}_tasks_ready" or n.startswith(f"{base}_task_get"):
+                absorbed.add(n)
+    folded: list[EndpointMeta] = []
+    for e in endpoints:
+        if e.name in absorbed:
+            continue
+        if e.name.endswith("_task_post"):
+            base = e.name[: -len("_task_post")]
+            g = groups[base]
+            folded.append(EndpointMeta(
+                name=base, family=family, request_model=e.request_model,
+                is_task_based=True, kind="task",
+                task_methods=(g["post"], g["ready"], g["get"]),
+            ))
+        else:
+            folded.append(e)
+    return folded
 
 
 if __name__ == "__main__":
