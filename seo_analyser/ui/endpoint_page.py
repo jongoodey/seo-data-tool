@@ -39,7 +39,7 @@ def _run_and_record(meta: EndpointMeta, payload: dict, creds: Credentials) -> No
         return
     parsed = parse_response(result)
     default_store().add_run(meta.name, meta.family, payload, parsed.cost,
-                            "ok" if parsed.ok else "error")
+                            "ok" if parsed.ok else "error", response=result)
     render_result(result, endpoint=meta.name)
 
 
@@ -171,17 +171,21 @@ def _render_save_preset(family: str, endpoint: str, payload: dict) -> None:
 def _render_history_and_presets(creds: Credentials) -> None:
     store = default_store()
     rerun_target: tuple[str, str, dict] | None = None
+    view_target: int | None = None
 
     with st.expander("Recent runs"):
         runs = store.recent_runs(15)
         if not runs:
             st.caption("No runs yet.")
         for i, r in enumerate(runs):
-            cols = st.columns([5, 2, 2])
+            cols = st.columns([5, 2, 1.5, 1.5])
             stamp = r.created_at.strftime("%H:%M:%S") if r.created_at else ""
             cols[0].write(f"`{r.family} · {r.endpoint}`")
             cols[1].caption(f"{stamp} · ${r.cost:.4f}")
-            if cols[2].button("Re-run", key=f"rerun.{i}"):
+            if cols[2].button("View", key=f"view.{i}", disabled=not r.has_response,
+                              help="Show the saved result without re-running"):
+                view_target = r.id
+            if cols[3].button("Re-run", key=f"rerun.{i}"):
                 rerun_target = (r.family, r.endpoint, r.params)
 
     with st.expander("Saved presets"):
@@ -196,6 +200,14 @@ def _render_history_and_presets(creds: Credentials) -> None:
             if cols[2].button("Delete", key=f"delpreset.{i}"):
                 store.delete_preset(p.name)
                 st.rerun()
+
+    if view_target is not None:
+        saved = store.load_response(view_target)
+        if saved is None:
+            st.warning("No saved output for that run — use Re-run.")
+        else:
+            st.subheader("Saved result")
+            render_result(saved, endpoint="saved")
 
     if rerun_target:
         fam, ep, params = rerun_target

@@ -8,7 +8,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from seo_analyser.results.detect import (
-    extract_html, extract_message_text, items_table, parse_response, strip_scripts,
+    extract_html, extract_message_text, items_table, parse_response, sanitize_for_preview,
 )
 from seo_analyser.results.export import to_csv_bytes, to_json_bytes
 
@@ -59,8 +59,9 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
         st.markdown("#### Rendered HTML")
         tab_view, tab_source = st.tabs(["Preview", "Source"])
         with tab_view:
-            st.caption("Scripts removed for safe in-app preview. Download for the full page.")
-            components.html(strip_scripts(html), height=600, scrolling=True)
+            st.caption("Scripts removed and links disabled for a safe preview. "
+                       "Download for the full, interactive page.")
+            components.html(sanitize_for_preview(html), height=600, scrolling=True)
         with tab_source:
             st.code(html[:20000] + ("\n…(truncated)" if len(html) > 20000 else ""),
                     language="html")

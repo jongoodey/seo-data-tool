@@ -99,6 +99,17 @@ def strip_scripts(html: str) -> str:
     return _SCRIPT_RE.sub("", html or "")
 
 
+# Disable link clicks in the preview — they 404 inside the sandboxed iframe.
+_PREVIEW_STYLE = (
+    "<style>a{pointer-events:none !important;cursor:default !important;}</style>"
+)
+
+
+def sanitize_for_preview(html: str) -> str:
+    """Strip scripts and neutralise links for a safe, static in-app preview."""
+    return _PREVIEW_STYLE + strip_scripts(html or "")
+
+
 def extract_html(resp: Any) -> str | None:
     """Find the largest HTML-looking string anywhere in a response (e.g. *_live_html)."""
     best: str | None = None

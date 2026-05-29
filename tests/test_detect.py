@@ -1,6 +1,6 @@
 from seo_analyser.results.detect import (
     extract_html, extract_message_text, items_table, looks_like_html, parse_response,
-    strip_scripts,
+    sanitize_for_preview, strip_scripts,
 )
 
 OK_RESPONSE = {
@@ -103,6 +103,13 @@ def test_strip_scripts():
     assert "<script" not in out
     assert "location.href" not in out
     assert "<h1>Hi</h1>" in out and "<p>ok</p>" in out
+
+
+def test_sanitize_for_preview_disables_links_and_scripts():
+    out = sanitize_for_preview('<a href="/x">link</a><script>alert(1)</script>')
+    assert "pointer-events:none" in out
+    assert "<script" not in out
+    assert "link" in out  # link text kept, just non-clickable
 
 
 def test_extract_message_text_plain_and_none():

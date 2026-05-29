@@ -22,6 +22,21 @@ def test_add_and_recent_runs(store):
     assert runs[1].params == {"keyword": "shoes"}
 
 
+def test_stores_and_loads_response(store):
+    store.add_run("google_organic_live_html", "serp", {"keyword": "shoes"},
+                  0.002, "ok", response={"tasks": [{"id": "abc"}]})
+    run = store.recent_runs()[0]
+    assert run.has_response is True
+    assert store.load_response(run.id) == {"tasks": [{"id": "abc"}]}
+
+
+def test_no_response_has_response_false(store):
+    store.add_run("e", "f", {}, 0.0, "ok")  # no response
+    run = store.recent_runs()[0]
+    assert run.has_response is False
+    assert store.load_response(run.id) is None
+
+
 def test_save_and_load_preset(store):
     store.save_preset("UK SERP", "serp", "google_organic_live_advanced",
                       {"location_name": "United Kingdom"})
