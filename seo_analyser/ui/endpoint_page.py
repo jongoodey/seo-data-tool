@@ -1,11 +1,13 @@
-"""Endpoint page: auto-form + Run + raw JSON result."""
+"""Endpoint page: friendly header + auto-form + Run + rendered results."""
 from __future__ import annotations
 
 import streamlit as st
 
 from seo_analyser.auth import Credentials
 from seo_analyser.forms.builder import render_form
+from seo_analyser.labels import titleize
 from seo_analyser.registry import catalogue
+from seo_analyser.results.render import render_result
 from seo_analyser.runner.errors import RunError
 from seo_analyser.runner.live import run_live
 
@@ -16,11 +18,16 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         st.warning("Select an endpoint from the sidebar.")
         return
 
-    st.subheader(f"{family} · {endpoint_name}")
+    st.subheader(titleize(endpoint_name))
+    st.caption(f"{titleize(family)}  ·  `{endpoint_name}`")
+
     if meta.is_task_based:
-        st.info("This is a task-based endpoint. Task polling lands in Phase 2 — running it live may not return results yet.")
+        st.info(
+            "This is a task-based endpoint. Submitting starts a job that is polled "
+            "for results — full polling support is coming in the next phase."
+        )
     if meta.request_model is None:
-        st.warning("This endpoint takes no request body and isn't runnable in Phase 1.")
+        st.warning("This endpoint takes no inputs and isn't runnable yet.")
         return
 
     payload = render_form(meta.request_model, key_prefix=f"{family}.{endpoint_name}")
@@ -32,5 +39,4 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
             except RunError as err:
                 st.error(str(err))
                 return
-        st.success("Done.")
-        st.json(result)
+        render_result(result)

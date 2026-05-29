@@ -6,21 +6,46 @@ from typing import Any
 import streamlit as st
 
 from seo_analyser.forms.widgets import FieldSpec, fields_for
+from seo_analyser.labels import humanize
+
+# Fields most users reach for first; everything else goes under "Advanced options".
+_COMMON_FIELDS = {
+    "keyword", "keywords", "target", "domain", "url",
+    "location_name", "language_name", "location_code", "language_code",
+    "device", "depth", "limit", "prompt",
+}
 
 
 def render_form(model: type, key_prefix: str) -> dict[str, Any]:
-    """Render one widget per field. Returns {field_name: value} with empties dropped."""
+    """Render common fields up front and the rest behind an expander.
+
+    Returns {field_name: value} with empty values dropped.
+    """
+    specs = fields_for(model)
+    common = [s for s in specs if s.name in _COMMON_FIELDS]
+    advanced = [s for s in specs if s.name not in _COMMON_FIELDS]
+    if not common:  # nothing well-known — don't bury the whole form
+        common, advanced = advanced, []
+
     payload: dict[str, Any] = {}
-    for spec in fields_for(model):
-        value = _render_field(spec, key=f"{key_prefix}.{spec.name}")
-        if value not in (None, "", []):
-            payload[spec.name] = value
+    for spec in common:
+        _collect(spec, key_prefix, payload)
+    if advanced:
+        with st.expander(f"Advanced options ({len(advanced)})"):
+            for spec in advanced:
+                _collect(spec, key_prefix, payload)
     return payload
+
+
+def _collect(spec: FieldSpec, key_prefix: str, payload: dict[str, Any]) -> None:
+    value = _render_field(spec, key=f"{key_prefix}.{spec.name}")
+    if value not in (None, "", []):
+        payload[spec.name] = value
 
 
 def _render_field(spec: FieldSpec, key: str) -> Any:
     help_text = spec.description or None
-    label = spec.name
+    label = humanize(spec.name)
     if spec.kind == "bool":
         return st.checkbox(label, value=bool(spec.default), help=help_text, key=key)
     if spec.kind == "select":
