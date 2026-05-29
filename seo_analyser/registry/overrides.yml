@@ -1,0 +1,35 @@
+# Per-endpoint UX overrides. Keyed by "family.endpoint".
+# Supported keys: title, description.
+# Seeded with high-traffic endpoints; extend freely.
+
+serp.google_organic_live_advanced:
+  title: "Google Organic SERP"
+  description: "Top organic Google results for a keyword. Live, ~$0.002 per call."
+
+serp.google_ai_mode_live_advanced:
+  title: "Google AI Mode (AI Overview)"
+  description: "Google's AI-generated answer for a query, with cited sources."
+
+ai_optimization.chat_gpt_llm_responses_live:
+  title: "Ask ChatGPT"
+  description: "Send a prompt to an OpenAI model; pick the model from the dropdown."
+
+ai_optimization.claude_llm_responses_live:
+  title: "Ask Claude"
+  description: "Send a prompt to an Anthropic Claude model."
+
+ai_optimization.ai_keyword_data_keywords_search_volume_live:
+  title: "AI Keyword Search Volume"
+  description: "AI search volume for keywords. Needs a location and a language."
+
+keywords_data.google_ads_search_volume_live:
+  title: "Google Ads Search Volume"
+  description: "Monthly search volume, competition and CPC from Google Ads."
+
+backlinks.backlinks_summary_live:
+  title: "Backlink Summary"
+  description: "Top-level backlink metrics for a domain or URL."
+
+dataforseo_labs.google_ranked_keywords_live:
+  title: "Ranked Keywords"
+  description: "Keywords a target domain ranks for, with positions and volume."

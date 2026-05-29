@@ -1,166 +1,55 @@
-# AI Keyword Analyser - DataForSEO
+# SEO Analyzer Tool
 
-A comprehensive Streamlit application for analysing keywords and querying AI models using the DataForSEO AI Optimisation API.
+A bring-your-own-key Streamlit gateway to the **full DataForSEO API**. Forms for
+every endpoint are auto-generated from the official `dataforseo-client` SDK, so all
+13 API families (~396 logical operations) are available without hand-coding each one.
 
 ## Features
 
-### 1. AI Keyword Search Volume Analysis
-- Analyse up to 1000 keywords at once
-- View current AI search volumes
-- Historical trend data (12 months)
-- Interactive charts and visualizations:
-  - Search volume comparison bar charts
-  - Multi-keyword trend comparisons
-  - Individual keyword trend analysis
-- Export data in CSV and JSON formats
+- **Every DataForSEO endpoint** — SERP, Keywords Data, DataForSEO Labs, AI
+  Optimization (ChatGPT/Claude/Gemini/Perplexity + AI Overview), Backlinks, On-Page,
+  Business Data, Merchant, App Data, Domain Analytics, Content Analysis/Generation.
+- **Auto-generated forms** with friendly labels and per-field markers
+  (`required` / `required unless X set` / `optional` / `default: …`).
+- **Quick-pick dropdowns** for common locations and languages, plus model
+  dropdowns for LLM endpoints — with free-text fallback.
+- **Smart results** — summary metrics, a clean table, LLM/AI answers rendered as
+  text, and raw JSON. CSV + JSON export on every result.
+- **Global endpoint search**, **task-based endpoint polling**, **run history**,
+  **saved presets**, **account balance widget**, **cost estimates**,
+  **shareable links**, and **bulk-run from CSV**.
 
-### 2. LLM Scraper
-- Query multiple AI models (ChatGPT, Claude, Gemini, Perplexity)
-- Web-enhanced responses
-- Customisable parameters:
-  - Temperature control
-  - Max output tokens
-  - System messages
-  - Force web search
-- View response metadata (tokens, cost, model info)
+## Running locally
 
-### 3. Google AI Overview
-- Retrieve actual Google AI-generated overviews from search results
-- View markdown-formatted AI content
-- Access reference sources used in the overview
-- See additional content (videos, tables, expanded elements)
-- Device and OS selection (desktop/mobile, Windows/macOS/Android/iOS)
-- Optional pixel positioning data for visual analysis
-- Export complete SERP data
-
-## Installation
-
-1. Clone or download this repository
-
-2. Install dependencies:
 ```bash
+python3.13 -m venv .venv && source .venv/bin/activate   # Python 3.13 (see below)
 pip install -r requirements.txt
-```
-
-## Usage
-
-1. Run the Streamlit app:
-```bash
 streamlit run app.py
 ```
 
-2. Enter your DataForSEO API credentials in the sidebar:
-   - Login (email)
-   - Password
+Credentials are read from `.env.local` (`user_name` / `password`) or entered in the
+sidebar. Run history and presets persist to a local SQLite file under `data/`.
 
-3. Configure analysis settings:
-   - Select location (country)
-   - Select language
-   - Choose function type
+## Deployment (Railway)
 
-4. For Keyword Analysis:
-   - Enter keywords (one per line or comma-separated)
-   - Click "Analyse Keywords"
-   - View results in different tabs:
-     - Overview: Metrics and comparison charts
-     - Trends: Historical trend analysis
-     - Data Table: Complete data view
-     - Export: Download as CSV or JSON
+- Set `DATABASE_URL` to a Railway Postgres instance for durable history/presets
+  (falls back to local SQLite when unset).
+- `Procfile` / `railway.json` run `streamlit run app.py`.
+- **Python 3.13 is required** (`.python-version`). Python 3.14 breaks Streamlit's
+  protobuf dependency.
 
-5. For LLM Scraper:
-   - Select AI model (ChatGPT, Claude, etc.)
-   - Enter your prompt (max 500 characters)
-   - Configure advanced settings (optional)
-   - Click "Request"
-   - View AI response and metadata
+## Architecture
 
-6. For Google AI Overview:
-   - Enter a search keyword (up to 700 characters)
-   - Select device type (desktop or mobile)
-   - Choose operating system
-   - Configure advanced settings if needed
-   - Click "Get AI Overview"
-   - View the AI-generated overview, references, and additional content
+```
+app.py                     # thin entry point -> seo_analyser.ui.app:main
+seo_analyser/
+├── registry/    # SDK introspection, endpoint catalogue, overrides
+├── forms/       # request-model -> widget specs and rendering
+├── runner/      # live + task-based execution, error normalisation, lookups
+├── results/     # response detection, rendering, export
+├── billing/     # balance + cost estimates
+├── persistence/ # SQLAlchemy store (Postgres / SQLite)
+└── ui/          # sidebar, endpoint page, sharing, app shell
+```
 
-## Configuration
-
-### Supported Locations
-- United States, United Kingdom, Canada, Australia
-- Germany, France, Spain, Italy, Netherlands
-- Belgium, Switzerland, Austria, Sweden, Norway
-- Denmark, Finland, Poland, Czech Republic
-- Ireland, Portugal, Greece, Japan, South Korea
-- Singapore, India, Brazil, Mexico, Argentina, Chile
-
-### Supported Languages
-- English, Spanish, French, German, Italian
-- Portuguese, Dutch, Polish, Swedish, Norwegian
-- Danish, Finnish, Czech, Greek, Japanese
-- Korean, Chinese
-
-## API Information
-
-This application uses the DataForSEO APIs:
-- AI Keyword Data: Search volume and historical trends
-- LLM Responses: Query AI models with web search capabilities
-- Google AI Overview SERP: Retrieve actual Google AI overviews from search results
-
-API Documentation:
-- https://docs.dataforseo.com/v3/ai_optimization/overview/
-- https://docs.dataforseo.com/v3/serp/google/ai_mode/live/advanced/
-
-## Requirements
-
-- Python 3.8+
-- DataForSEO API account
-- Internet connection
-
-## Cost
-
-API usage is charged by DataForSEO according to their pricing:
-- AI Keyword Search Volume: Per keyword
-- LLM Responses: Per request + token usage
-- Google AI Overview: Per search (double cost if calculate_rectangles is enabled)
-
-Check current pricing at: https://dataforseo.com/pricing
-
-## Security
-
-Your API credentials are:
-- Never stored in the application
-- Only used for API authentication during your session
-- Entered fresh each time you use the app
-- Recommended to use environment variables for automated deployments
-
-## Troubleshooting
-
-### No data returned
-- Verify API credentials are correct
-- Check that keywords are properly formatted
-- Ensure location and language are supported
-
-### API errors
-- Check your API account has sufficient credits
-- Verify rate limits aren't exceeded (2000 calls/minute)
-- Confirm keywords don't exceed 1000 per request
-
-### LLM Scraper timeout
-- Processing can take up to 120 seconds
-- Wait for the full response
-- Try reducing max_output_tokens if timeout persists
-
-### No AI Overview found
-- Google doesn't show AI Overviews for all keywords
-- AI Overviews are not available in all locations
-- Currently only English language is supported for AI Overviews
-- Try different keywords or locations
-
-## Support
-
-For API-related issues, contact DataForSEO support:
-- Website: https://dataforseo.com
-- Documentation: https://docs.dataforseo.com
-
-## Licence
-
-This application is provided as-is for use with DataForSEO API services.
+The previous single-file app is preserved at `archive/app_v1.py`.

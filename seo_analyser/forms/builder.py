@@ -1,0 +1,154 @@
+"""Render FieldSpecs as Streamlit widgets and collect a payload dict."""
+from __future__ import annotations
+
+from typing import Any
+
+import streamlit as st
+
+from seo_analyser.forms.widgets import FieldSpec, fields_for
+from seo_analyser.labels import humanize
+from seo_analyser.presets import presets_for
+
+_OTHER = "Other (type a value)…"
+
+# Fields most users reach for first; everything else goes under "Advanced options".
+_COMMON_FIELDS = {
+    "keyword", "keywords", "target", "domain", "url",
+    "location_name", "language_name", "location_code", "language_code",
+    "device", "depth", "limit",
+    "prompt", "user_prompt", "message", "model_name",
+}
+
+
+def render_form(
+    model: type,
+    key_prefix: str,
+    dynamic_choices: dict[str, list[str]] | None = None,
+) -> dict[str, Any]:
+    """Render common fields up front and the rest behind an expander.
+
+    `dynamic_choices` maps a field name to a list of options sourced at runtime
+    (e.g. model_name from the models endpoint); such fields render as dropdowns.
+    Returns {field_name: value} with empty values dropped.
+    """
+    dynamic_choices = dynamic_choices or {}
+    specs = fields_for(model)
+    common = [s for s in specs if s.name in _COMMON_FIELDS]
+    advanced = [s for s in specs if s.name not in _COMMON_FIELDS]
+    if not common:  # nothing well-known — don't bury the whole form
+        common, advanced = advanced, []
+
+    payload: dict[str, Any] = {}
+    for spec in common:
+        _collect(spec, key_prefix, payload, dynamic_choices)
+    if advanced:
+        with st.expander(f"Advanced options ({len(advanced)})"):
+            for spec in advanced:
+                _collect(spec, key_prefix, payload, dynamic_choices)
+    return payload
+
+
+def _collect(
+    spec: FieldSpec,
+    key_prefix: str,
+    payload: dict[str, Any],
+    dynamic_choices: dict[str, list[str]],
+) -> None:
+    value = _render_field(
+        spec,
+        key=f"{key_prefix}.{spec.name}",
+        choices_override=dynamic_choices.get(spec.name),
+    )
+    if value not in (None, "", []):
+        payload[spec.name] = value
+
+
+_BOOL_OPTIONS = ["", "true", "false"]
+
+
+def decorate_label(spec: FieldSpec) -> str:
+    """Append a plain-language requirement/default marker to a field label."""
+    bits: list[str] = []
+    if spec.requirement == "required":
+        bits.append("required")
+    elif spec.requirement == "conditional":
+        bits.append(f"required unless {humanize(spec.partner)} set" if spec.partner else "conditional")
+    elif spec.requirement == "optional":
+        bits.append("optional")
+    if spec.default_hint:
+        bits.append(f"default: {spec.default_hint}")
+    base = humanize(spec.name)
+    return f"{base}  ·  {', '.join(bits)}" if bits else base
+
+
+def bool_from_choice(choice: str) -> bool | None:
+    """Map a tri-state dropdown choice to a bool or None (unset).
+
+    Optional API booleans must NOT be sent when untouched — DataForSEO rejects
+    conditionally-valid fields (e.g. force_web_search) when sent as a bare false.
+    """
+    if choice == "true":
+        return True
+    if choice == "false":
+        return False
+    return None
+
+
+def _coerce(value: Any, kind: str) -> Any:
+    """Cast a chosen/typed value to int when the field expects an int."""
+    if kind == "int" and value not in (None, ""):
+        try:
+            return int(value)
+        except (ValueError, TypeError):
+            return value
+    return value
+
+
+def _render_combobox(spec: FieldSpec, label: str, help_text, key: str,
+                     presets: list[tuple[str, Any]]) -> Any:
+    """Dropdown of common presets plus an 'Other' option for free text."""
+    by_label = {lbl: val for lbl, val in presets}
+    choice = st.selectbox(label, [""] + list(by_label) + [_OTHER], help=help_text, key=key)
+    if choice == _OTHER:
+        typed = st.text_input(f"{humanize(spec.name)} — custom value", key=f"{key}.custom")
+        return _coerce((typed or "").strip() or None, spec.kind)
+    if choice:
+        return _coerce(by_label[choice], spec.kind)
+    return None
+
+
+def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None) -> Any:
+    help_text = spec.description or None
+    label = decorate_label(spec)
+    if choices_override:
+        return st.selectbox(label, [""] + list(choices_override), help=help_text, key=key) or None
+    presets = presets_for(spec.name)
+    if presets:
+        return _render_combobox(spec, label, help_text, key, presets)
+    if spec.kind == "bool":
+        return bool_from_choice(st.selectbox(label, _BOOL_OPTIONS, help=help_text, key=key))
+    if spec.kind == "select":
+        options = [""] + spec.choices
+        return st.selectbox(label, options, help=help_text, key=key) or None
+    if spec.kind == "int":
+        return _number(label, spec, help_text, key, is_float=False)
+    if spec.kind == "float":
+        return _number(label, spec, help_text, key, is_float=True)
+    if spec.kind == "list":
+        raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)
+        return [line.strip() for line in raw.splitlines() if line.strip()]
+    if spec.kind == "nested":
+        st.caption(f"{label}: advanced nested field — not editable in this view yet.")
+        return None
+    return st.text_input(label, help=help_text, key=key) or None
+
+
+def _number(label, spec: FieldSpec, help_text, key, is_float: bool):
+    kwargs: dict[str, Any] = {"help": help_text, "key": key, "value": None}
+    if spec.min is not None:
+        kwargs["min_value"] = float(spec.min) if is_float else int(spec.min)
+    if spec.max is not None:
+        kwargs["max_value"] = float(spec.max) if is_float else int(spec.max)
+    if not is_float:
+        kwargs["step"] = 1
+    return st.number_input(label, **kwargs)
