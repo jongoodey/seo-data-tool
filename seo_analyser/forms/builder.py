@@ -7,6 +7,9 @@ import streamlit as st
 
 from seo_analyser.forms.widgets import FieldSpec, fields_for
 from seo_analyser.labels import humanize
+from seo_analyser.presets import presets_for
+
+_OTHER = "Other (type a value)…"
 
 # Fields most users reach for first; everything else goes under "Advanced options".
 _COMMON_FIELDS = {
@@ -91,11 +94,37 @@ def bool_from_choice(choice: str) -> bool | None:
     return None
 
 
+def _coerce(value: Any, kind: str) -> Any:
+    """Cast a chosen/typed value to int when the field expects an int."""
+    if kind == "int" and value not in (None, ""):
+        try:
+            return int(value)
+        except (ValueError, TypeError):
+            return value
+    return value
+
+
+def _render_combobox(spec: FieldSpec, label: str, help_text, key: str,
+                     presets: list[tuple[str, Any]]) -> Any:
+    """Dropdown of common presets plus an 'Other' option for free text."""
+    by_label = {lbl: val for lbl, val in presets}
+    choice = st.selectbox(label, [""] + list(by_label) + [_OTHER], help=help_text, key=key)
+    if choice == _OTHER:
+        typed = st.text_input(f"{humanize(spec.name)} — custom value", key=f"{key}.custom")
+        return _coerce((typed or "").strip() or None, spec.kind)
+    if choice:
+        return _coerce(by_label[choice], spec.kind)
+    return None
+
+
 def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None) -> Any:
     help_text = spec.description or None
     label = decorate_label(spec)
     if choices_override:
         return st.selectbox(label, [""] + list(choices_override), help=help_text, key=key) or None
+    presets = presets_for(spec.name)
+    if presets:
+        return _render_combobox(spec, label, help_text, key, presets)
     if spec.kind == "bool":
         return bool_from_choice(st.selectbox(label, _BOOL_OPTIONS, help=help_text, key=key))
     if spec.kind == "select":
