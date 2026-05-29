@@ -5,8 +5,11 @@ from datetime import datetime
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
-from seo_analyser.results.detect import extract_message_text, items_table, parse_response
+from seo_analyser.results.detect import (
+    extract_html, extract_message_text, items_table, parse_response, strip_scripts,
+)
 from seo_analyser.results.export import to_csv_bytes, to_json_bytes
 
 # Columns that, when present, read best left-to-right.
@@ -49,6 +52,23 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
     if answer:
         st.markdown("#### Response")
         st.markdown(answer)
+
+    # HTML-returning endpoints (*_live_html, raw_html) — render it in-app.
+    html = extract_html(resp)
+    if html:
+        st.markdown("#### Rendered HTML")
+        tab_view, tab_source = st.tabs(["Preview", "Source"])
+        with tab_view:
+            st.caption("Scripts removed for safe in-app preview. Download for the full page.")
+            components.html(strip_scripts(html), height=600, scrolling=True)
+        with tab_source:
+            st.code(html[:20000] + ("\n…(truncated)" if len(html) > 20000 else ""),
+                    language="html")
+        stamp_html = datetime.now().strftime("%Y%m%d-%H%M%S")
+        st.download_button(
+            "Download HTML", html.encode("utf-8"),
+            file_name=f"{endpoint}-{stamp_html}.html", mime="text/html",
+        )
 
     rows = items_table(parsed.items)
     if rows:

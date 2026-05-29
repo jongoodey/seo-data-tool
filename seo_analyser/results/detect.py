@@ -13,11 +13,14 @@ the envelope. It carries no Streamlit dependency so it can be unit-tested.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
 _SCALAR = (str, int, float, bool)
 _SUCCESS = 20000
+_CLOSING_TAG_RE = re.compile(r"</[a-zA-Z]")
+_SCRIPT_RE = re.compile(r"<script\b[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
 
 
 @dataclass
@@ -80,6 +83,40 @@ def parse_response(resp: dict) -> ParsedResult:
 def items_table(items: list[dict]) -> list[dict]:
     """Reduce each item to its scalar fields so it renders as a flat table."""
     return [_scalars(it) for it in items]
+
+
+def looks_like_html(value: Any) -> bool:
+    """Heuristic: a longish string with several closing tags is renderable HTML."""
+    return (
+        isinstance(value, str)
+        and len(value) > 50
+        and len(_CLOSING_TAG_RE.findall(value)) >= 3
+    )
+
+
+def strip_scripts(html: str) -> str:
+    """Remove <script> blocks so an embedded preview can't navigate or run JS."""
+    return _SCRIPT_RE.sub("", html or "")
+
+
+def extract_html(resp: Any) -> str | None:
+    """Find the largest HTML-looking string anywhere in a response (e.g. *_live_html)."""
+    best: str | None = None
+
+    def walk(node: Any) -> None:
+        nonlocal best
+        if isinstance(node, str):
+            if looks_like_html(node) and (best is None or len(node) > len(best)):
+                best = node
+        elif isinstance(node, dict):
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(resp)
+    return best
 
 
 def extract_message_text(items: list[dict]) -> str:

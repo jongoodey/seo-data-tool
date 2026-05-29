@@ -1,4 +1,7 @@
-from seo_analyser.results.detect import extract_message_text, items_table, parse_response
+from seo_analyser.results.detect import (
+    extract_html, extract_message_text, items_table, looks_like_html, parse_response,
+    strip_scripts,
+)
 
 OK_RESPONSE = {
     "status_code": 20000,
@@ -69,6 +72,37 @@ def test_extract_message_text_sections():
                                           {"type": "text", "text": "Hoka"}]},
     ]
     assert extract_message_text(items) == "Salomon\n\nHoka"
+
+
+_PAGE = ("<html><head><title>Test page here</title></head>"
+         "<body><h1>Heading</h1><p>Some paragraph text.</p></body></html>")
+
+
+def test_looks_like_html():
+    assert looks_like_html(_PAGE) is True
+    assert looks_like_html("just a sentence, not html") is False
+    assert looks_like_html("<p>only one tag, far too short to count</p>") is False
+
+
+def test_extract_html_finds_nested_largest():
+    resp = {"tasks": [{"result": [{"items": [
+        {"html": _PAGE},
+        {"snippet": "<b>x</b>"},
+    ]}]}]}
+    html = extract_html(resp)
+    assert html is not None and "<h1>Heading</h1>" in html
+
+
+def test_extract_html_none_when_absent():
+    assert extract_html({"tasks": [{"result": [{"keyword": "shoes"}]}]}) is None
+
+
+def test_strip_scripts():
+    html = '<html><body><h1>Hi</h1><script>location.href="/x"</script><p>ok</p></body></html>'
+    out = strip_scripts(html)
+    assert "<script" not in out
+    assert "location.href" not in out
+    assert "<h1>Hi</h1>" in out and "<p>ok</p>" in out
 
 
 def test_extract_message_text_plain_and_none():
