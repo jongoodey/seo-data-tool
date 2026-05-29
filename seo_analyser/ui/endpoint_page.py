@@ -1,6 +1,7 @@
 """Endpoint page: friendly header + auto-form + Run + results + history/presets."""
 from __future__ import annotations
 
+import pandas as pd
 import streamlit as st
 
 from seo_analyser.auth import Credentials
@@ -10,12 +11,15 @@ from seo_analyser.labels import titleize
 from seo_analyser.persistence.store import default_store
 from seo_analyser.registry import catalogue
 from seo_analyser.registry.introspect import EndpointMeta
-from seo_analyser.results.detect import parse_response
+from seo_analyser.registry.overrides import override_for
+from seo_analyser.results.detect import items_table, parse_response
 from seo_analyser.results.render import render_result
+from seo_analyser.runner.bulk import MAX_ROWS, rows_to_payloads
 from seo_analyser.runner.errors import RunError
 from seo_analyser.runner.live import run_live
 from seo_analyser.runner.lookups import llm_model_choices
 from seo_analyser.runner.tasks import run_task
+from seo_analyser.ui.share import SHARE_KEY, encode_share
 
 
 def _execute(meta: EndpointMeta, payload: dict, creds: Credentials) -> dict:
@@ -45,8 +49,11 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         st.warning("Select an endpoint from the sidebar.")
         return
 
-    st.subheader(titleize(endpoint_name))
+    override = override_for(family, endpoint_name)
+    st.subheader(override.get("title") or titleize(endpoint_name))
     st.caption(f"{titleize(family)}  ·  `{endpoint_name}`")
+    if override.get("description"):
+        st.write(override["description"])
 
     if meta.kind == "task":
         st.info("Task-based endpoint: submitting starts a job and polls for results (up to ~2 min).")
@@ -79,7 +86,75 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         else:
             _run_and_record(meta, payload, creds)
 
+    _render_share(family, endpoint_name, payload)
+    _render_bulk(meta, payload, creds)
     _render_history_and_presets(creds)
+
+
+def _render_share(family: str, endpoint: str, payload: dict) -> None:
+    with st.expander("Share this request"):
+        if st.button("Create shareable link", key=f"share.{family}.{endpoint}"):
+            st.query_params[SHARE_KEY] = encode_share(family, endpoint, payload)
+            st.caption("The link is now in your browser address bar — copy it to share.")
+
+
+def _render_bulk(meta: EndpointMeta, base_payload: dict, creds: Credentials) -> None:
+    if meta.request_model is None:
+        return
+    with st.expander("Bulk run from CSV"):
+        st.caption(
+            f"Upload a CSV, choose a column, and run this endpoint for each row "
+            f"(up to {MAX_ROWS}). Other inputs above are reused for every row."
+        )
+        field = st.text_input(
+            "Field to fill from the CSV column", value="keyword",
+            key=f"bulk_field.{meta.family}.{meta.name}",
+        )
+        uploaded = st.file_uploader("CSV file", type=["csv"], key=f"bulk_csv.{meta.family}.{meta.name}")
+        if uploaded is None:
+            return
+        df = pd.read_csv(uploaded)
+        if df.empty:
+            st.warning("That CSV has no rows.")
+            return
+        column = st.selectbox("Column to use", list(df.columns), key=f"bulk_col.{meta.family}.{meta.name}")
+        if st.button("Run bulk", key=f"bulk_run.{meta.family}.{meta.name}"):
+            payloads = rows_to_payloads(base_payload, field, df[column].tolist())
+            _run_bulk(meta, payloads, creds)
+
+
+def _run_bulk(meta: EndpointMeta, payloads: list[dict], creds: Credentials) -> None:
+    all_rows: list[dict] = []
+    total_cost = 0.0
+    progress = st.progress(0.0)
+    for i, payload in enumerate(payloads):
+        try:
+            result = _execute(meta, payload, creds)
+        except RunError as err:
+            st.error(f"Row {i + 1} failed: {err}")
+            continue
+        parsed = parse_response(result)
+        total_cost += parsed.cost
+        default_store().add_run(meta.name, meta.family, payload, parsed.cost,
+                                "ok" if parsed.ok else "error")
+        all_rows.extend(items_table(parsed.items))
+        progress.progress((i + 1) / len(payloads))
+    st.success(f"Ran {len(payloads)} rows · total cost ${total_cost:.4f}")
+    if all_rows:
+        st.dataframe(pd.DataFrame(all_rows), use_container_width=True, hide_index=True)
+
+
+def render_shared_request(creds: Credentials, shared: dict) -> None:
+    """Top-of-page banner for a request opened via a shareable link."""
+    family, endpoint, params = shared["family"], shared["endpoint"], shared["params"]
+    meta = catalogue.find_endpoint(family, endpoint)
+    st.info(f"Shared request: **{titleize(endpoint)}** ({titleize(family)})")
+    st.json(params, expanded=False)
+    if meta is None:
+        st.error("That endpoint no longer exists.")
+        return
+    if st.button("Run shared request", type="primary"):
+        _run_and_record(meta, params, creds)
 
 
 def _render_save_preset(family: str, endpoint: str, payload: dict) -> None:

@@ -4,7 +4,8 @@ from __future__ import annotations
 import streamlit as st
 
 from seo_analyser.registry import catalogue
-from seo_analyser.ui.endpoint_page import render_endpoint_page
+from seo_analyser.ui.endpoint_page import render_endpoint_page, render_shared_request
+from seo_analyser.ui.share import SHARE_KEY, decode_share
 from seo_analyser.ui.sidebar import render_sidebar
 
 
@@ -26,6 +27,11 @@ def main() -> None:
             "Then pick an API family and an endpoint to run."
         )
         return
+
+    shared = decode_share(st.query_params.get(SHARE_KEY, ""))
+    if shared:
+        render_shared_request(creds, shared)
+        st.divider()
 
     if family and endpoint_name:
         render_endpoint_page(creds, family, endpoint_name)
