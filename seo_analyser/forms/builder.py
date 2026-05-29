@@ -33,8 +33,13 @@ def render_form(
     """
     dynamic_choices = dynamic_choices or {}
     specs = fields_for(model)
-    common = [s for s in specs if s.name in _COMMON_FIELDS]
-    advanced = [s for s in specs if s.name not in _COMMON_FIELDS]
+
+    def is_upfront(spec: FieldSpec) -> bool:
+        # Required/conditional fields and well-known ones belong up front.
+        return spec.name in _COMMON_FIELDS or spec.requirement in ("required", "conditional")
+
+    common = [s for s in specs if is_upfront(s)]
+    advanced = [s for s in specs if not is_upfront(s)]
     if not common:  # nothing well-known — don't bury the whole form
         common, advanced = advanced, []
 
