@@ -53,4 +53,4 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
             except RunError as err:
                 st.error(str(err))
                 return
-        render_result(result)
+        render_result(result, endpoint=endpoint_name)

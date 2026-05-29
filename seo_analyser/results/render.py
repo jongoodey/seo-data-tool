@@ -1,10 +1,13 @@
 """Render a parsed DataForSEO response as a friendly summary + table."""
 from __future__ import annotations
 
+from datetime import datetime
+
 import pandas as pd
 import streamlit as st
 
 from seo_analyser.results.detect import extract_message_text, items_table, parse_response
+from seo_analyser.results.export import to_csv_bytes, to_json_bytes
 
 # Columns that, when present, read best left-to-right.
 _PRIORITY_COLS = [
@@ -21,7 +24,7 @@ _META_KEYS = [
 ]
 
 
-def render_result(resp: dict) -> None:
+def render_result(resp: dict, endpoint: str = "result") -> None:
     parsed = parse_response(resp)
 
     if not parsed.ok:
@@ -55,6 +58,18 @@ def render_result(resp: dict) -> None:
         st.dataframe(df[ordered], use_container_width=True, hide_index=True)
     elif parsed.ok:
         st.info("The request succeeded but returned no rows.")
+
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    col_csv, col_json = st.columns(2)
+    if rows:
+        col_csv.download_button(
+            "Download CSV", to_csv_bytes(rows),
+            file_name=f"{endpoint}-{stamp}.csv", mime="text/csv",
+        )
+    col_json.download_button(
+        "Download JSON", to_json_bytes(resp),
+        file_name=f"{endpoint}-{stamp}.json", mime="application/json",
+    )
 
     with st.expander("Raw JSON response"):
         st.json(resp)
