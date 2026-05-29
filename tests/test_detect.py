@@ -1,6 +1,6 @@
 from seo_analyser.results.detect import (
-    extract_html, extract_message_text, items_table, looks_like_html, parse_response,
-    sanitize_for_preview, strip_scripts,
+    extract_html, extract_links, extract_message_text, items_table, looks_like_html,
+    parse_response, sanitize_for_preview, strip_scripts,
 )
 
 OK_RESPONSE = {
@@ -110,6 +110,24 @@ def test_sanitize_for_preview_disables_links_and_scripts():
     assert "pointer-events:none" in out
     assert "<script" not in out
     assert "link" in out  # link text kept, just non-clickable
+
+
+def test_extract_links_from_annotations():
+    items = [{"type": "message", "sections": [{"type": "text", "text": "answer",
+              "annotations": [
+                  {"title": "REI", "url": "https://rei.com"},
+                  {"title": "RunRepeat", "url": "https://runrepeat.com"},
+                  {"title": "REI dup", "url": "https://rei.com"},  # dup url
+              ]}]}]
+    links = extract_links(items)
+    assert links == [
+        {"title": "REI", "url": "https://rei.com"},
+        {"title": "RunRepeat", "url": "https://runrepeat.com"},
+    ]
+
+
+def test_extract_links_none():
+    assert extract_links([{"type": "message", "sections": [{"text": "hi"}]}]) == []
 
 
 def test_extract_message_text_plain_and_none():

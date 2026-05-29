@@ -8,7 +8,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from seo_analyser.results.detect import (
-    extract_html, extract_message_text, items_table, parse_response, sanitize_for_preview,
+    extract_html, extract_links, extract_message_text, items_table, parse_response,
+    sanitize_for_preview,
 )
 from seo_analyser.results.export import to_csv_bytes, to_json_bytes
 
@@ -52,6 +53,12 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
     if answer:
         st.markdown("#### Response")
         st.markdown(answer)
+
+    links = extract_links(parsed.items)
+    if links:
+        st.markdown("**Sources**")
+        for link in links:
+            st.markdown(f"- [{link['title']}]({link['url']})")
 
     # HTML-returning endpoints (*_live_html, raw_html) — render it in-app.
     html = extract_html(resp)

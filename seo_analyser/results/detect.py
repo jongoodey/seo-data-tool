@@ -130,6 +130,31 @@ def extract_html(resp: Any) -> str | None:
     return best
 
 
+def extract_links(items: list[dict]) -> list[dict]:
+    """Collect source citations (title + url) from LLM-response annotations.
+
+    LLM endpoints attach sources as items[].sections[].annotations = [{title, url}].
+    Returns a de-duplicated list of {"title", "url"}.
+    """
+    links: list[dict] = []
+    seen: set[str] = set()
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        sections = item.get("sections") or []
+        if not sections and isinstance(item.get("content"), dict):
+            sections = item["content"].get("sections") or []
+        for section in sections:
+            if not isinstance(section, dict):
+                continue
+            for ann in section.get("annotations") or []:
+                url = isinstance(ann, dict) and ann.get("url")
+                if url and url not in seen:
+                    seen.add(url)
+                    links.append({"title": ann.get("title") or url, "url": url})
+    return links
+
+
 def extract_message_text(items: list[dict]) -> str:
     """Pull readable answer text out of LLM-response items.
 
