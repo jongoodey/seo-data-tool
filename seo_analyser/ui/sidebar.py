@@ -4,8 +4,21 @@ from __future__ import annotations
 import streamlit as st
 
 from seo_analyser.auth import Credentials, from_env
+from seo_analyser.billing.balance import account_balance
 from seo_analyser.labels import titleize
 from seo_analyser.registry import catalogue
+
+
+def _render_balance(creds: Credentials) -> None:
+    if "balance" not in st.session_state:
+        with st.spinner("Checking balance..."):
+            st.session_state["balance"] = account_balance(creds)
+    balance = st.session_state["balance"]
+    col_a, col_b = st.columns([3, 1])
+    col_a.metric("Account balance", f"${balance:,.2f}" if balance is not None else "—")
+    if col_b.button("↻", help="Refresh balance"):
+        del st.session_state["balance"]
+        st.rerun()
 
 
 def render_sidebar() -> tuple[Credentials, str | None, str | None]:
@@ -17,6 +30,7 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
         creds = Credentials(login=login, password=password)
         if creds.is_complete:
             st.caption("✓ Credentials loaded")
+            _render_balance(creds)
 
         st.header("Choose an endpoint")
         query = st.text_input("Search all endpoints", placeholder="e.g. ai overview, backlinks")

@@ -4,6 +4,7 @@ from __future__ import annotations
 import streamlit as st
 
 from seo_analyser.auth import Credentials
+from seo_analyser.billing.cost import format_estimate
 from seo_analyser.forms.builder import render_form
 from seo_analyser.labels import titleize
 from seo_analyser.persistence.store import default_store
@@ -66,6 +67,9 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         dynamic_choices=dynamic_choices,
     )
 
+    estimate = format_estimate(family)
+    if estimate:
+        st.caption(estimate)
     run_clicked = st.button("Run", type="primary")
     _render_save_preset(family, endpoint_name, payload)
 
