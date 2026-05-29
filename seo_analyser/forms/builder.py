@@ -63,6 +63,21 @@ def _collect(
 _BOOL_OPTIONS = ["", "true", "false"]
 
 
+def decorate_label(spec: FieldSpec) -> str:
+    """Append a plain-language requirement/default marker to a field label."""
+    bits: list[str] = []
+    if spec.requirement == "required":
+        bits.append("required")
+    elif spec.requirement == "conditional":
+        bits.append(f"required unless {humanize(spec.partner)} set" if spec.partner else "conditional")
+    elif spec.requirement == "optional":
+        bits.append("optional")
+    if spec.default_hint:
+        bits.append(f"default: {spec.default_hint}")
+    base = humanize(spec.name)
+    return f"{base}  ·  {', '.join(bits)}" if bits else base
+
+
 def bool_from_choice(choice: str) -> bool | None:
     """Map a tri-state dropdown choice to a bool or None (unset).
 
@@ -78,7 +93,7 @@ def bool_from_choice(choice: str) -> bool | None:
 
 def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None) -> Any:
     help_text = spec.description or None
-    label = humanize(spec.name)
+    label = decorate_label(spec)
     if choices_override:
         return st.selectbox(label, [""] + list(choices_override), help=help_text, key=key) or None
     if spec.kind == "bool":

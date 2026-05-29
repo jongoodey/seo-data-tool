@@ -2,7 +2,15 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
 
-from seo_analyser.forms.widgets import FieldSpec, extract_choices, extract_range, fields_for
+from seo_analyser.forms.widgets import (
+    FieldSpec,
+    extract_choices,
+    extract_default,
+    extract_range,
+    extract_requirement,
+    fields_for,
+    resolve_partner,
+)
 
 
 class _Sample(BaseModel):
@@ -40,6 +48,26 @@ def test_fields_for_kinds():
 def test_fieldspec_carries_description():
     specs = {f.name: f for f in fields_for(_Sample)}
     assert "required" in specs["keyword"].description
+
+
+def test_extract_requirement():
+    assert extract_requirement("keywordsrequired fieldUTF-8") == "required"
+    assert extract_requirement("full name of the languageoptional field") == "optional"
+    assert extract_requirement(
+        "required field if you don't specify location_code") == "conditional"
+    assert extract_requirement("no hints here") == ""
+
+
+def test_resolve_partner_against_siblings():
+    # Space-less description: 'language_codeif' must still resolve to language_code.
+    desc = "required field if you don't specify language_codeif you use this field"
+    assert resolve_partner(desc, ["language_name", "language_code", "keywords"]) == "language_code"
+    assert resolve_partner("no clause", ["a", "b"]) is None
+
+
+def test_extract_default():
+    assert extract_default("group results default value: true here") == "true"
+    assert extract_default("no default") is None
 
 
 def test_additional_properties_excluded():
