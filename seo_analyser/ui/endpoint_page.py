@@ -7,7 +7,8 @@ import streamlit as st
 from seo_analyser.auth import Credentials
 from seo_analyser.billing.cost import format_estimate
 from seo_analyser.forms.builder import render_form
-from seo_analyser.forms.validators import validate_payload
+from seo_analyser.forms.validators import validate_payload, validate_required_ids
+from seo_analyser.forms.widgets import fields_for
 from seo_analyser.labels import titleize
 from seo_analyser.persistence.store import default_store
 from seo_analyser.registry import catalogue
@@ -75,7 +76,8 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         dynamic_choices=dynamic_choices,
     )
 
-    problems = validate_payload(payload)
+    problems = validate_payload(payload) + validate_required_ids(
+        fields_for(meta.request_model), payload)
     for problem in problems:
         st.warning(problem)
 
