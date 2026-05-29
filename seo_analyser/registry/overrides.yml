@@ -33,3 +33,9 @@ backlinks.backlinks_summary_live:
 dataforseo_labs.google_ranked_keywords_live:
   title: "Ranked Keywords"
   description: "Keywords a target domain ranks for, with positions and volume."
+
+on_page.content_parsing:
+  title: "Content Parsing"
+  description: "Parses a page from a completed On-Page crawl. Requires BOTH a full
+    page URL (https://…) AND the task id from a prior On-Page Task Post crawl — it
+    cannot parse an arbitrary URL on its own."

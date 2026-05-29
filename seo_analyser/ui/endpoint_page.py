@@ -7,6 +7,7 @@ import streamlit as st
 from seo_analyser.auth import Credentials
 from seo_analyser.billing.cost import format_estimate
 from seo_analyser.forms.builder import render_form
+from seo_analyser.forms.validators import validate_payload
 from seo_analyser.labels import titleize
 from seo_analyser.persistence.store import default_store
 from seo_analyser.registry import catalogue
@@ -74,6 +75,10 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         dynamic_choices=dynamic_choices,
     )
 
+    problems = validate_payload(payload)
+    for problem in problems:
+        st.warning(problem)
+
     estimate = format_estimate(family)
     if estimate:
         st.caption(estimate)
@@ -81,7 +86,9 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
     _render_save_preset(family, endpoint_name, payload)
 
     if run_clicked:
-        if "model_name" in dynamic_choices and not payload.get("model_name"):
+        if problems:
+            st.error("Fix the highlighted field(s) before running — no call was made.")
+        elif "model_name" in dynamic_choices and not payload.get("model_name"):
             st.warning("Please choose a model from the dropdown before running.")
         else:
             _run_and_record(meta, payload, creds)
