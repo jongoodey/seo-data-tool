@@ -1,4 +1,4 @@
-"""Sidebar: credentials + family/endpoint picker with readable labels."""
+"""Sidebar: credentials + endpoint search / family+endpoint picker."""
 from __future__ import annotations
 
 import streamlit as st
@@ -19,6 +19,20 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
             st.caption("✓ Credentials loaded")
 
         st.header("Choose an endpoint")
+        query = st.text_input("Search all endpoints", placeholder="e.g. ai overview, backlinks")
+        if query.strip():
+            hits = catalogue.search_endpoints(query)
+            if not hits:
+                st.caption("No endpoints match.")
+                return creds, None, None
+            labels = {
+                f"{titleize(e.family)} · {titleize(e.name)}": (e.family, e.name)
+                for e in hits
+            }
+            chosen = st.selectbox(f"{len(hits)} matches", list(labels))
+            family, endpoint_name = labels[chosen]
+            return creds, family, endpoint_name
+
         family = st.selectbox("API family", catalogue.families(), format_func=titleize)
         endpoints = catalogue.endpoints_for(family)
         names = [e.name for e in endpoints]
