@@ -51,3 +51,6 @@ Thumbs.db
 *.csv
 *.json
 !requirements.txt
+
+# Local persistence
+data/
