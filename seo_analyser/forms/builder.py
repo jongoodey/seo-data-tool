@@ -33,15 +33,7 @@ def render_form(
     """
     dynamic_choices = dynamic_choices or {}
     specs = fields_for(model)
-
-    def is_upfront(spec: FieldSpec) -> bool:
-        # Required/conditional fields and well-known ones belong up front.
-        return spec.name in _COMMON_FIELDS or spec.requirement in ("required", "conditional")
-
-    common = [s for s in specs if is_upfront(s)]
-    advanced = [s for s in specs if not is_upfront(s)]
-    if not common:  # nothing well-known — don't bury the whole form
-        common, advanced = advanced, []
+    common, advanced = split_common_advanced(specs)
 
     payload: dict[str, Any] = {}
     for spec in common:
@@ -51,6 +43,28 @@ def render_form(
             for spec in advanced:
                 _collect(spec, key_prefix, payload, dynamic_choices)
     return payload
+
+
+def split_common_advanced(specs: list[FieldSpec]) -> tuple[list[FieldSpec], list[FieldSpec]]:
+    """Partition fields into up-front vs Advanced.
+
+    Required/conditional and well-known fields go up front, except a *_code field
+    whose *_name twin is on the same form: names are friendlier, so the code twin
+    moves to Advanced even though the API marks it conditional.
+    """
+    names = {s.name for s in specs}
+
+    def is_upfront(spec: FieldSpec) -> bool:
+        if spec.name in ("location_code", "language_code") \
+                and spec.name.replace("_code", "_name") in names:
+            return False
+        return spec.name in _COMMON_FIELDS or spec.requirement in ("required", "conditional")
+
+    common = [s for s in specs if is_upfront(s)]
+    advanced = [s for s in specs if not is_upfront(s)]
+    if not common:  # nothing well-known — don't bury the whole form
+        return advanced, []
+    return common, advanced
 
 
 def _collect(
@@ -109,11 +123,19 @@ def _coerce(value: Any, kind: str) -> Any:
     return value
 
 
+# Sensible starting values for quick-pick dropdowns (a beginner shouldn't have
+# to discover that language is effectively mandatory).
+_DEFAULT_CHOICES = {"language_name": "English"}
+
+
 def _render_combobox(spec: FieldSpec, label: str, help_text, key: str,
                      presets: list[tuple[str, Any]]) -> Any:
     """Dropdown of common presets plus an 'Other' option for free text."""
     by_label = {lbl: val for lbl, val in presets}
-    choice = st.selectbox(label, [""] + list(by_label) + [_OTHER], help=help_text, key=key)
+    options = [""] + list(by_label) + [_OTHER]
+    default = _DEFAULT_CHOICES.get(spec.name)
+    index = options.index(default) if default in options else 0
+    choice = st.selectbox(label, options, index=index, help=help_text, key=key)
     if choice == _OTHER:
         typed = st.text_input(f"{humanize(spec.name)} — custom value", key=f"{key}.custom")
         return _coerce((typed or "").strip() or None, spec.kind)
