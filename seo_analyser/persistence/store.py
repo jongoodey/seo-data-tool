@@ -148,8 +148,13 @@ class Store:
 def _build_engine():
     url = os.environ.get("DATABASE_URL")
     if url:
-        # SQLAlchemy expects postgresql://, Railway sometimes gives postgres://
-        url = url.replace("postgres://", "postgresql://", 1)
+        # Railway gives postgres:// or postgresql://; SQLAlchemy's bare
+        # postgresql:// dialect means psycopg2, but we ship psycopg v3,
+        # so the URL must name the +psycopg driver explicitly.
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+psycopg://", 1)
+        elif url.startswith("postgresql://"):
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
         return create_engine(url, future=True)
     data_dir = Path(__file__).resolve().parent.parent.parent / "data"
     data_dir.mkdir(exist_ok=True)

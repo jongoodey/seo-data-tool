@@ -1,7 +1,7 @@
 # SEO Analyzer Tool — Working Document (read this first)
 
 **This is the living status doc for the project. Read it at the start of every session.**
-Last updated: 2026-05-29.
+Last updated: 2026-06-10.
 
 ---
 
@@ -39,7 +39,14 @@ rendering is verified manually in the browser.
 
 ## 4. Current status
 
-**Phases 0–5 built and verified locally. NOT yet deployed.**
+**Phases 0–5 built and verified locally. Deployed to Railway 2026-06-10.**
+
+- **Live URL:** https://seo-data-tool.up.railway.app
+- Railway project `intuitive-transformation` (Jon's Hobby workspace), service `web`,
+  GitHub-connected to `jongoodey/seo-data-tool` `main` (push = deploy).
+- PostgreSQL service added; `web` has `DATABASE_URL = ${{Postgres.DATABASE_URL}}`.
+- Deploy gotcha fixed 2026-06-10: pandas had to be `>=2.2.3` (2.2.0 has no
+  Python 3.13 wheels; source build fails under gcc 13 on Nixpacks).
 
 | Phase | State |
 |---|---|
@@ -49,16 +56,7 @@ rendering is verified manually in the browser.
 | 3 Persistence: run history + presets (SQLite local / Postgres prod) | ✅ |
 | 4 Cost estimate, balance widget, shareable links, bulk-CSV, overrides | ✅ |
 | 5 Cutover prep (app.py promoted, Python pinned, README) + local merge to main | ✅ |
-| **Deploy** (push + Railway Postgres) | ⛔ **PENDING — needs Jon's go-ahead** |
-
-### The only outstanding step: deploy
-`origin/main` is still the OLD app; local `main` has the full rebuild. To go live:
-1. **Railway dashboard:** add PostgreSQL (auto-sets `DATABASE_URL`). Without it,
-   prod history won't persist (Railway FS is ephemeral).
-2. `git push origin main` (triggers the Railway deploy if GitHub-connected).
-3. Verify the live URL; run an endpoint; confirm a run appears in Recent runs.
-
-**Claude must NOT push/deploy without Jon's explicit say-so** (outward-facing).
+| **Deploy** (push + Railway Postgres) | ✅ 2026-06-10 (Jon's go-ahead given) |
 
 ## 5. Feature map (what works today)
 
@@ -133,7 +131,6 @@ seo_analyser/
 
 ## 8. Outstanding / next ideas (v2 backlog)
 
-- **Deploy** (see §4) — the immediate next action when Jon's ready.
 - **Crawl → id → parse workflow** so `content_parsing` (and other id-dependent
   endpoints) "just work" from a URL. Currently they need a Task Post id first.
   This is the multi-endpoint workflow earmarked for v2.
@@ -155,6 +152,11 @@ seo_analyser/
 
 ## 10. Session log (most recent first)
 
+- 2026-06-10: **Deployed to Railway** with Jon's go-ahead. Verified locally first
+  (77 tests passing; live SERP run through the UI). Pushed the rebuild to
+  origin/main; first build failed (pandas 2.2.0 has no cp313 wheels — bumped to
+  >=2.2.3); added Railway Postgres + DATABASE_URL reference on web. Live at
+  seo-data-tool.up.railway.app.
 - 2026-05-29: Phases 0–5 built. Then, from live testing: model dropdowns + bool
   tri-state + answer rendering; required/optional/default markers; location/language
   presets; search; export; task polling; persistence + Save/View/Re-run; balance +
