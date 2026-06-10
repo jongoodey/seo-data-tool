@@ -21,3 +21,26 @@ def titleize(name: str) -> str:
     if not parts:
         return name
     return " ".join(p.upper() if p.lower() in _ACRONYMS else p.capitalize() for p in parts)
+
+
+# Junior-SEO-friendly names for the API families; fall back to titleize for new ones.
+_FAMILY_LABELS = {
+    "serp": "Rankings (SERP)",
+    "keywords_data": "Keyword Volumes",
+    "dataforseo_labs": "Keyword & Competitor Research",
+    "backlinks": "Backlinks",
+    "on_page": "Site Audits (On-Page)",
+    "ai_optimization": "AI Visibility (LLMs)",
+    "content_analysis": "Brand Mentions",
+    "content_generation": "Content Generation",
+    "domain_analytics": "Domain Tech & Whois",
+    "business_data": "Business Listings & Reviews",
+    "merchant": "Amazon & Shopping",
+    "app_data": "App Stores",
+    "appendix": "Account & Admin",
+}
+
+
+def family_label(name: str) -> str:
+    """Plain-English family name for menus, e.g. 'serp' -> 'Rankings (SERP)'."""
+    return _FAMILY_LABELS.get(name) or titleize(name)

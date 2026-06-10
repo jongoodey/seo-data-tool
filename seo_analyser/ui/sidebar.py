@@ -5,7 +5,7 @@ import streamlit as st
 
 from seo_analyser.auth import Credentials, from_env
 from seo_analyser.billing.balance import account_balance
-from seo_analyser.labels import titleize
+from seo_analyser.labels import family_label, titleize
 from seo_analyser.registry import catalogue
 
 
@@ -41,14 +41,14 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
                 st.caption("No endpoints match.")
                 return creds, None, None
             labels = {
-                f"{titleize(e.family)} · {titleize(e.name)}": (e.family, e.name)
+                f"{family_label(e.family)} · {titleize(e.name)}": (e.family, e.name)
                 for e in hits
             }
             chosen = st.selectbox(f"{len(hits)} matches", list(labels))
             family, endpoint_name = labels[chosen]
             return creds, family, endpoint_name
 
-        family = st.selectbox("API family", catalogue.families(), format_func=titleize,
+        family = st.selectbox("API family", catalogue.families(), format_func=family_label,
                               index=None, placeholder="Browse the API families...")
         if family is None:
             return creds, None, None
@@ -56,5 +56,5 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
         names = [e.name for e in endpoints]
         endpoint_name = st.selectbox("Endpoint", names, format_func=titleize,
                                      index=None, placeholder="Pick an endpoint...")
-        st.caption(f"{len(names)} endpoints in {titleize(family)}")
+        st.caption(f"{len(names)} endpoints in {family_label(family)}")
     return creds, family, endpoint_name

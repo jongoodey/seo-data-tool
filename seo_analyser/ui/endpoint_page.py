@@ -11,7 +11,7 @@ from seo_analyser.forms.validators import (
     validate_payload, validate_required_fields, validate_required_ids,
 )
 from seo_analyser.forms.widgets import fields_for
-from seo_analyser.labels import titleize
+from seo_analyser.labels import family_label, titleize
 from seo_analyser.persistence.store import default_store
 from seo_analyser.registry import catalogue
 from seo_analyser.registry.introspect import EndpointMeta
@@ -66,7 +66,7 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
 
     override = override_for(family, endpoint_name)
     st.subheader(override.get("title") or titleize(endpoint_name))
-    st.caption(f"{titleize(family)}  ·  `{endpoint_name}`")
+    st.caption(f"{family_label(family)}  ·  `{endpoint_name}`")
     if override.get("description"):
         st.write(override["description"])
 
