@@ -45,8 +45,12 @@ rendering is verified manually in the browser.
 - Railway project `intuitive-transformation` (Jon's Hobby workspace), service `web`,
   GitHub-connected to `jongoodey/seo-data-tool` `main` (push = deploy).
 - PostgreSQL service added; `web` has `DATABASE_URL = ${{Postgres.DATABASE_URL}}`.
-- Deploy gotcha fixed 2026-06-10: pandas had to be `>=2.2.3` (2.2.0 has no
-  Python 3.13 wheels; source build fails under gcc 13 on Nixpacks).
+- Deploy gotchas fixed 2026-06-10: (1) pandas had to be `>=2.2.3` (2.2.0 has no
+  Python 3.13 wheels; source build fails under gcc 13 on Nixpacks); (2) Railway's
+  `postgresql://` URL had to be rewritten to `postgresql+psycopg://` in
+  persistence/store.py — bare scheme loads psycopg2, we ship psycopg v3.
+- Verified live 2026-06-10: SERP run OK ($0.002) and the run reappeared in
+  Recent runs from a fresh session (Postgres persistence confirmed).
 
 | Phase | State |
 |---|---|
