@@ -8,8 +8,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from seo_analyser.results.detect import (
-    extract_html, extract_links, extract_message_text, items_table, parse_response,
-    sanitize_for_preview,
+    extract_html, extract_links, extract_message_text, friendly_error, items_table,
+    parse_response, sanitize_for_preview,
 )
 from seo_analyser.results.export import to_csv_bytes, to_json_bytes
 
@@ -32,8 +32,8 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
     parsed = parse_response(resp)
 
     if not parsed.ok:
-        msg = parsed.status_message or f"status code {parsed.status_code}"
-        st.error(f"DataForSEO returned an error: {msg}")
+        st.error("DataForSEO returned an error: "
+                 + friendly_error(parsed.status_message, parsed.status_code))
 
     col1, col2, col3 = st.columns(3)
     col1.metric("Status", "OK" if parsed.ok else "Error")

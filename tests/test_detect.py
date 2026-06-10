@@ -134,3 +134,24 @@ def test_extract_message_text_plain_and_none():
     assert extract_message_text([{"text": "hello"}]) == "hello"
     assert extract_message_text([{"message": "hi"}]) == "hi"
     assert extract_message_text([{"type": "organic", "title": "x"}]) == ""
+
+
+# --- friendly_error -----------------------------------------------------------
+
+def test_friendly_error_translates_invalid_field():
+    from seo_analyser.results.detect import friendly_error
+    msg = friendly_error("Invalid Field: 'keyword'.", 40501)
+    assert "keyword" in msg
+    assert "fill in" in msg.lower() or "missing" in msg.lower()
+    assert "Invalid Field" in msg  # original preserved for power users
+
+
+def test_friendly_error_translates_task_not_found():
+    from seo_analyser.results.detect import friendly_error
+    msg = friendly_error("Task Not Found.", 40401)
+    assert "still be processing" in msg
+
+
+def test_friendly_error_passes_through_unknown():
+    from seo_analyser.results.detect import friendly_error
+    assert friendly_error("You have reached your limit.", 40202) == "You have reached your limit."

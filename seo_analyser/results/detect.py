@@ -80,6 +80,29 @@ def parse_response(resp: dict) -> ParsedResult:
     )
 
 
+_INVALID_FIELD_RE = re.compile(r"invalid field:?\s*'?([a-z0-9_]+)'?", re.I)
+
+
+def friendly_error(status_message: str, status_code: int | None = None) -> str:
+    """Translate DataForSEO error phrasing into instructions a beginner can act on.
+
+    'Invalid Field' almost always means a required field was left empty, not that
+    the value was wrong; say so, but keep the original message for power users.
+    """
+    msg = status_message or (f"status code {status_code}" if status_code else "unknown error")
+    m = _INVALID_FIELD_RE.search(msg)
+    if m:
+        name = m.group(1)
+        return (f"'{name}' is missing or not valid. Fill in the '{name}' field "
+                f"above and run again. (API said: {msg})")
+    low = msg.lower()
+    if "task" in low and "not found" in low:
+        return ("That task id was not found. The task may still be processing "
+                "(wait a minute and fetch or run again), or the id may be mistyped. "
+                f"(API said: {msg})")
+    return msg
+
+
 def items_table(items: list[dict]) -> list[dict]:
     """Reduce each item to its scalar fields so it renders as a flat table."""
     return [_scalars(it) for it in items]
