@@ -30,6 +30,33 @@ def validate_payload(payload: dict) -> list[str]:
     return warnings
 
 
+def validate_required_fields(specs, payload: dict) -> list[str]:
+    """Flag empty required fields before a paid call is wasted on 'Invalid Field'.
+
+    Only unambiguous cases block: hard-required fields (the introspection already
+    separates 'required unless X' into requirement == "conditional"), and
+    conditional pairs where neither half is filled. Id fields are handled by
+    validate_required_ids; nested fields aren't renderable; fields with an API
+    default are fine to omit.
+    """
+    warnings: list[str] = []
+    filled = {k for k, v in payload.items() if v not in (None, "", [])}
+    seen_pairs: set[frozenset[str]] = set()
+    for spec in specs:
+        if spec.name in _ID_FIELDS or spec.kind == "nested" or spec.default_hint:
+            continue
+        if spec.requirement == "required" and spec.name not in filled:
+            warnings.append(f"'{spec.name}' is required. Fill it in before running.")
+        elif spec.requirement == "conditional" and spec.partner:
+            pair = frozenset((spec.name, spec.partner))
+            if pair in seen_pairs or filled & pair:
+                continue
+            seen_pairs.add(pair)
+            warnings.append(
+                f"Provide either '{spec.name}' or '{spec.partner}' before running.")
+    return warnings
+
+
 def validate_required_ids(specs, payload: dict) -> list[str]:
     """Flag a required task-id field that's empty before a (futile) call.
 

@@ -43,3 +43,34 @@ def test_validate_required_ids_ok_when_present():
 def test_validate_required_ids_ignores_optional_id():
     specs = [FieldSpec(name="id", kind="text", requirement="optional")]
     assert validate_required_ids(specs, {}) == []
+
+
+# --- validate_required_fields -------------------------------------------------
+
+from seo_analyser.forms.validators import validate_required_fields
+from seo_analyser.forms.widgets import FieldSpec
+
+
+def _spec(name, requirement="", partner=None, kind="text", default_hint=None):
+    return FieldSpec(name=name, kind=kind, requirement=requirement,
+                     partner=partner, default_hint=default_hint)
+
+
+def test_blocks_empty_hard_required_field():
+    specs = [_spec("keyword", "required")]
+    assert validate_required_fields(specs, {}) != []
+    assert validate_required_fields(specs, {"keyword": "indexify"}) == []
+
+
+def test_skips_ids_nested_and_defaulted_fields():
+    specs = [_spec("id", "required"),                         # covered by validate_required_ids
+             _spec("filters", "required", kind="nested"),     # not renderable
+             _spec("depth", "required", default_hint="100")]  # API has a default
+    assert validate_required_fields(specs, {}) == []
+
+
+def test_blocks_conditional_pair_only_when_both_empty():
+    specs = [_spec("language_name", "conditional", partner="language_code"),
+             _spec("language_code", "conditional", partner="language_name")]
+    assert len(validate_required_fields(specs, {})) == 1  # deduplicated pair message
+    assert validate_required_fields(specs, {"language_code": "en"}) == []

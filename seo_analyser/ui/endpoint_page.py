@@ -7,7 +7,9 @@ import streamlit as st
 from seo_analyser.auth import Credentials
 from seo_analyser.billing.cost import format_estimate
 from seo_analyser.forms.builder import render_form
-from seo_analyser.forms.validators import validate_payload, validate_required_ids
+from seo_analyser.forms.validators import (
+    validate_payload, validate_required_fields, validate_required_ids,
+)
 from seo_analyser.forms.widgets import fields_for
 from seo_analyser.labels import titleize
 from seo_analyser.persistence.store import default_store
@@ -76,7 +78,8 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         return
 
     key_prefix = f"{family}.{endpoint_name}"
-    prereq = prerequisite_for(family, fields_for(meta.request_model))
+    specs = fields_for(meta.request_model)
+    prereq = prerequisite_for(family, specs)
     if prereq:
         _render_prereq_panel(prereq, key_prefix, creds)
 
@@ -92,8 +95,9 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         dynamic_choices=dynamic_choices,
     )
 
-    problems = validate_payload(payload) + validate_required_ids(
-        fields_for(meta.request_model), payload)
+    problems = (validate_payload(payload)
+                + validate_required_ids(specs, payload)
+                + validate_required_fields(specs, payload))
     for problem in problems:
         st.warning(problem)
 
