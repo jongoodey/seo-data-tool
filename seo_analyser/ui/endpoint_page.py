@@ -20,6 +20,10 @@ from seo_analyser.runner.bulk import MAX_ROWS, rows_to_payloads
 from seo_analyser.runner.errors import RunError
 from seo_analyser.runner.live import run_live
 from seo_analyser.runner.lookups import llm_model_choices
+from seo_analyser.runner.prereq import (
+    Prerequisite, post_prerequisite, prerequisite_for, recent_task_ids,
+    wait_until_ready,
+)
 from seo_analyser.runner.tasks import run_task
 from seo_analyser.ui.share import SHARE_KEY, encode_share
 
@@ -64,6 +68,11 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         _render_history_and_presets(creds)
         return
 
+    key_prefix = f"{family}.{endpoint_name}"
+    prereq = prerequisite_for(family, fields_for(meta.request_model))
+    if prereq:
+        _render_prereq_panel(prereq, key_prefix, creds)
+
     dynamic_choices: dict[str, list[str]] = {}
     with st.spinner("Loading model options..."):
         model_choices = llm_model_choices(meta, creds)
@@ -72,7 +81,7 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
 
     payload = render_form(
         meta.request_model,
-        key_prefix=f"{family}.{endpoint_name}",
+        key_prefix=key_prefix,
         dynamic_choices=dynamic_choices,
     )
 
@@ -98,6 +107,92 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
     _render_share(family, endpoint_name, payload)
     _render_bulk(meta, payload, creds)
     _render_history_and_presets(creds)
+
+
+def _render_prereq_panel(prereq: Prerequisite, key_prefix: str, creds: Credentials) -> None:
+    """Get the user a valid task id: pick one from history or start the task here."""
+    field_key = f"{key_prefix}.{prereq.id_field}"
+    outcome = st.session_state.pop(f"{key_prefix}.prereq_outcome", None)
+    if outcome:
+        level, message = outcome
+        (st.success if level == "ok" else st.warning)(message)
+    have_id = bool(st.session_state.get(field_key))
+    with st.expander(f"This endpoint reads {prereq.label} — get a task id here",
+                     expanded=not have_id):
+        ids = recent_task_ids(default_store(), prereq)
+        if ids:
+            labels = [f"{tid}  ({label})" for tid, label in ids]
+            picked = st.selectbox("Recent task ids from your run history", labels,
+                                  key=f"{key_prefix}.prereq_pick")
+            if st.button("Use this id", key=f"{key_prefix}.prereq_use"):
+                st.session_state[field_key] = picked.split("  (")[0]
+                st.rerun()
+        else:
+            st.caption("No matching task ids in your recent run history yet.")
+
+        st.divider()
+        if prereq.kind == "onpage_crawl":
+            st.caption("Or start a new crawl (the readers below analyse its results):")
+            target = st.text_input("Site to crawl (e.g. example.com)",
+                                   key=f"{key_prefix}.prereq_target")
+            pages = st.number_input("Max pages to crawl", min_value=1, max_value=1000,
+                                    value=10, key=f"{key_prefix}.prereq_pages")
+            if st.button("Start crawl and wait", key=f"{key_prefix}.prereq_start"):
+                if target.strip():
+                    payload = {"target": target.strip(), "max_crawl_pages": int(pages)}
+                    _start_prereq(prereq, payload, creds, field_key)
+                else:
+                    st.warning("Enter the site to crawl first.")
+        else:
+            st.caption("Or create a new SERP task to summarise:")
+            kw = st.text_input("Keyword", key=f"{key_prefix}.prereq_keyword")
+            col1, col2 = st.columns(2)
+            loc = col1.text_input("Location name", value="United Kingdom",
+                                  key=f"{key_prefix}.prereq_location")
+            lang = col2.text_input("Language name", value="English",
+                                   key=f"{key_prefix}.prereq_language")
+            if st.button("Create SERP task and wait", key=f"{key_prefix}.prereq_start"):
+                if kw.strip():
+                    payload = {"keyword": kw.strip(), "location_name": loc.strip(),
+                               "language_name": lang.strip()}
+                    _start_prereq(prereq, payload, creds, field_key)
+                else:
+                    st.warning("Enter a keyword first.")
+
+
+def _start_prereq(prereq: Prerequisite, payload: dict, creds: Credentials,
+                  field_key: str) -> None:
+    key_prefix = field_key.rsplit(".", 1)[0]
+    outcome_key = f"{key_prefix}.prereq_outcome"
+    try:
+        with st.spinner("Submitting the task..."):
+            task_id = post_prerequisite(prereq, payload, creds)
+    except RunError as err:
+        st.error(str(err))
+        return
+    # Fill the reader's id field straight away; readiness only affects when Run works.
+    st.session_state[field_key] = task_id
+    endpoint = "task_post" if prereq.kind == "onpage_crawl" else "google_organic"
+    default_store().add_run(endpoint, prereq.family, payload, 0.0, "ok",
+                            response={"tasks": [{"id": task_id}]})
+    try:
+        with st.spinner(f"Task {task_id} submitted — waiting for it to be ready "
+                        "(up to ~3 min)..."):
+            ready = wait_until_ready(prereq, task_id, creds)
+    except RunError as err:
+        st.session_state[outcome_key] = (
+            "warn", f"Task {task_id} submitted and its id is filled in below, "
+                    f"but the readiness check failed: {err}")
+        st.rerun()
+        return
+    if ready:
+        st.session_state[outcome_key] = (
+            "ok", f"Task {task_id} is ready — its id is filled in below. Hit Run.")
+    else:
+        st.session_state[outcome_key] = (
+            "warn", f"Task {task_id} is still processing — its id is filled in below; "
+                    "try Run again in a minute.")
+    st.rerun()
 
 
 def _render_share(family: str, endpoint: str, payload: dict) -> None:

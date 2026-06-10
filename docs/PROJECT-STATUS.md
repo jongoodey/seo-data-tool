@@ -81,6 +81,11 @@ rendering is verified manually in the browser.
   (one-click "Run shared request"), **bulk-run from CSV**.
 - **Client-side validation** before Run (no wasted call): URL fields must be full
   http(s) URLs; required `id`/`task_id` must be present (with guidance).
+- **Prerequisite-task workflow** (runner/prereq.py): the 17 "orphan reader"
+  endpoints (15 on_page readers needing a crawl `id`; serp ai_summary/screenshot
+  needing a SERP `task_id`) get an inline panel that either harvests usable ids
+  from run history or starts the prerequisite task (on_page task_post -> poll
+  summary; serp google_organic task_post -> tasks_ready), auto-filling the id.
 
 ## 6. Architecture
 
@@ -135,9 +140,6 @@ seo_analyser/
 
 ## 8. Outstanding / next ideas (v2 backlog)
 
-- **Crawl → id → parse workflow** so `content_parsing` (and other id-dependent
-  endpoints) "just work" from a URL. Currently they need a Task Post id first.
-  This is the multi-endpoint workflow earmarked for v2.
 - **Form pre-fill mechanism** so preset-load / shared links / override default_params
   populate the editable form (currently they re-run stored params directly; the
   combobox stores labels not raw values, which makes round-tripping fiddly).
@@ -155,6 +157,14 @@ seo_analyser/
   — original analysis.
 
 ## 10. Session log (most recent first)
+
+- 2026-06-10 (later): **Prerequisite-task workflow shipped** — readers that need a
+  prior task id (all 15 on_page readers + serp ai_summary/screenshot) now have an
+  inline get-an-id panel: pick from history or start the task and auto-fill.
+  Gotcha: st.status cannot nest inside st.expander (StreamlitAPIException) — use
+  st.spinner + a session-state outcome message across the rerun. Verified live:
+  SERP task -> ai_summary OK ($0.01); on_page crawl -> pages OK via history picker.
+  88 tests passing.
 
 - 2026-06-10: **Deployed to Railway** with Jon's go-ahead. Verified locally first
   (77 tests passing; live SERP run through the UI). Pushed the rebuild to
