@@ -26,7 +26,7 @@ keywords_data.google_ads_search_volume_live:
   title: "Google Ads Search Volume"
   description: "Monthly search volume, competition and CPC from Google Ads."
 
-backlinks.backlinks_summary_live:
+backlinks.summary_live:
   title: "Backlink Summary"
   description: "Top-level backlink metrics for a domain or URL."
 

@@ -5,6 +5,7 @@ import streamlit as st
 
 from seo_analyser.registry import catalogue
 from seo_analyser.ui.endpoint_page import render_endpoint_page, render_shared_request
+from seo_analyser.ui.home import NAV_KEY, render_home
 from seo_analyser.ui.share import SHARE_KEY, decode_share
 from seo_analyser.ui.sidebar import render_sidebar
 
@@ -34,9 +35,13 @@ def main() -> None:
         st.divider()
 
     if family and endpoint_name:
+        st.session_state.pop(NAV_KEY, None)   # a sidebar choice overrides a shortcut
         render_endpoint_page(creds, family, endpoint_name)
+    elif st.session_state.get(NAV_KEY):
+        nav_family, nav_endpoint = st.session_state[NAV_KEY]
+        render_endpoint_page(creds, nav_family, nav_endpoint)
     else:
-        st.info("Pick an API family and endpoint from the sidebar to begin.")
+        render_home()
 
 
 if __name__ == "__main__":

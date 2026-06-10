@@ -48,11 +48,13 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
             family, endpoint_name = labels[chosen]
             return creds, family, endpoint_name
 
-        family = st.selectbox("API family", catalogue.families(), format_func=titleize)
+        family = st.selectbox("API family", catalogue.families(), format_func=titleize,
+                              index=None, placeholder="Browse the API families...")
+        if family is None:
+            return creds, None, None
         endpoints = catalogue.endpoints_for(family)
         names = [e.name for e in endpoints]
-        endpoint_name = (
-            st.selectbox("Endpoint", names, format_func=titleize) if names else None
-        )
+        endpoint_name = st.selectbox("Endpoint", names, format_func=titleize,
+                                     index=None, placeholder="Pick an endpoint...")
         st.caption(f"{len(names)} endpoints in {titleize(family)}")
     return creds, family, endpoint_name
