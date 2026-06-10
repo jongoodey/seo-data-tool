@@ -33,7 +33,8 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
             _render_balance(creds)
 
         st.header("Choose an endpoint")
-        query = st.text_input("Search all endpoints", placeholder="e.g. ai overview, backlinks")
+        query = st.text_input("Search all endpoints",
+                              placeholder="e.g. ai overview, keyword volume, backlinks")
         if query.strip():
             hits = catalogue.search_endpoints(query)
             if not hits:
