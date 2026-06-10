@@ -31,7 +31,7 @@ streamlit run app.py --server.port 8501
 ## 3. Test it
 
 ```bash
-source .venv/bin/activate && python -m pytest -q     # 77 tests, all passing
+source .venv/bin/activate && python -m pytest -q     # 107 tests, all passing
 ```
 Pure logic is unit-tested (introspection, widgets, detect, store, validators,
 billing, search, export, tasks, lookups, presets, share/bulk). Streamlit
@@ -86,6 +86,26 @@ rendering is verified manually in the browser.
   needing a SERP `task_id`) get an inline panel that either harvests usable ids
   from run history or starts the prerequisite task (on_page task_post -> poll
   summary; serp google_organic task_post -> tasks_ready), auto-filling the id.
+- **Junior-SEO UX pass (2026-06-10):**
+  - **Landing page** (ui/home.py): 8 job-shaped shortcuts ("Check Google rankings",
+    "Ask ChatGPT", "Audit a page"...) instead of auto-selecting the first endpoint
+    alphabetically (which was a non-runnable dead end). Sidebar selectboxes use
+    `index=None` placeholders; shortcut nav lives in `st.session_state["nav_target"]`.
+  - **Pending tasks survive the poll window**: when a task outlives the 2-minute
+    poll (LLM responses routinely do), the run is saved as `pending` with its task
+    id and history shows a **Fetch** button (task_get by id, no new charge,
+    updates the run in place via `store.update_run`).
+  - **Plain-English API errors** (detect.friendly_error): "Invalid Field: 'x'" ->
+    "fill in x"; "Task Not Found" -> "may still be processing".
+  - **Hard block before paid calls**: empty hard-required fields and fully-empty
+    conditional pairs refuse to run (validators.validate_required_fields).
+  - **Ranked search** (catalogue.score_endpoint): word 3 / prefix 2 / substring 1,
+    all tokens must hit; override titles are searchable, so "ai overview" finds
+    Google AI Mode first instead of "Backlinks Available Filters".
+  - **Plain-English family names** (labels.family_label): "Rankings (SERP)",
+    "AI Visibility (LLMs)", "Site Audits (On-Page)"...
+  - **Form polish**: location_code/language_code demoted to Advanced when their
+    *_name twin is on the form; language_name quick-pick defaults to English.
 
 ## 6. Architecture
 
@@ -126,8 +146,10 @@ seo_analyser/
   *strings* (models resolved from `dataforseo_client.models`); `StrictInt`/`StrictStr`
   hide the real type inside `Annotated`; `additional_properties` is a catch-all (excluded).
 - **"required field" labels are unreliable** — many are conditional ("required field if
-  you don't specify X"). So we DON'T hard-block on generic required; we only block on
-  unambiguous cases (bad URL format, empty required `id`). Markers show the nuance.
+  you don't specify X"). The introspection separates those into `conditional` (+partner),
+  so since 2026-06-10 we DO hard-block: empty hard-required fields, fully-empty
+  conditional pairs, bad URL format and empty required `id`. A lone conditional field
+  must still never block on its own — its partner may legitimately be the one filled.
 - **Two link behaviours, deliberately different:** LLM answer citations → clickable;
   scraped HTML page preview → links disabled + scripts stripped (they 404 in the iframe
   and JS would hijack it).
@@ -143,8 +165,10 @@ seo_analyser/
 - **Form pre-fill mechanism** so preset-load / shared links / override default_params
   populate the editable form (currently they re-run stored params directly; the
   combobox stores labels not raw values, which makes round-tripping fiddly).
-- Tighten fuzzy search (word-boundary; "ai mode" currently also matches "...models").
 - Seed more endpoints in `overrides.yml`; enum coverage for more free-text fields.
+  (Note: override keys are unchecked strings — `backlinks.backlinks_summary_live` sat
+  dead until 2026-06-10 because the real endpoint is `summary_live`. A test pinning
+  every override key to a catalogue endpoint would prevent that.)
 - Client workspaces (nullable `workspace` column already in the schema).
 
 ## 9. Where the planning docs live
@@ -157,6 +181,18 @@ seo_analyser/
   — original analysis.
 
 ## 10. Session log (most recent first)
+
+- 2026-06-10 (evening): **Junior-SEO UX pass shipped** (from the first-time-user
+  audit). Landing page with 8 job shortcuts (ui/home.py; sidebar no longer
+  auto-selects a dead-end endpoint); pending tasks survive the poll window with a
+  free Fetch from history (fixes premature "Task Not Found" on LLM responses);
+  friendly API error translation; hard block on empty required fields/pairs before
+  paid calls; ranked word-boundary search (override titles searchable — "ai
+  overview" now finds AI Mode first); plain-English family names; *_code fields
+  demoted when *_name present; language defaults to English. Also fixed a stale
+  override key (backlinks.summary_live). 107 tests passing. Verified locally via
+  a real SERP run through the UI (OK, 10 results, $0.002); empty-form Run is
+  blocked with no API call made. Plan: docs/superpowers/plans/2026-06-10-junior-seo-ux-handover.md.
 
 - 2026-06-10 (later): **Prerequisite-task workflow shipped** — readers that need a
   prior task id (all 15 on_page readers + serp ai_summary/screenshot) now have an
