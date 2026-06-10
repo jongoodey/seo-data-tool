@@ -16,7 +16,7 @@ from pathlib import Path
 
 from sqlalchemy import (
     Column, DateTime, Float, Integer, MetaData, String, Table, Text,
-    create_engine, delete, desc, insert, inspect, select, text,
+    create_engine, delete, desc, insert, inspect, select, text, update,
 )
 
 _metadata = MetaData()
@@ -93,6 +93,19 @@ class Store:
                 endpoint=endpoint, family=family, params=json.dumps(params, default=str),
                 cost=cost, status=status, created_at=_dt.datetime.now(_dt.UTC),
                 response=response_json,
+            ))
+
+    def update_run(self, run_id: int, *, cost: float, status: str,
+                   response: dict | None) -> None:
+        """Overwrite a run's outcome in place (used when a pending task completes)."""
+        response_json = None
+        if response is not None:
+            blob = json.dumps(response, default=str)
+            if len(blob) <= _MAX_RESPONSE_BYTES:
+                response_json = blob
+        with self.engine.begin() as conn:
+            conn.execute(update(runs).where(runs.c.id == run_id).values(
+                cost=cost, status=status, response=response_json,
             ))
 
     def recent_runs(self, limit: int = 20) -> list[RunRecord]:

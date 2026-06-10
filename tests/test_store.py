@@ -37,6 +37,18 @@ def test_no_response_has_response_false(store):
     assert store.load_response(run.id) is None
 
 
+def test_update_run_completes_a_pending_run(store):
+    store.add_run("chat_gpt_llm_responses_live", "ai_optimization", {"user_prompt": "x"},
+                  0.0, "pending", response={"tasks": [{"id": "t1"}]})
+    run_id = store.recent_runs()[0].id
+    store.update_run(run_id, cost=0.01, status="ok",
+                     response={"tasks": [{"id": "t1", "result": [{"items": []}]}]})
+    run = store.recent_runs()[0]
+    assert run.status == "ok"
+    assert run.cost == 0.01
+    assert store.load_response(run_id)["tasks"][0]["result"] == [{"items": []}]
+
+
 def test_save_and_load_preset(store):
     store.save_preset("UK SERP", "serp", "google_organic_live_advanced",
                       {"location_name": "United Kingdom"})

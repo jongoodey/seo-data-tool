@@ -1,5 +1,6 @@
 from seo_analyser.registry.introspect import group_task_methods
-from seo_analyser.runner.tasks import extract_task_id, ready_ids
+from seo_analyser.runner.errors import RunError
+from seo_analyser.runner.tasks import extract_task_id, ready_ids, task_not_found
 
 
 def test_groups_triplet():
@@ -34,3 +35,14 @@ def test_extract_task_id_missing():
 def test_ready_ids():
     resp = {"tasks": [{"result": [{"id": "a"}, {"id": "b"}]}]}
     assert ready_ids(resp) == {"a", "b"}
+
+
+def test_task_not_found_detector():
+    assert task_not_found({"tasks": [{"status_message": "Task Not Found."}]})
+    assert not task_not_found({"tasks": [{"status_message": "Ok."}]})
+    assert not task_not_found({})
+
+
+def test_runerror_carries_task_id():
+    err = RunError("pending", "still processing", task_id="abc-123")
+    assert err.task_id == "abc-123"

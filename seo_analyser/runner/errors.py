@@ -10,9 +10,10 @@ from dataclasses import dataclass
 
 @dataclass
 class RunError(Exception):
-    kind: str          # "auth" | "rate_limit" | "bad_request" | "server" | "network" | "empty"
+    kind: str          # "auth" | "rate_limit" | "bad_request" | "server" | "network" | "empty" | "pending"
     message: str
     status_code: int | None = None
+    task_id: str | None = None   # set for kind == "pending" so the UI can keep the id
 
     def __str__(self) -> str:
         return f"[{self.kind}] {self.message}"

@@ -24,7 +24,7 @@ from seo_analyser.runner.prereq import (
     Prerequisite, post_prerequisite, prerequisite_for, recent_task_ids,
     wait_until_ready,
 )
-from seo_analyser.runner.tasks import run_task
+from seo_analyser.runner.tasks import extract_task_id, fetch_task, run_task, task_not_found
 from seo_analyser.ui.share import SHARE_KEY, encode_share
 
 
@@ -41,7 +41,14 @@ def _run_and_record(meta: EndpointMeta, payload: dict, creds: Credentials) -> No
         with st.spinner(spinner):
             result = _execute(meta, payload, creds)
     except RunError as err:
-        st.error(str(err))
+        if err.kind == "pending" and err.task_id:
+            # Keep the id: store a pending run whose response carries it, so the
+            # history Fetch button (and the prereq id-harvester) can use it later.
+            default_store().add_run(meta.name, meta.family, payload, 0.0, "pending",
+                                    response={"tasks": [{"id": err.task_id}]})
+            st.info(str(err))
+        else:
+            st.error(str(err))
         return
     parsed = parse_response(result)
     default_store().add_run(meta.name, meta.family, payload, parsed.cost,
@@ -276,6 +283,7 @@ def _render_history_and_presets(creds: Credentials) -> None:
     store = default_store()
     rerun_target: tuple[str, str, dict] | None = None
     view_target: int | None = None
+    fetch_target: tuple[int, str, str] | None = None
 
     with st.expander("Recent runs"):
         runs = store.recent_runs(15)
@@ -286,8 +294,12 @@ def _render_history_and_presets(creds: Credentials) -> None:
             stamp = r.created_at.strftime("%H:%M:%S") if r.created_at else ""
             cols[0].write(f"`{r.family} · {r.endpoint}`")
             cols[1].caption(f"{stamp} · ${r.cost:.4f}")
-            if cols[2].button("View", key=f"view.{i}", disabled=not r.has_response,
-                              help="Show the saved result without re-running"):
+            if r.status == "pending":
+                if cols[2].button("Fetch", key=f"fetch.{i}",
+                                  help="Fetch the finished task's result (no new charge)"):
+                    fetch_target = (r.id, r.family, r.endpoint)
+            elif cols[2].button("View", key=f"view.{i}", disabled=not r.has_response,
+                                help="Show the saved result without re-running"):
                 view_target = r.id
             if cols[3].button("Re-run", key=f"rerun.{i}"):
                 rerun_target = (r.family, r.endpoint, r.params)
@@ -304,6 +316,29 @@ def _render_history_and_presets(creds: Credentials) -> None:
             if cols[2].button("Delete", key=f"delpreset.{i}"):
                 store.delete_preset(p.name)
                 st.rerun()
+
+    if fetch_target:
+        run_id, fam, ep = fetch_target
+        saved = store.load_response(run_id) or {}
+        pending_id = extract_task_id(saved)
+        meta = catalogue.find_endpoint(fam, ep)
+        if not (meta and pending_id):
+            st.warning("No task id is stored for that run.")
+        else:
+            try:
+                with st.spinner(f"Fetching task {pending_id}..."):
+                    result = fetch_task(meta, pending_id, creds)
+            except RunError as err:
+                st.error(str(err))
+                return
+            if task_not_found(result):
+                st.info("Still processing. Try Fetch again in a minute.")
+            else:
+                parsed = parse_response(result)
+                store.update_run(run_id, cost=parsed.cost,
+                                 status="ok" if parsed.ok else "error", response=result)
+                st.subheader("Fetched result")
+                render_result(result, endpoint=ep)
 
     if view_target is not None:
         saved = store.load_response(view_target)

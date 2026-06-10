@@ -25,6 +25,36 @@ def ready_ids(resp: dict) -> set[str]:
     return out
 
 
+def task_not_found(resp: dict) -> bool:
+    """True when a task_get envelope reports the id as unknown (still processing)."""
+    for task in resp.get("tasks") or []:
+        if "not found" in (task.get("status_message") or "").lower():
+            return True
+    return False
+
+
+def fetch_task(meta: EndpointMeta, task_id: str, creds: Credentials) -> dict:
+    """Fetch an already-posted task's result by id. No new task, no new charge."""
+    if not creds.is_complete:
+        raise RunError("auth", "Enter your DataForSEO login and password first.")
+    _post, _ready, get_method = meta.task_methods or (None, None, None)
+    if not get_method:
+        raise RunError("bad_request", f"{meta.name} has no task-get method.")
+
+    from dataforseo_client import api_client as prov
+    from dataforseo_client import configuration as cfg
+
+    conf = cfg.Configuration(username=creds.login, password=creds.password)
+    try:
+        with prov.ApiClient(conf) as client:
+            api = _api_class_for(meta.family)(client)
+            return _to_dict(getattr(api, get_method)(id=task_id))
+    except RunError:
+        raise
+    except Exception as exc:  # noqa: BLE001 — normalised below
+        raise normalise(exc) from exc
+
+
 def run_task(meta: EndpointMeta, payload: dict, creds: Credentials,
              on_wait=None, max_wait: int = 120, interval: int = 5) -> dict:
     if not creds.is_complete:
@@ -57,7 +87,18 @@ def run_task(meta: EndpointMeta, payload: dict, creds: Credentials,
                 time.sleep(interval)
                 waited += interval
 
-            return _to_dict(getattr(api, get_method)(id=task_id))
+            result = _to_dict(getattr(api, get_method)(id=task_id))
+            if task_not_found(result):
+                # Slow tasks (LLM responses especially) outlive the poll window;
+                # "Task Not Found" here means "not finished yet", not an error.
+                raise RunError(
+                    "pending",
+                    f"The task was accepted and is still processing (id {task_id}). "
+                    "It has been saved to Recent runs below; press Fetch in a minute "
+                    "or two to get the result without being charged again.",
+                    task_id=task_id,
+                )
+            return result
     except RunError:
         raise
     except Exception as exc:  # noqa: BLE001 — normalised below
