@@ -10,6 +10,11 @@ from seo_analyser.registry import catalogue
 
 
 def _render_balance(creds: Credentials) -> None:
+    # Hidden by default; only fetched when revealed (keeps the balance private
+    # on shared screens and skips a lookup on every fresh session).
+    if not st.toggle("Show account balance", key="sb.show_balance"):
+        st.session_state.pop("balance", None)
+        return
     if "balance" not in st.session_state:
         with st.spinner("Checking balance..."):
             st.session_state["balance"] = account_balance(creds)
