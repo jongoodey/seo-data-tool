@@ -182,6 +182,16 @@ seo_analyser/
 
 ## 10. Session log (most recent first)
 
+- 2026-06-11: **Live-testing fixes from Jon's walkthrough.** (1) model_name dropdown
+  now also covers the folded task-triplet LLM endpoints (chat_gpt/claude/gemini
+  `*_llm_responses` — the lookups regex only matched `_live`/`_task_post`, so the
+  task variants showed a bare text box with no hint of valid values); fallback
+  caption when the model list can't be fetched. (2) "← Home" button on every
+  endpoint page — resets sidebar search/family/endpoint and shortcut nav via an
+  on_click callback (the only safe point to clear instantiated widget keys).
+  (3) Verified the HTML preview path with a real google_organic_live_html run
+  ($0.002, 354KB extracted, scripts stripped). 108 tests passing.
+
 - 2026-06-10 (evening): **Junior-SEO UX pass shipped** (from the first-time-user
   audit). Landing page with 8 job shortcuts (ui/home.py; sidebar no longer
   auto-selects a dead-end endpoint); pending tasks survive the poll window with a

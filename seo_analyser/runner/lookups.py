@@ -13,13 +13,16 @@ from seo_analyser.auth import Credentials
 from seo_analyser.registry.introspect import EndpointMeta
 from seo_analyser.runner.live import _api_class_for
 
-_LLM_RESPONSES_RE = re.compile(r"^(?P<prefix>.+)_llm_responses_(?:live|task_post)$")
+# Matches the live variant, the raw task_post, and the folded task triplet
+# (which has no suffix at all) — every shape that takes a model_name.
+_LLM_RESPONSES_RE = re.compile(r"^(?P<prefix>.+)_llm_responses(?:_live|_task_post)?$")
 
 
 def models_method_name(endpoint_name: str) -> str | None:
     """Map an LLM responses endpoint to its sibling models-listing method.
 
     'chat_gpt_llm_responses_live' -> 'chat_gpt_llm_responses_models'
+    'chat_gpt_llm_responses' (task triplet) -> 'chat_gpt_llm_responses_models'
     Returns None for endpoints without a models sibling.
     """
     match = _LLM_RESPONSES_RE.match(endpoint_name)

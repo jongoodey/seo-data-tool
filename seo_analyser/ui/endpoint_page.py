@@ -21,13 +21,20 @@ from seo_analyser.results.render import render_result
 from seo_analyser.runner.bulk import MAX_ROWS, rows_to_payloads
 from seo_analyser.runner.errors import RunError
 from seo_analyser.runner.live import run_live
-from seo_analyser.runner.lookups import llm_model_choices
+from seo_analyser.runner.lookups import llm_model_choices, models_method_name
 from seo_analyser.runner.prereq import (
     Prerequisite, post_prerequisite, prerequisite_for, recent_task_ids,
     wait_until_ready,
 )
 from seo_analyser.runner.tasks import extract_task_id, fetch_task, run_task, task_not_found
+from seo_analyser.ui.home import NAV_KEY
 from seo_analyser.ui.share import SHARE_KEY, encode_share
+
+
+def _go_home() -> None:
+    """Reset navigation (runs as an on_click callback, before widgets instantiate)."""
+    for key in ("sb.query", "sb.search_pick", "sb.family", "sb.endpoint", NAV_KEY):
+        st.session_state.pop(key, None)
 
 
 def _execute(meta: EndpointMeta, payload: dict, creds: Credentials) -> dict:
@@ -64,6 +71,7 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         st.warning("Select an endpoint from the sidebar.")
         return
 
+    st.button("← Home", on_click=_go_home, help="Back to the start page")
     override = override_for(family, endpoint_name)
     st.subheader(override.get("title") or titleize(endpoint_name))
     st.caption(f"{family_label(family)}  ·  `{endpoint_name}`")
@@ -88,6 +96,9 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         model_choices = llm_model_choices(meta, creds)
     if model_choices:
         dynamic_choices["model_name"] = model_choices
+    elif models_method_name(meta.name):
+        st.caption("Couldn't load the model list just now — type a model name "
+                   "(e.g. gpt-4.1-mini) or reload the page to retry.")
 
     payload = render_form(
         meta.request_model,

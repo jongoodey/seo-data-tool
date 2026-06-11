@@ -33,7 +33,7 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
             _render_balance(creds)
 
         st.header("Choose an endpoint")
-        query = st.text_input("Search all endpoints",
+        query = st.text_input("Search all endpoints", key="sb.query",
                               placeholder="e.g. ai overview, keyword volume, backlinks")
         if query.strip():
             hits = catalogue.search_endpoints(query)
@@ -44,17 +44,19 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
                 f"{family_label(e.family)} · {titleize(e.name)}": (e.family, e.name)
                 for e in hits
             }
-            chosen = st.selectbox(f"{len(hits)} matches", list(labels))
+            chosen = st.selectbox(f"{len(hits)} matches", list(labels), key="sb.search_pick")
             family, endpoint_name = labels[chosen]
             return creds, family, endpoint_name
 
         family = st.selectbox("API family", catalogue.families(), format_func=family_label,
-                              index=None, placeholder="Browse the API families...")
+                              index=None, placeholder="Browse the API families...",
+                              key="sb.family")
         if family is None:
             return creds, None, None
         endpoints = catalogue.endpoints_for(family)
         names = [e.name for e in endpoints]
         endpoint_name = st.selectbox("Endpoint", names, format_func=titleize,
-                                     index=None, placeholder="Pick an endpoint...")
+                                     index=None, placeholder="Pick an endpoint...",
+                                     key="sb.endpoint")
         st.caption(f"{len(names)} endpoints in {family_label(family)}")
     return creds, family, endpoint_name
