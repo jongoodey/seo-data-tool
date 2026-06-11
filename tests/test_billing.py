@@ -21,3 +21,18 @@ def test_format_estimate():
     assert "per call" in format_estimate("backlinks")
     assert format_estimate("appendix") == "Estimated cost: free"
     assert format_estimate("nope") is None
+
+
+# --- app password gate ----------------------------------------------------------
+
+def test_gate_passes_when_no_password_configured():
+    from seo_analyser.ui.gate import check_app_password
+    assert check_app_password("anything", "") is True
+    assert check_app_password("", "") is True
+
+
+def test_gate_requires_exact_match():
+    from seo_analyser.ui.gate import check_app_password
+    assert check_app_password("right-horse", "right-horse") is True
+    assert check_app_password("wrong", "right-horse") is False
+    assert check_app_password("", "right-horse") is False

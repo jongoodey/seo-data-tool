@@ -5,6 +5,7 @@ import streamlit as st
 
 from seo_analyser.registry import catalogue
 from seo_analyser.ui.endpoint_page import render_endpoint_page, render_shared_request
+from seo_analyser.ui.gate import gate_passed
 from seo_analyser.ui.home import NAV_KEY, render_home
 from seo_analyser.ui.share import SHARE_KEY, decode_share
 from seo_analyser.ui.sidebar import render_sidebar
@@ -12,6 +13,8 @@ from seo_analyser.ui.sidebar import render_sidebar
 
 def main() -> None:
     st.set_page_config(page_title="SEO Analyzer Tool", page_icon="🔍", layout="wide")
+    if not gate_passed():
+        return
     st.title("🔍 SEO Analyzer Tool")
 
     # Build the catalogue once, with feedback on the first (slow) load.

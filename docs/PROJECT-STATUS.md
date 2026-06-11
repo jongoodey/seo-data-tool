@@ -182,6 +182,18 @@ seo_analyser/
 
 ## 10. Session log (most recent first)
 
+- 2026-06-11 (latest): **App password gate + server-side credentials** (ui/gate.py).
+  Deploys/disconnects were logging Jon out (Streamlit sessions die on every app
+  restart and websocket drop, wiping typed creds). Now: set APP_PASSWORD on the
+  Railway web service to gate the public site behind one passphrase, and set
+  user_name/password env vars to pre-fill the DataForSEO creds server-side
+  (auth.from_env already reads them). With all three set, a restart costs one
+  passphrase entry, not two credential fields. Without APP_PASSWORD the gate is
+  open (local dev unchanged). NEVER set user_name/password on Railway without
+  APP_PASSWORD — public URL would expose the account to strangers. Earlier same
+  morning: AI Overview markdown answers + references surfaced, xpath/rectangle
+  dropped from tables; balance behind a toggle; creds whitespace stripped.
+
 - 2026-06-11 (later): **AI Overview / AI Mode results made readable.** Jon's
   "best running shoes" AI Mode run rendered as one table row with the answer
   hidden in a `markdown` column next to xpath gibberish. Now: items[].markdown
