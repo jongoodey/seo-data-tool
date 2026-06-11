@@ -182,6 +182,15 @@ seo_analyser/
 
 ## 10. Session log (most recent first)
 
+- 2026-06-11 (later): **AI Overview / AI Mode results made readable.** Jon's
+  "best running shoes" AI Mode run rendered as one table row with the answer
+  hidden in a `markdown` column next to xpath gibberish. Now: items[].markdown
+  is surfaced as the prominent Response (sections text still preferred when
+  present); items[].references (incl. nested sub-items) feed the Sources list;
+  xpath/rectangle are dropped from tables everywhere; the markdown column is
+  dropped from the table when it's already rendered as the answer. Verified
+  against a real AI Mode response (8KB answer, 28 sources). 112 tests passing.
+
 - 2026-06-11: **Live-testing fixes from Jon's walkthrough.** (1) model_name dropdown
   now also covers the folded task-triplet LLM endpoints (chat_gpt/claude/gemini
   `*_llm_responses` — the lookups regex only matched `_live`/`_task_post`, so the

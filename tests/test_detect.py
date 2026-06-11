@@ -155,3 +155,36 @@ def test_friendly_error_translates_task_not_found():
 def test_friendly_error_passes_through_unknown():
     from seo_analyser.results.detect import friendly_error
     assert friendly_error("You have reached your limit.", 40202) == "You have reached your limit."
+
+
+# --- AI Overview / AI Mode shapes (markdown answers + references) -------------
+
+def test_extract_message_text_falls_back_to_markdown():
+    from seo_analyser.results.detect import extract_message_text
+    items = [{"type": "ai_overview", "markdown": "**Best shoes** are...", "xpath": "/div[1]"}]
+    assert extract_message_text(items) == "**Best shoes** are..."
+
+
+def test_sections_text_preferred_over_markdown():
+    from seo_analyser.results.detect import extract_message_text
+    items = [{"sections": [{"text": "from sections"}], "markdown": "from markdown"}]
+    assert extract_message_text(items) == "from sections"
+
+
+def test_extract_links_collects_references():
+    from seo_analyser.results.detect import extract_links
+    items = [{
+        "type": "ai_overview",
+        "references": [{"title": "Best 2026 shoes", "url": "https://a.com/x"}],
+        "items": [{"type": "ai_overview_element",
+                   "references": [{"title": "Nested ref", "url": "https://b.com/y"},
+                                  {"title": "Dup", "url": "https://a.com/x"}]}],
+    }]
+    links = extract_links(items)
+    assert {l["url"] for l in links} == {"https://a.com/x", "https://b.com/y"}
+
+
+def test_items_table_drops_machine_noise_columns():
+    from seo_analyser.results.detect import items_table
+    rows = items_table([{"title": "t", "xpath": "/div[1]/div[2]", "rank_group": 1}])
+    assert rows == [{"title": "t", "rank_group": 1}]

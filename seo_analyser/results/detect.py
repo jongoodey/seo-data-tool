@@ -103,9 +103,14 @@ def friendly_error(status_message: str, status_code: int | None = None) -> str:
     return msg
 
 
+# Machine locators DataForSEO attaches to SERP items; never useful to a reader.
+_NOISE_FIELDS = {"xpath", "rectangle"}
+
+
 def items_table(items: list[dict]) -> list[dict]:
     """Reduce each item to its scalar fields so it renders as a flat table."""
-    return [_scalars(it) for it in items]
+    return [{k: v for k, v in _scalars(it).items() if k not in _NOISE_FIELDS}
+            for it in items]
 
 
 def looks_like_html(value: Any) -> bool:
@@ -154,27 +159,39 @@ def extract_html(resp: Any) -> str | None:
 
 
 def extract_links(items: list[dict]) -> list[dict]:
-    """Collect source citations (title + url) from LLM-response annotations.
+    """Collect source citations (title + url) from response items.
 
-    LLM endpoints attach sources as items[].sections[].annotations = [{title, url}].
+    Two shapes exist: LLM endpoints attach sources as
+    items[].sections[].annotations = [{title, url}]; AI Overview / AI Mode items
+    carry items[].references = [{title, url, domain}] (also on nested sub-items).
     Returns a de-duplicated list of {"title", "url"}.
     """
     links: list[dict] = []
     seen: set[str] = set()
-    for item in items:
+
+    def add(entry) -> None:
+        url = isinstance(entry, dict) and entry.get("url")
+        if url and url not in seen:
+            seen.add(url)
+            links.append({"title": entry.get("title") or url, "url": url})
+
+    def walk(item) -> None:
         if not isinstance(item, dict):
-            continue
+            return
         sections = item.get("sections") or []
         if not sections and isinstance(item.get("content"), dict):
             sections = item["content"].get("sections") or []
         for section in sections:
-            if not isinstance(section, dict):
-                continue
-            for ann in section.get("annotations") or []:
-                url = isinstance(ann, dict) and ann.get("url")
-                if url and url not in seen:
-                    seen.add(url)
-                    links.append({"title": ann.get("title") or url, "url": url})
+            if isinstance(section, dict):
+                for ann in section.get("annotations") or []:
+                    add(ann)
+        for ref in item.get("references") or []:
+            add(ref)
+        for sub in item.get("items") or []:
+            walk(sub)
+
+    for item in items:
+        walk(item)
     return links
 
 
@@ -196,6 +213,9 @@ def extract_message_text(items: list[dict]) -> str:
             for sec in sections:
                 if isinstance(sec, dict) and sec.get("text"):
                     parts.append(str(sec["text"]))
+        elif isinstance(it.get("markdown"), str) and it["markdown"].strip():
+            # AI Overview / AI Mode items carry the whole answer as markdown.
+            parts.append(it["markdown"])
         elif isinstance(it.get("text"), str):
             parts.append(it["text"])
         elif isinstance(it.get("message"), str):

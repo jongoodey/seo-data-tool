@@ -79,6 +79,11 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
         )
 
     rows = items_table(parsed.items)
+    if answer:
+        # The answer is already rendered above; an 8KB markdown blob in a table
+        # cell would just bury the readable columns.
+        rows = [{k: v for k, v in r.items() if k != "markdown"} for r in rows]
+        rows = [r for r in rows if r]
     if rows:
         df = pd.DataFrame(rows)
         ordered = [c for c in _PRIORITY_COLS if c in df.columns]
