@@ -30,9 +30,12 @@ def render_sidebar() -> tuple[Credentials, str | None, str | None]:
     env = from_env()
     with st.sidebar:
         st.header("DataForSEO credentials")
-        login = st.text_input("Login", value=env.login)
-        password = st.text_input("Password", value=env.password, type="password")
-        creds = Credentials(login=login, password=password)
+        login = st.text_input("Login", value=env.login,
+                              help="Your DataForSEO API login (app.dataforseo.com -> API Access)")
+        password = st.text_input("Password", value=env.password, type="password",
+                                 help="The generated API password, not your dashboard password")
+        # Strip paste artefacts — a trailing space turns into a baffling auth failure.
+        creds = Credentials(login=(login or "").strip(), password=(password or "").strip())
         if creds.is_complete:
             st.caption("✓ Credentials loaded")
             _render_balance(creds)
