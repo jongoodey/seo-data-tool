@@ -174,6 +174,10 @@ seo_analyser/
 ## 9. Where the planning docs live
 
 - `docs/PROJECT-STATUS.md` — this file (the working doc).
+- `docs/superpowers/specs/2026-06-11-indexify-seo-platform-spec.md` — **the
+  consolidated platform spec** (analyzer becomes the engine; rank-tracker the
+  product shell; new chat analyst + Google OAuth integrations; Railway;
+  phased prototype -> hardening -> Stripe). Read this before any platform work.
 - `docs/superpowers/specs/2026-05-29-seo-analyser-design.md` — frozen design spec.
 - `docs/superpowers/plans/2026-05-29-seo-analyser-phase0-1.md` — Phase 0-1 plan.
 - `docs/superpowers/plans/2026-05-29-seo-analyser-phase2-5.md` — Phase 2-5 plan/roadmap.
