@@ -1,0 +1,51 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "2.0742 sec.",
+  "cost": 0.024072,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0482-0000-565838cbf9da",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "2.0622 sec.",
+      "cost": 0.024072,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "bulk_spam_score",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "bulk_spam_score",
+        "targets": [
+          "dataforseo.com",
+          "ahrefs.com"
+        ],
+        "tag": null
+      },
+      "result": [
+        {
+          "items_count": 2,
+          "items": [
+            {
+              "type": "backlinks_bulk_spam_score",
+              "target": "dataforseo.com",
+              "spam_score": 14
+            },
+            {
+              "type": "backlinks_bulk_spam_score",
+              "target": "ahrefs.com",
+              "spam_score": 32
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

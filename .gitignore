@@ -51,6 +51,8 @@ Thumbs.db
 *.csv
 *.json
 !requirements.txt
+# Captured API response fixtures are test inputs — keep them tracked.
+!tests/fixtures/**/*.json
 
 # Local persistence
 data/

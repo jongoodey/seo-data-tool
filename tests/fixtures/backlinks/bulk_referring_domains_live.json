@@ -1,0 +1,55 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "2.4071 sec.",
+  "cost": 0.024072,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0351-0000-dd2aee0d0051",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "2.3985 sec.",
+      "cost": 0.024072,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "bulk_referring_domains",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "bulk_referring_domains",
+        "targets": [
+          "dataforseo.com",
+          "ahrefs.com"
+        ],
+        "tag": null
+      },
+      "result": [
+        {
+          "items_count": 2,
+          "items": [
+            {
+              "target": "dataforseo.com",
+              "referring_domains": 3622,
+              "referring_domains_nofollow": 1020,
+              "referring_main_domains": 3223,
+              "referring_main_domains_nofollow": 772
+            },
+            {
+              "target": "ahrefs.com",
+              "referring_domains": 99181,
+              "referring_domains_nofollow": 19431,
+              "referring_main_domains": 91637,
+              "referring_main_domains_nofollow": 15940
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

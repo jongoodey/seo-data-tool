@@ -17,6 +17,7 @@ from seo_analyser.persistence.store import default_store
 from seo_analyser.registry import catalogue
 from seo_analyser.registry.introspect import EndpointMeta
 from seo_analyser.registry.overrides import override_for
+from seo_analyser.results import backlinks as bl
 from seo_analyser.results.detect import items_table, parse_response
 from seo_analyser.results.render import render_result
 from seo_analyser.runner.bulk import MAX_ROWS, rows_to_payloads
@@ -107,6 +108,13 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         dynamic_choices=dynamic_choices,
         family=family,
     )
+
+    if family == "backlinks" and isinstance(payload.get("targets"), list):
+        unique, _blanks, dupes = bl.clean_targets(payload["targets"])
+        if dupes:
+            payload["targets"] = unique
+            st.info(f"{dupes} duplicate target(s) removed — {len(unique)} unique "
+                    "target(s) will be sent.")
 
     problems = (validate_payload(payload)
                 + validate_required_ids(specs, payload)

@@ -1,0 +1,105 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0157 sec.",
+  "cost": 0.024216,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0460-0000-820c448f115e",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0070 sec.",
+      "cost": 0.024216,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "timeseries_new_lost_summary",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "timeseries_new_lost_summary",
+        "target": "dataforseo.com",
+        "date_from": "2026-01-01",
+        "date_to": "2026-06-01",
+        "group_range": "month",
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "date_from": "2026-01-01",
+          "date_to": "2026-06-01",
+          "group_range": "month",
+          "items_count": 6,
+          "items": [
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-01-31 00:00:00 +00:00",
+              "new_backlinks": 2033,
+              "lost_backlinks": 297728,
+              "new_referring_domains": 81,
+              "lost_referring_domains": 125,
+              "new_referring_main_domains": 72,
+              "lost_referring_main_domains": 108
+            },
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-02-28 00:00:00 +00:00",
+              "new_backlinks": 5359,
+              "lost_backlinks": 911,
+              "new_referring_domains": 113,
+              "lost_referring_domains": 149,
+              "new_referring_main_domains": 79,
+              "lost_referring_main_domains": 120
+            },
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-03-31 00:00:00 +00:00",
+              "new_backlinks": 1612,
+              "lost_backlinks": 943,
+              "new_referring_domains": 144,
+              "lost_referring_domains": 126,
+              "new_referring_main_domains": 99,
+              "lost_referring_main_domains": 106
+            },
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-04-30 00:00:00 +00:00",
+              "new_backlinks": 1404,
+              "lost_backlinks": 17740,
+              "new_referring_domains": 140,
+              "lost_referring_domains": 127,
+              "new_referring_main_domains": 126,
+              "lost_referring_main_domains": 112
+            },
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-05-31 00:00:00 +00:00",
+              "new_backlinks": 27399,
+              "lost_backlinks": 19531,
+              "new_referring_domains": 148,
+              "lost_referring_domains": 160,
+              "new_referring_main_domains": 143,
+              "lost_referring_main_domains": 141
+            },
+            {
+              "type": "backlinks_timeseries_new_lost_summary",
+              "date": "2026-06-30 00:00:00 +00:00",
+              "new_backlinks": 2379,
+              "lost_backlinks": 21476,
+              "new_referring_domains": 151,
+              "lost_referring_domains": 134,
+              "new_referring_main_domains": 145,
+              "lost_referring_main_domains": 114
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

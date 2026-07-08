@@ -1,0 +1,1327 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "1.8218 sec.",
+  "cost": 0.02436,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0270-0000-d526a6a5eb13",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "1.7647 sec.",
+      "cost": 0.02436,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "domain_pages",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "domain_pages",
+        "target": "dataforseo.com",
+        "limit": 10,
+        "offset": null,
+        "internal_list_limit": null,
+        "backlinks_status_type": null,
+        "filters": null,
+        "order_by": null,
+        "backlinks_filters": null,
+        "include_subdomains": null,
+        "exclude_internal_backlinks": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "total_count": 22261,
+          "items_count": 10,
+          "items": [
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/",
+              "ip": "104.26.6.202",
+              "first_visited": "2019-01-17 13:42:15 +00:00",
+              "prev_visited": "2026-04-09 11:11:25 +00:00",
+              "fetch_time": "2026-06-02 12:32:23 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 292839,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "Powerful API Stack For Data-Driven SEO Tools \u2013 DataForSEO",
+                "canonical": null,
+                "internal_links_count": 132,
+                "external_links_count": 24,
+                "images_count": 79,
+                "words_count": 990,
+                "page_spam_score": 0,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "website",
+                  "og:title": "Powerful API Stack For Data-Driven SEO Tools \u2013 DataForSEO",
+                  "og:description": "We provide comprehensive data solutions for SEO and SEM analytics via API. DataForSEO is a trusted partner for 750+ SEO software companies and agencies.",
+                  "og:url": "https://dataforseo.com",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2026-05-11T11:05:19+03:00",
+                  "og:image": "https://dataforseo.com/wp-content/uploads/2022/04/cropped-favicon_512.png",
+                  "og:image:secure_url": "https://dataforseo.com/wp-content/uploads/2022/04/cropped-favicon_512.png",
+                  "og:image:width": "512",
+                  "og:image:height": "512",
+                  "og:image:alt": "Powerful API Stack For Data-Driven SEO Tools",
+                  "og:image:type": "image/png",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Powerful API Stack For Data-Driven SEO Tools \u2013 DataForSEO",
+                  "twitter:description": "We provide comprehensive data solutions for SEO and SEM analytics via API. DataForSEO is a trusted partner for 750+ SEO software companies and agencies.",
+                  "twitter:image": "https://dataforseo.com/wp-content/uploads/2022/04/cropped-favicon_512.png",
+                  "twitter:label1": "Written by",
+                  "twitter:data1": "lobov",
+                  "twitter:label2": "Time to read",
+                  "twitter:data2": "20 minutes"
+                },
+                "h1": [
+                  "Powerful API Stack For\nData-Driven Marketers"
+                ],
+                "h2": [
+                  "All the data your SEO software requires\nis now in one place",
+                  "DataForSEO in Figures",
+                  "Champions of customer support\navailable 24/7",
+                  "Our Vision",
+                  "Our Mission",
+                  "Release in days, not weeks",
+                  "Jumpstart your journey with DataForSEO",
+                  "Data industry leaders trust",
+                  "Solutions developers praise",
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "DataForSEO APIs",
+                  "DataForSEO Databases",
+                  "Total Backlinks collected",
+                  "Save time and money with a convenient pay-per-use pricing model",
+                  "Amplify your capabilities with our business solutions",
+                  "DataForSEO Knowledge Base",
+                  "DataForSEO API Documentation",
+                  "DataForSEO White Papers",
+                  "Amplify your business with new opportunities",
+                  "Didn\u2019t find the feature you were looking for?"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress.",
+                  "WP Rocket 3.21.3"
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2019-01-17 13:42:15 +00:00",
+                "lost_date": null,
+                "rank": 261,
+                "backlinks": 2294,
+                "backlinks_spam_score": 10,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 801,
+                "referring_domains_nofollow": 199,
+                "referring_main_domains": 770,
+                "referring_main_domains_nofollow": 194,
+                "referring_ips": 618,
+                "referring_subnets": 499,
+                "referring_pages": 2058,
+                "referring_pages_nofollow": 452,
+                "referring_links_tld": {
+                  "com": 1395,
+                  "org": 100,
+                  "blogspot.com": 54,
+                  "ai": 51,
+                  "io": 49,
+                  "xyz": 46,
+                  "co": 28,
+                  "net": 28,
+                  "info": 25,
+                  "dev": 25
+                },
+                "referring_links_types": {
+                  "anchor": 2007,
+                  "image": 47,
+                  "canonical": 2,
+                  "redirect": 2
+                },
+                "referring_links_attributes": {
+                  "noopener": 1013,
+                  "noreferrer": 736,
+                  "nofollow": 452,
+                  "external": 51,
+                  "ugc": 38,
+                  "sponsored": 6,
+                  "author": 3
+                },
+                "referring_links_platform_types": {
+                  "unknown": 887,
+                  "organization": 713,
+                  "blogs": 615,
+                  "cms": 575,
+                  "ecommerce": 67,
+                  "news": 41,
+                  "message-boards": 8
+                },
+                "referring_links_semantic_locations": {
+                  "article": 569,
+                  "section": 559,
+                  "": 483,
+                  "main": 251,
+                  "footer": 167,
+                  "header": 9,
+                  "details": 7,
+                  "figure": 7,
+                  "aside": 4,
+                  "figcaption": 1
+                },
+                "referring_links_countries": {
+                  "": 731,
+                  "US": 681,
+                  "WW": 172,
+                  "UA": 150,
+                  "IO": 51,
+                  "AI": 51,
+                  "DE": 37,
+                  "CO": 28,
+                  "IN": 20,
+                  "GB": 14
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/dataforseo-butt",
+              "ip": "104.26.6.202",
+              "first_visited": "2023-08-03 14:19:18 +00:00",
+              "prev_visited": "2026-04-10 04:03:20 +00:00",
+              "fetch_time": "2026-06-10 17:08:52 +00:00",
+              "status_code": 404,
+              "location": null,
+              "size": 174818,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": null,
+                "canonical": null,
+                "internal_links_count": 0,
+                "external_links_count": 0,
+                "images_count": 0,
+                "words_count": 0,
+                "page_spam_score": 0,
+                "social_media_tags": null,
+                "h1": null,
+                "h2": null,
+                "h3": null,
+                "images_alt": null,
+                "powered_by": null,
+                "language": null,
+                "charset": null,
+                "platform_type": null,
+                "technologies": null
+              },
+              "page_summary": {
+                "first_seen": "2023-08-03 14:19:18 +00:00",
+                "lost_date": null,
+                "rank": 244,
+                "backlinks": 1070,
+                "backlinks_spam_score": 1,
+                "broken_backlinks": 1070,
+                "broken_pages": 1,
+                "referring_domains": 38,
+                "referring_domains_nofollow": 16,
+                "referring_main_domains": 34,
+                "referring_main_domains_nofollow": 15,
+                "referring_ips": 33,
+                "referring_subnets": 32,
+                "referring_pages": 979,
+                "referring_pages_nofollow": 33,
+                "referring_links_tld": {
+                  "cc": 404,
+                  "org": 378,
+                  "net": 156,
+                  "com": 28,
+                  "de": 3,
+                  "": 2,
+                  "github.io": 2,
+                  "eu": 1,
+                  "fyi": 1,
+                  "io": 1
+                },
+                "referring_links_types": {
+                  "redirect": 774,
+                  "anchor": 204,
+                  "image": 1
+                },
+                "referring_links_attributes": {
+                  "nofollow": 33,
+                  "external": 18,
+                  "ugc": 16,
+                  "noopener": 8,
+                  "noreferrer": 7
+                },
+                "referring_links_platform_types": {
+                  "unknown": 184,
+                  "blogs": 17,
+                  "cms": 17,
+                  "organization": 2,
+                  "wikis": 2,
+                  "news": 1
+                },
+                "referring_links_semantic_locations": {
+                  "": 943,
+                  "footer": 16,
+                  "article": 11,
+                  "main": 8,
+                  "section": 1
+                },
+                "referring_links_countries": {
+                  "CC": 404,
+                  "": 391,
+                  "US": 172,
+                  "WW": 5,
+                  "DE": 3,
+                  "IO": 3,
+                  "PH": 1
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/dataforseo-bot",
+              "ip": "104.26.6.202",
+              "first_visited": "2021-01-27 13:31:39 +00:00",
+              "prev_visited": "2026-04-09 17:41:05 +00:00",
+              "fetch_time": "2026-06-08 20:57:33 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 231378,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "DataForSEO Link Bot \u2013 DataForSEO",
+                "canonical": null,
+                "internal_links_count": 119,
+                "external_links_count": 4,
+                "images_count": 15,
+                "words_count": 829,
+                "page_spam_score": 0,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "article",
+                  "og:title": "DataForSEO Link Bot \u2013 DataForSEO",
+                  "og:description": "LIVE backlink bot from DATAFOSEO! We\u2019re working on the biggest available backlink database on the web. Own Backlinks API!",
+                  "og:url": "https://dataforseo.com/dataforseo-bot",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2024-06-07T14:15:28+03:00",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "DataForSEO Link Bot \u2013 DataForSEO",
+                  "twitter:description": "LIVE backlink bot from DATAFOSEO! We\u2019re working on the biggest available backlink database on the web. Own Backlinks API!",
+                  "twitter:label1": "Time to read",
+                  "twitter:data1": "9 minutes"
+                },
+                "h1": [
+                  "DataForSEO Link Bot"
+                ],
+                "h2": [
+                  "What is DataForSEO Link Bot?",
+                  "Enter the\u00a0Backlinks API",
+                  "Modify DataForSEO Bot\nfor a smoother ride",
+                  "Request the force-reload of robots.txt",
+                  "Quick FAQ",
+                  "Contact Us",
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "DataForSEO Link Bot",
+                  "Want to learn more about DataForSEO Bot?"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress."
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2021-01-27 13:31:39 +00:00",
+                "lost_date": null,
+                "rank": 243,
+                "backlinks": 1874,
+                "backlinks_spam_score": 13,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 188,
+                "referring_domains_nofollow": 109,
+                "referring_main_domains": 173,
+                "referring_main_domains_nofollow": 105,
+                "referring_ips": 163,
+                "referring_subnets": 154,
+                "referring_pages": 1819,
+                "referring_pages_nofollow": 140,
+                "referring_links_tld": {
+                  "net": 1168,
+                  "biz": 223,
+                  "com": 145,
+                  "de": 66,
+                  "org": 56,
+                  "me": 51,
+                  "be": 21,
+                  "ch": 20,
+                  "dev": 16,
+                  "gouv.fr": 4
+                },
+                "referring_links_types": {
+                  "redirect": 1156,
+                  "anchor": 637,
+                  "image": 26
+                },
+                "referring_links_attributes": {
+                  "nofollow": 140,
+                  "noopener": 94,
+                  "noreferrer": 20,
+                  "ugc": 2
+                },
+                "referring_links_platform_types": {
+                  "unknown": 434,
+                  "blogs": 182,
+                  "organization": 43,
+                  "cms": 22,
+                  "message-boards": 2,
+                  "news": 2,
+                  "wikis": 1
+                },
+                "referring_links_semantic_locations": {
+                  "": 1692,
+                  "section": 91,
+                  "article": 19,
+                  "main": 11,
+                  "details": 5,
+                  "header": 1
+                },
+                "referring_links_countries": {
+                  "": 1597,
+                  "DE": 69,
+                  "ME": 51,
+                  "US": 26,
+                  "BE": 21,
+                  "CH": 20,
+                  "FR": 7,
+                  "WW": 6,
+                  "IO": 3,
+                  "GB": 2
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "http://dataforseo.com/",
+              "ip": "104.26.6.202",
+              "first_visited": "2019-01-17 13:39:49 +00:00",
+              "prev_visited": "2026-04-09 17:44:42 +00:00",
+              "fetch_time": "2026-06-11 16:57:11 +00:00",
+              "status_code": 301,
+              "location": "https://dataforseo.com/",
+              "size": 167,
+              "encoded_size": 167,
+              "content_encoding": null,
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": null,
+                "canonical": null,
+                "internal_links_count": 0,
+                "external_links_count": 0,
+                "images_count": 0,
+                "words_count": 0,
+                "page_spam_score": 0,
+                "social_media_tags": null,
+                "h1": null,
+                "h2": null,
+                "h3": null,
+                "images_alt": null,
+                "powered_by": null,
+                "language": null,
+                "charset": null,
+                "platform_type": null,
+                "technologies": null
+              },
+              "page_summary": {
+                "first_seen": "2019-01-17 13:39:49 +00:00",
+                "lost_date": null,
+                "rank": 218,
+                "backlinks": 233,
+                "backlinks_spam_score": 30,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 137,
+                "referring_domains_nofollow": 115,
+                "referring_main_domains": 127,
+                "referring_main_domains_nofollow": 106,
+                "referring_ips": 52,
+                "referring_subnets": 51,
+                "referring_pages": 229,
+                "referring_pages_nofollow": 167,
+                "referring_links_tld": {
+                  "com": 135,
+                  "net": 23,
+                  "in": 22,
+                  "co.in": 15,
+                  "net.in": 6,
+                  "org": 6,
+                  "cc": 5,
+                  "io": 3,
+                  "info": 2,
+                  "pro": 2
+                },
+                "referring_links_types": {
+                  "anchor": 214,
+                  "image": 15
+                },
+                "referring_links_attributes": {
+                  "nofollow": 167,
+                  "noopener": 36,
+                  "external": 14,
+                  "noreferrer": 13,
+                  "ugc": 4
+                },
+                "referring_links_platform_types": {
+                  "unknown": 200,
+                  "organization": 23,
+                  "cms": 14,
+                  "blogs": 12,
+                  "ecommerce": 3,
+                  "message-boards": 3
+                },
+                "referring_links_semantic_locations": {
+                  "": 183,
+                  "main": 20,
+                  "article": 14,
+                  "aside": 5,
+                  "section": 5,
+                  "header": 2
+                },
+                "referring_links_countries": {
+                  "": 71,
+                  "US": 69,
+                  "IN": 45,
+                  "WW": 27,
+                  "CC": 5,
+                  "IO": 3,
+                  "CA": 1,
+                  "ES": 1,
+                  "FR": 1,
+                  "HU": 1
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/dataforseo-bot)",
+              "ip": "104.26.6.202",
+              "first_visited": "2023-10-10 00:06:38 +00:00",
+              "prev_visited": "2025-12-18 01:42:03 +00:00",
+              "fetch_time": "2026-05-27 13:36:39 +00:00",
+              "status_code": 404,
+              "location": null,
+              "size": 181238,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": null,
+                "canonical": null,
+                "internal_links_count": 0,
+                "external_links_count": 0,
+                "images_count": 0,
+                "words_count": 0,
+                "page_spam_score": 0,
+                "social_media_tags": null,
+                "h1": null,
+                "h2": null,
+                "h3": null,
+                "images_alt": null,
+                "powered_by": null,
+                "language": null,
+                "charset": null,
+                "platform_type": null,
+                "technologies": null
+              },
+              "page_summary": {
+                "first_seen": "2023-10-10 00:06:38 +00:00",
+                "lost_date": null,
+                "rank": 217,
+                "backlinks": 265,
+                "backlinks_spam_score": 41,
+                "broken_backlinks": 265,
+                "broken_pages": 1,
+                "referring_domains": 5,
+                "referring_domains_nofollow": 2,
+                "referring_main_domains": 4,
+                "referring_main_domains_nofollow": 2,
+                "referring_ips": 4,
+                "referring_subnets": 4,
+                "referring_pages": 135,
+                "referring_pages_nofollow": 2,
+                "referring_links_tld": {
+                  "org": 123,
+                  "com": 10,
+                  "net": 1,
+                  "rip": 1
+                },
+                "referring_links_types": {
+                  "anchor": 135
+                },
+                "referring_links_attributes": {
+                  "nofollow": 2,
+                  "noopener": 2,
+                  "noreferrer": 2
+                },
+                "referring_links_platform_types": {
+                  "unknown": 135
+                },
+                "referring_links_semantic_locations": {
+                  "": 135
+                },
+                "referring_links_countries": {
+                  "": 135
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/apis/serp-api",
+              "ip": "104.26.6.202",
+              "first_visited": "2019-02-20 07:57:15 +00:00",
+              "prev_visited": "2026-06-02 12:30:27 +00:00",
+              "fetch_time": "2026-07-02 16:13:01 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 594870,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "SERP API You Can Trust: DataForSEO Always Works.",
+                "canonical": null,
+                "internal_links_count": 145,
+                "external_links_count": 21,
+                "images_count": 92,
+                "words_count": 964,
+                "page_spam_score": 0,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "article",
+                  "og:title": "SERP API You Can Trust: DataForSEO Always Works.",
+                  "og:description": "Forget web scraping and proxy rotation. Collect desktop and mobile search results data in HTML or JSON and track rank in Google, Bing, and more with SERP API.",
+                  "og:url": "https://dataforseo.com/apis/serp-api",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2026-07-01T14:25:47+03:00",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "SERP API You Can Trust: DataForSEO Always Works.",
+                  "twitter:description": "Forget web scraping and proxy rotation. Collect desktop and mobile search results data in HTML or JSON and track rank in Google, Bing, and more with SERP API.",
+                  "twitter:label1": "Time to read",
+                  "twitter:data1": "29 minutes"
+                },
+                "h1": [
+                  "Reliable SERP API",
+                  "for every use case"
+                ],
+                "h2": [
+                  "Test SERP API",
+                  "What is DataForSEO SERP API?",
+                  "Try DataForSEO",
+                  "API Explorer",
+                  "Cost-efficient solution",
+                  "for budget-conscious businesses",
+                  "SERP API Pricing",
+                  "Jumpstart your journey with SERP API",
+                  "No-code integration with DataForSEO APIs",
+                  "Data industry leaders trust",
+                  "Solutions developers praise",
+                  "Release in days, not weeks",
+                  "Frequently Asked Questions",
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "Start your unlimited free trial",
+                  "Need help with a cost estimate?",
+                  "Seeking a personalized pricing quote for your project?",
+                  "Rank Tracking App Dev Guide",
+                  "SERP API Help Center",
+                  "SEO Software Trends: Rank Tracking Tools",
+                  "Amplify your capabilities with our business solutions",
+                  "Didn\u2019t find the feature you were looking for?",
+                  "Want to discuss your use case?"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress."
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization",
+                  "ecommerce"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2019-02-20 07:57:15 +00:00",
+                "lost_date": null,
+                "rank": 178,
+                "backlinks": 236,
+                "backlinks_spam_score": 4,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 121,
+                "referring_domains_nofollow": 23,
+                "referring_main_domains": 118,
+                "referring_main_domains_nofollow": 23,
+                "referring_ips": 111,
+                "referring_subnets": 100,
+                "referring_pages": 228,
+                "referring_pages_nofollow": 48,
+                "referring_links_tld": {
+                  "com": 131,
+                  "io": 28,
+                  "ai": 19,
+                  "net": 18,
+                  "org": 7,
+                  "blogspot.com": 4,
+                  "cloud": 4,
+                  "app": 2,
+                  "de": 2,
+                  "fr": 2
+                },
+                "referring_links_types": {
+                  "anchor": 228
+                },
+                "referring_links_attributes": {
+                  "noopener": 142,
+                  "nofollow": 48,
+                  "noreferrer": 41,
+                  "ugc": 3,
+                  "external": 1
+                },
+                "referring_links_platform_types": {
+                  "organization": 196,
+                  "blogs": 81,
+                  "cms": 70,
+                  "ecommerce": 24,
+                  "unknown": 19,
+                  "news": 4
+                },
+                "referring_links_semantic_locations": {
+                  "article": 121,
+                  "section": 53,
+                  "main": 25,
+                  "": 22,
+                  "aside": 3,
+                  "header": 3,
+                  "figure": 1
+                },
+                "referring_links_countries": {
+                  "US": 65,
+                  "WW": 52,
+                  "": 47,
+                  "IO": 29,
+                  "AI": 19,
+                  "IN": 3,
+                  "DE": 2,
+                  "FR": 2,
+                  "CO": 1,
+                  "EC": 1
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/free-seo-stats/serp-volatility-index",
+              "ip": "104.26.6.202",
+              "first_visited": "2023-09-26 15:00:46 +00:00",
+              "prev_visited": "2026-03-15 17:28:59 +00:00",
+              "fetch_time": "2026-05-15 01:11:22 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 221387,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "SERP Volatility Index \u2013 DataForSEO",
+                "canonical": null,
+                "internal_links_count": 121,
+                "external_links_count": 5,
+                "images_count": 18,
+                "words_count": 273,
+                "page_spam_score": 0,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "article",
+                  "og:title": "SERP Volatility Index \u2013 DataForSEO",
+                  "og:description": "SERP volatility index refers to the changes in Google and Bing SERP rankings and ranges from 1 to 10. On this scale, one is characterized by minimal changes",
+                  "og:url": "https://dataforseo.com/free-seo-stats/serp-volatility-index",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2023-10-10T15:40:32+03:00",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "SERP Volatility Index \u2013 DataForSEO",
+                  "twitter:description": "SERP volatility index refers to the changes in Google and Bing SERP rankings and ranges from 1 to 10. On this scale, one is characterized by minimal changes",
+                  "twitter:label1": "Time to read",
+                  "twitter:data1": "4 minutes"
+                },
+                "h1": null,
+                "h2": [
+                  "Get More Data on Millions of Google SERPs",
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "How we calculate SERP Volatility Index",
+                  "Google updates for the last 30 days",
+                  "SERP Feature Occurrence"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "WordPress 6.9.4",
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress.",
+                  "WP Rocket 3.21.3"
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2023-09-26 15:00:46 +00:00",
+                "lost_date": null,
+                "rank": 168,
+                "backlinks": 436,
+                "backlinks_spam_score": 2,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 71,
+                "referring_domains_nofollow": 16,
+                "referring_main_domains": 70,
+                "referring_main_domains_nofollow": 16,
+                "referring_ips": 70,
+                "referring_subnets": 67,
+                "referring_pages": 430,
+                "referring_pages_nofollow": 131,
+                "referring_links_tld": {
+                  "com": 308,
+                  "fun": 71,
+                  "ir": 27,
+                  "net": 5,
+                  "com.br": 3,
+                  "io": 3,
+                  "blogspot.com": 2,
+                  "fm": 2,
+                  "news": 2,
+                  "co.id": 1
+                },
+                "referring_links_types": {
+                  "anchor": 428,
+                  "image": 2
+                },
+                "referring_links_attributes": {
+                  "nofollow": 131,
+                  "noopener": 89,
+                  "noreferrer": 4,
+                  "external": 1
+                },
+                "referring_links_platform_types": {
+                  "cms": 263,
+                  "organization": 255,
+                  "blogs": 193,
+                  "news": 131,
+                  "unknown": 18,
+                  "ecommerce": 3
+                },
+                "referring_links_semantic_locations": {
+                  "article": 254,
+                  "section": 131,
+                  "": 42,
+                  "main": 2,
+                  "figure": 1
+                },
+                "referring_links_countries": {
+                  "": 235,
+                  "US": 86,
+                  "WW": 43,
+                  "IR": 27,
+                  "IN": 18,
+                  "AU": 5,
+                  "BR": 3,
+                  "IO": 3,
+                  "DE": 2,
+                  "FM": 2
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/apis/google-trends-api",
+              "ip": "104.26.6.202",
+              "first_visited": "2020-04-08 16:26:55 +00:00",
+              "prev_visited": "2026-04-10 12:27:11 +00:00",
+              "fetch_time": "2026-06-09 15:30:11 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 287031,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "Keyword Data: Google Trends API \u2013 Capture Search Interest",
+                "canonical": null,
+                "internal_links_count": 132,
+                "external_links_count": 21,
+                "images_count": 77,
+                "words_count": 1006,
+                "page_spam_score": 0,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "article",
+                  "og:title": "Keyword Data: Google Trends API \u2013 Capture Search Interest",
+                  "og:description": "Get keyword popularity data via API and compare search interest stats from Google Search, Google News, Google Images, Google Shopping, and YouTube",
+                  "og:url": "https://dataforseo.com/apis/google-trends-api",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2025-01-17T15:19:15+03:00",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Keyword Data: Google Trends API \u2013 Capture Search Interest",
+                  "twitter:description": "Get keyword popularity data via API and compare search interest stats from Google Search, Google News, Google Images, Google Shopping, and YouTube",
+                  "twitter:label1": "Time to read",
+                  "twitter:data1": "23 minutes"
+                },
+                "h1": [
+                  "Keyword Data:\nGoogle Trends API"
+                ],
+                "h2": [
+                  "Get actionable keyword data hassle-free",
+                  "Build up the product, not expenses",
+                  "All the data you need, under one roof",
+                  "Need to process thousands of requests per minute?",
+                  "Google Trends API response examples",
+                  "Business benefits",
+                  "Try DataForSEO",
+                  "API Explorer",
+                  "Cost-efficient solution",
+                  "for budget-conscious businesses",
+                  "Jumpstart your journey with DataForSEO",
+                  "No-code integration with DataForSEO APIs",
+                  "Data industry leaders trust",
+                  "Solutions developers praise",
+                  "Release in days, not weeks",
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "If you need any assistance with DataForSEO APIs integration into your system, or looking for best practices to implement in your solution, we\u2019re always happy to help!",
+                  "Try DataForSEO Trends API",
+                  "Need help with a cost estimate?",
+                  "Keyword Research Tool White Paper",
+                  "3 SEO Use Cases for Google Trends Data API",
+                  "How DataForSEO Ensures API Reliability and 99.95% Uptime",
+                  "Amplify your capabilities with our business solutions",
+                  "Didn\u2019t find the feature you were looking for?",
+                  "Want to discuss your use case?"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress."
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization",
+                  "ecommerce"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2020-04-08 16:26:55 +00:00",
+                "lost_date": null,
+                "rank": 159,
+                "backlinks": 211,
+                "backlinks_spam_score": 0,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 130,
+                "referring_domains_nofollow": 19,
+                "referring_main_domains": 121,
+                "referring_main_domains_nofollow": 13,
+                "referring_ips": 112,
+                "referring_subnets": 99,
+                "referring_pages": 194,
+                "referring_pages_nofollow": 22,
+                "referring_links_tld": {
+                  "com": 146,
+                  "io": 17,
+                  "cool": 7,
+                  "org": 4,
+                  "biz": 2,
+                  "co.uk": 2,
+                  "info": 2,
+                  "net": 2,
+                  "nl": 2,
+                  "ca": 1
+                },
+                "referring_links_types": {
+                  "anchor": 191,
+                  "image": 3
+                },
+                "referring_links_attributes": {
+                  "noopener": 105,
+                  "noreferrer": 74,
+                  "nofollow": 22,
+                  "ugc": 5,
+                  "external": 1,
+                  "sponsored": 1
+                },
+                "referring_links_platform_types": {
+                  "organization": 112,
+                  "cms": 70,
+                  "blogs": 64,
+                  "unknown": 57,
+                  "news": 14,
+                  "ecommerce": 3
+                },
+                "referring_links_semantic_locations": {
+                  "section": 75,
+                  "article": 71,
+                  "": 25,
+                  "main": 22,
+                  "header": 1
+                },
+                "referring_links_countries": {
+                  "US": 61,
+                  "WW": 46,
+                  "UA": 26,
+                  "": 24,
+                  "IO": 17,
+                  "FR": 3,
+                  "DE": 2,
+                  "GB": 2,
+                  "IN": 2,
+                  "NL": 2
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "trends.dataforseo.com",
+              "tld": "com",
+              "page": "https://trends.dataforseo.com/",
+              "ip": "104.26.6.202",
+              "first_visited": "2024-05-13 05:09:12 +00:00",
+              "prev_visited": "2026-04-10 12:11:43 +00:00",
+              "fetch_time": "2026-06-09 13:23:39 +00:00",
+              "status_code": 403,
+              "location": null,
+              "size": 5476,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": null,
+                "canonical": null,
+                "internal_links_count": 0,
+                "external_links_count": 0,
+                "images_count": 0,
+                "words_count": 0,
+                "page_spam_score": 0,
+                "social_media_tags": null,
+                "h1": null,
+                "h2": null,
+                "h3": null,
+                "images_alt": null,
+                "powered_by": null,
+                "language": null,
+                "charset": null,
+                "platform_type": null,
+                "technologies": null
+              },
+              "page_summary": {
+                "first_seen": "2024-05-13 05:09:12 +00:00",
+                "lost_date": null,
+                "rank": 141,
+                "backlinks": 75,
+                "backlinks_spam_score": 3,
+                "broken_backlinks": 75,
+                "broken_pages": 1,
+                "referring_domains": 69,
+                "referring_domains_nofollow": 0,
+                "referring_main_domains": 67,
+                "referring_main_domains_nofollow": 0,
+                "referring_ips": 64,
+                "referring_subnets": 57,
+                "referring_pages": 75,
+                "referring_pages_nofollow": 0,
+                "referring_links_tld": {
+                  "com": 54,
+                  "io": 8,
+                  "co": 3,
+                  "net": 3,
+                  "ai": 2,
+                  "co.uk": 1,
+                  "design": 1,
+                  "ly": 1,
+                  "org": 1,
+                  "tv": 1
+                },
+                "referring_links_types": {
+                  "anchor": 75
+                },
+                "referring_links_attributes": {
+                  "noopener": 39,
+                  "noreferrer": 16,
+                  "external": 1
+                },
+                "referring_links_platform_types": {
+                  "organization": 53,
+                  "cms": 31,
+                  "blogs": 25,
+                  "unknown": 14,
+                  "news": 2
+                },
+                "referring_links_semantic_locations": {
+                  "article": 33,
+                  "section": 22,
+                  "": 15,
+                  "main": 4,
+                  "header": 1
+                },
+                "referring_links_countries": {
+                  "US": 33,
+                  "WW": 15,
+                  "": 8,
+                  "IO": 8,
+                  "CO": 3,
+                  "AI": 2,
+                  "IN": 2,
+                  "GB": 1,
+                  "LY": 1,
+                  "TV": 1
+                }
+              }
+            },
+            {
+              "type": "backlinks_domain_page",
+              "main_domain": "dataforseo.com",
+              "domain": "dataforseo.com",
+              "tld": "com",
+              "page": "https://dataforseo.com/privacy-policy",
+              "ip": "104.26.6.202",
+              "first_visited": "2019-02-20 07:53:46 +00:00",
+              "prev_visited": "2026-05-02 15:57:17 +00:00",
+              "fetch_time": "2026-06-18 00:21:42 +00:00",
+              "status_code": 200,
+              "location": null,
+              "size": 500234,
+              "encoded_size": 0,
+              "content_encoding": "br",
+              "media_type": "text/html",
+              "server": "cloudflare",
+              "meta": {
+                "title": "Privacy Policy \u2013 DataForSEO",
+                "canonical": null,
+                "internal_links_count": 119,
+                "external_links_count": 9,
+                "images_count": 7,
+                "words_count": 1441,
+                "page_spam_score": 5,
+                "social_media_tags": {
+                  "og:locale": "en_US",
+                  "og:type": "article",
+                  "og:title": "Privacy Policy \u2013 DataForSEO",
+                  "og:description": "a. This privacy policy applies with regard to the processing of personal data by DataForSEO OU (further \"DataForSEO\"), company No. 14502291, registered in",
+                  "og:url": "https://dataforseo.com/privacy-policy",
+                  "og:site_name": "DataForSEO",
+                  "og:updated_time": "2026-06-12T17:23:22+03:00",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Privacy Policy \u2013 DataForSEO",
+                  "twitter:description": "a. This privacy policy applies with regard to the processing of personal data by DataForSEO OU (further \"DataForSEO\"), company No. 14502291, registered in",
+                  "twitter:label1": "Time to read",
+                  "twitter:data1": "13 minutes"
+                },
+                "h1": [
+                  "Privacy Policy"
+                ],
+                "h2": [
+                  "Embed DataForSeo widget on your website"
+                ],
+                "h3": [
+                  "1. Introduction",
+                  "2. DataForSEO Account and Website",
+                  "3. Payment processing",
+                  "4. DataForSEO API Connector for Google Sheets\u2122",
+                  "5. DataForSEO users and personal data",
+                  "6. Data protection",
+                  "7. Data Processors and Sub-processors",
+                  "8. User rights to access, rectification or erasure, restriction and objection of processing"
+                ],
+                "images_alt": null,
+                "powered_by": [
+                  "Powered by WPBakery Page Builder - drag and drop page builder for WordPress."
+                ],
+                "language": "en",
+                "charset": "utf-8",
+                "platform_type": [
+                  "cms",
+                  "blogs"
+                ],
+                "technologies": {
+                  "cms": "wordpress",
+                  "blogs": "wordpress",
+                  "cdn": "cloudflare"
+                }
+              },
+              "page_summary": {
+                "first_seen": "2019-02-20 07:53:46 +00:00",
+                "lost_date": null,
+                "rank": 130,
+                "backlinks": 45,
+                "backlinks_spam_score": 3,
+                "broken_backlinks": 0,
+                "broken_pages": 0,
+                "referring_domains": 34,
+                "referring_domains_nofollow": 2,
+                "referring_main_domains": 34,
+                "referring_main_domains_nofollow": 2,
+                "referring_ips": 23,
+                "referring_subnets": 22,
+                "referring_pages": 44,
+                "referring_pages_nofollow": 3,
+                "referring_links_tld": {
+                  "com": 21,
+                  "de": 8,
+                  "ai": 5,
+                  "io": 4,
+                  "net": 2,
+                  "app": 1,
+                  "github.io": 1,
+                  "it": 1,
+                  "pro": 1
+                },
+                "referring_links_types": {
+                  "anchor": 44
+                },
+                "referring_links_attributes": {
+                  "noopener": 26,
+                  "noreferrer": 20,
+                  "nofollow": 3,
+                  "ugc": 1
+                },
+                "referring_links_platform_types": {
+                  "organization": 20,
+                  "unknown": 20,
+                  "cms": 7,
+                  "blogs": 3,
+                  "ecommerce": 3
+                },
+                "referring_links_semantic_locations": {
+                  "": 14,
+                  "section": 14,
+                  "article": 10,
+                  "main": 6
+                },
+                "referring_links_countries": {
+                  "": 23,
+                  "DE": 8,
+                  "AI": 5,
+                  "IO": 5,
+                  "WW": 2,
+                  "IT": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

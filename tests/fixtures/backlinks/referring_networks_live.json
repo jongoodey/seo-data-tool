@@ -1,0 +1,453 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "1.5307 sec.",
+  "cost": 0.02436,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0332-0000-88eb15530e60",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "1.5209 sec.",
+      "cost": 0.02436,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "referring_networks",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "referring_networks",
+        "target": "dataforseo.com",
+        "network_address_type": null,
+        "limit": 10,
+        "offset": null,
+        "internal_list_limit": null,
+        "backlinks_status_type": null,
+        "filters": null,
+        "order_by": null,
+        "backlinks_filters": null,
+        "include_subdomains": null,
+        "exclude_internal_backlinks": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "total_count": 2576,
+          "items_count": 10,
+          "items": [
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "23.95.216.51",
+              "rank": 244,
+              "backlinks": 404,
+              "first_seen": "2023-08-02 14:38:24 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 404,
+              "broken_pages": 1,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 404,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "cc": 404
+              },
+              "referring_links_types": {
+                "redirect": 404
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": null,
+              "referring_links_semantic_locations": {
+                "": 404
+              },
+              "referring_links_countries": {
+                "CC": 404
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "193.37.35.155",
+              "rank": 216,
+              "backlinks": 246,
+              "first_seen": "2024-08-04 01:22:55 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 126,
+              "broken_pages": 2,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 126,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "org": 126
+              },
+              "referring_links_types": {
+                "anchor": 126
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 126
+              },
+              "referring_links_semantic_locations": {
+                "": 126
+              },
+              "referring_links_countries": {
+                "": 126
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "92.205.111.3",
+              "rank": 210,
+              "backlinks": 10,
+              "first_seen": "2022-09-10 06:52:29 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 10,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 10
+              },
+              "referring_links_types": {
+                "anchor": 10
+              },
+              "referring_links_attributes": {
+                "external": 10
+              },
+              "referring_links_platform_types": {
+                "unknown": 10
+              },
+              "referring_links_semantic_locations": {
+                "": 10
+              },
+              "referring_links_countries": {
+                "US": 9,
+                "WW": 1
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "47.238.114.118",
+              "rank": 196,
+              "backlinks": 306,
+              "first_seen": "2026-03-13 21:05:59 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 306,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "ai": 306
+              },
+              "referring_links_types": {
+                "anchor": 306
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 306
+              },
+              "referring_links_semantic_locations": {
+                "section": 306
+              },
+              "referring_links_countries": {
+                "AI": 306
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "104.18.6.151",
+              "rank": 193,
+              "backlinks": 333,
+              "first_seen": "2026-04-16 07:42:42 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 332,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 332
+              },
+              "referring_links_types": {
+                "anchor": 332
+              },
+              "referring_links_attributes": {
+                "noopener": 332,
+                "noreferrer": 332
+              },
+              "referring_links_platform_types": {
+                "unknown": 331,
+                "ecommerce": 1
+              },
+              "referring_links_semantic_locations": {
+                "section": 276,
+                "": 55,
+                "article": 1
+              },
+              "referring_links_countries": {
+                "US": 331,
+                "": 1
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "96.126.101.56",
+              "rank": 192,
+              "backlinks": 223,
+              "first_seen": "2026-03-03 09:15:12 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 223,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "biz": 223
+              },
+              "referring_links_types": {
+                "anchor": 223
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "blogs": 159,
+                "unknown": 64
+              },
+              "referring_links_semantic_locations": {
+                "": 221,
+                "article": 2
+              },
+              "referring_links_countries": {
+                "": 221,
+                "US": 2
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "188.114.96.3",
+              "rank": 177,
+              "backlinks": 5200,
+              "first_seen": "2019-01-16 19:00:45 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 4,
+              "broken_pages": 2,
+              "referring_domains": 182,
+              "referring_domains_nofollow": 62,
+              "referring_main_domains": 156,
+              "referring_main_domains_nofollow": 40,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 5084,
+              "referring_pages_nofollow": 243,
+              "referring_links_tld": {
+                "jetzt": 4611,
+                "com": 167,
+                "pl": 111,
+                "de": 83,
+                "io": 28,
+                "xyz": 25,
+                "pages.dev": 11,
+                "co.uk": 10,
+                "ai": 9,
+                "net": 5
+              },
+              "referring_links_types": {
+                "image": 4719,
+                "anchor": 346,
+                "redirect": 19
+              },
+              "referring_links_attributes": {
+                "noopener": 255,
+                "nofollow": 243,
+                "noreferrer": 72,
+                "sponsored": 12,
+                "external": 2,
+                "ugc": 2
+              },
+              "referring_links_platform_types": {
+                "unknown": 4693,
+                "cms": 311,
+                "blogs": 308,
+                "organization": 245,
+                "ecommerce": 11,
+                "news": 3
+              },
+              "referring_links_semantic_locations": {
+                "": 4733,
+                "footer": 110,
+                "article": 103,
+                "section": 79,
+                "main": 52,
+                "figure": 2,
+                "aside": 2,
+                "header": 2,
+                "figcaption": 1
+              },
+              "referring_links_countries": {
+                "": 4745,
+                "PL": 111,
+                "DE": 84,
+                "US": 69,
+                "IO": 28,
+                "GB": 11,
+                "AI": 9,
+                "WW": 8,
+                "LY": 4,
+                "CO": 3
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "144.76.208.110",
+              "rank": 167,
+              "backlinks": 164,
+              "first_seen": "2022-09-28 09:38:40 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 158,
+              "referring_pages_nofollow": 7,
+              "referring_links_tld": {
+                "com": 158
+              },
+              "referring_links_types": {
+                "anchor": 158
+              },
+              "referring_links_attributes": {
+                "nofollow": 7,
+                "noopener": 7,
+                "noreferrer": 7
+              },
+              "referring_links_platform_types": {
+                "blogs": 136,
+                "cms": 136,
+                "organization": 25,
+                "ecommerce": 8,
+                "unknown": 5
+              },
+              "referring_links_semantic_locations": {
+                "footer": 150,
+                "section": 7,
+                "article": 1
+              },
+              "referring_links_countries": {
+                "UA": 128,
+                "": 30
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "212.77.203.244",
+              "rank": 154,
+              "backlinks": 23,
+              "first_seen": "2021-12-19 02:43:39 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 23,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 23
+              },
+              "referring_links_types": {
+                "anchor": 23
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 23
+              },
+              "referring_links_semantic_locations": {
+                "": 23
+              },
+              "referring_links_countries": {
+                "": 23
+              }
+            },
+            {
+              "type": "backlinks_referring_network",
+              "network_address": "80.24.220.14",
+              "rank": 152,
+              "backlinks": 2,
+              "first_seen": "2022-01-18 12:19:36 +00:00",
+              "lost_date": null,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 2,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 2
+              },
+              "referring_links_types": {
+                "anchor": 2
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 2
+              },
+              "referring_links_semantic_locations": {
+                "": 2
+              },
+              "referring_links_countries": {
+                "": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

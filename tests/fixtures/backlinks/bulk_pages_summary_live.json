@@ -1,0 +1,205 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.1054 sec.",
+  "cost": 0.024072,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081447-6835-0576-0000-9f22a0f22389",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0933 sec.",
+      "cost": 0.024072,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "bulk_pages_summary",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "bulk_pages_summary",
+        "targets": [
+          "dataforseo.com",
+          "https://dataforseo.com/"
+        ],
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "total_count": 2,
+          "items_count": 2,
+          "items": [
+            {
+              "type": "backlinks_page_summary",
+              "url": "dataforseo.com",
+              "rank": 323,
+              "main_domain_rank": 324,
+              "backlinks": 347004,
+              "first_seen": "2019-01-15 23:54:14 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 14,
+              "broken_backlinks": 2296,
+              "broken_pages": 102,
+              "referring_domains": 3565,
+              "referring_domains_nofollow": 1000,
+              "referring_main_domains": 3173,
+              "referring_main_domains_nofollow": 754,
+              "referring_ips": 2576,
+              "referring_subnets": 1667,
+              "referring_pages": 343031,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "jetzt": 234187,
+                "de": 94109,
+                "com": 6046,
+                "net": 1612,
+                "blogspot.com": 1035,
+                "org": 969,
+                "ai": 877,
+                "io": 778,
+                "info": 440,
+                "cc": 426
+              },
+              "referring_links_types": {
+                "image": 239757,
+                "anchor": 68499,
+                "redirect": 34772,
+                "canonical": 3
+              },
+              "referring_links_attributes": {
+                "nofollow": 5988,
+                "noopener": 4976,
+                "noreferrer": 2328,
+                "ugc": 745,
+                "external": 159,
+                "sponsored": 96,
+                "author": 3,
+                "bookmark": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 245199,
+                "organization": 57764,
+                "blogs": 7035,
+                "cms": 4145,
+                "news": 1167,
+                "ecommerce": 495,
+                "wikis": 268,
+                "message-boards": 98
+              },
+              "referring_links_semantic_locations": {
+                "": 331621,
+                "article": 4657,
+                "footer": 2270,
+                "section": 2138,
+                "main": 1960,
+                "header": 224,
+                "aside": 74,
+                "details": 54,
+                "figure": 22,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 241896,
+                "DE": 94673,
+                "US": 2011,
+                "AI": 878,
+                "IO": 789,
+                "WW": 701,
+                "CC": 426,
+                "UA": 312,
+                "CA": 238,
+                "IN": 148
+              }
+            },
+            {
+              "type": "backlinks_page_summary",
+              "url": "https://dataforseo.com/",
+              "rank": 261,
+              "main_domain_rank": 324,
+              "backlinks": 2294,
+              "first_seen": "2019-02-16 11:51:11 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 10,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 801,
+              "referring_domains_nofollow": 199,
+              "referring_main_domains": 770,
+              "referring_main_domains_nofollow": 194,
+              "referring_ips": 618,
+              "referring_subnets": 499,
+              "referring_pages": 2058,
+              "referring_pages_nofollow": 452,
+              "referring_links_tld": {
+                "com": 1395,
+                "org": 100,
+                "blogspot.com": 54,
+                "ai": 51,
+                "io": 49,
+                "xyz": 46,
+                "net": 28,
+                "co": 28,
+                "de": 25,
+                "dev": 25
+              },
+              "referring_links_types": {
+                "anchor": 2007,
+                "image": 47,
+                "redirect": 2,
+                "canonical": 2
+              },
+              "referring_links_attributes": {
+                "noopener": 1013,
+                "noreferrer": 736,
+                "nofollow": 452,
+                "external": 51,
+                "ugc": 38,
+                "sponsored": 6,
+                "author": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 887,
+                "organization": 713,
+                "blogs": 615,
+                "cms": 575,
+                "ecommerce": 67,
+                "news": 41,
+                "message-boards": 8
+              },
+              "referring_links_semantic_locations": {
+                "article": 569,
+                "section": 559,
+                "": 483,
+                "main": 251,
+                "footer": 167,
+                "header": 9,
+                "details": 7,
+                "figure": 7,
+                "aside": 4,
+                "figcaption": 1
+              },
+              "referring_links_countries": {
+                "": 731,
+                "US": 681,
+                "WW": 172,
+                "UA": 150,
+                "IO": 51,
+                "AI": 51,
+                "DE": 37,
+                "CO": 28,
+                "IN": 20,
+                "GB": 14
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

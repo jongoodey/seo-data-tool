@@ -1,0 +1,531 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0681 sec.",
+  "cost": 0.02418,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0266-0000-062060b7fba4",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0588 sec.",
+      "cost": 0.02418,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "history",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "history",
+        "target": "dataforseo.com",
+        "date_from": "2026-01-01",
+        "date_to": "2026-06-01",
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "date_from": "2026-01-01",
+          "date_to": "2026-06-01",
+          "items_count": 5,
+          "items": [
+            {
+              "type": "backlinks_history",
+              "date": "2026-01-31 00:00:00 +00:00",
+              "rank": 327,
+              "backlinks": 405304,
+              "new_backlinks": 3184,
+              "lost_backlinks": 168455,
+              "new_referring_domains": 68,
+              "lost_referring_domains": 80,
+              "crawled_pages": 3505,
+              "info": {
+                "server": "cloudflare",
+                "cms": "wordpress",
+                "platform_type": [
+                  "cms",
+                  "blogs"
+                ],
+                "ip_address": "178.63.191.57",
+                "country": null,
+                "is_ip": false,
+                "target_spam_score": 0
+              },
+              "internal_links_count": 627834,
+              "external_links_count": 12789,
+              "broken_backlinks": 1768,
+              "broken_pages": 64,
+              "referring_domains": 3559,
+              "referring_domains_nofollow": 965,
+              "referring_main_domains": 3156,
+              "referring_main_domains_nofollow": 735,
+              "referring_ips": 2566,
+              "referring_subnets": 1704,
+              "referring_pages": 401696,
+              "referring_pages_nofollow": 6725,
+              "referring_links_tld": {
+                "jetzt": 270916,
+                "de": 117763,
+                "com": 6031,
+                "org": 1213,
+                "blogspot.com": 1049,
+                "net": 634,
+                "cc": 597,
+                "io": 525,
+                "ru": 459,
+                "ca": 232
+              },
+              "referring_links_types": {
+                "image": 273750,
+                "redirect": 108668,
+                "anchor": 19273,
+                "canonical": 5
+              },
+              "referring_links_attributes": {
+                "nofollow": 6725,
+                "noopener": 4474,
+                "noreferrer": 1690,
+                "ugc": 848,
+                "external": 348,
+                "sponsored": 54,
+                "bookmark": 4,
+                "author": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 281757,
+                "blogs": 8628,
+                "cms": 4801,
+                "organization": 3746,
+                "news": 1262,
+                "ecommerce": 393,
+                "wikis": 305,
+                "message-boards": 142
+              },
+              "referring_links_semantic_locations": {
+                "": 390054,
+                "article": 5165,
+                "footer": 3277,
+                "section": 1373,
+                "main": 1231,
+                "header": 264,
+                "aside": 183,
+                "figure": 86,
+                "details": 52,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 276972,
+                "DE": 118313,
+                "US": 2089,
+                "WW": 631,
+                "CC": 597,
+                "IO": 535,
+                "RU": 466,
+                "UA": 317,
+                "CA": 239,
+                "IN": 194
+              }
+            },
+            {
+              "type": "backlinks_history",
+              "date": "2026-02-28 00:00:00 +00:00",
+              "rank": 330,
+              "backlinks": 944311,
+              "new_backlinks": 9264,
+              "lost_backlinks": 965,
+              "new_referring_domains": 107,
+              "lost_referring_domains": 150,
+              "crawled_pages": 3251,
+              "info": {
+                "server": "nginx",
+                "cms": "wordpress",
+                "platform_type": [
+                  "cms",
+                  "blogs"
+                ],
+                "ip_address": "178.63.191.57",
+                "country": null,
+                "is_ip": false,
+                "target_spam_score": 0
+              },
+              "internal_links_count": 581094,
+              "external_links_count": 11858,
+              "broken_backlinks": 1642,
+              "broken_pages": 64,
+              "referring_domains": 3512,
+              "referring_domains_nofollow": 989,
+              "referring_main_domains": 3087,
+              "referring_main_domains_nofollow": 732,
+              "referring_ips": 2500,
+              "referring_subnets": 1692,
+              "referring_pages": 374985,
+              "referring_pages_nofollow": 7037,
+              "referring_links_tld": {
+                "jetzt": 271118,
+                "de": 90310,
+                "com": 5991,
+                "org": 1182,
+                "blogspot.com": 1048,
+                "cc": 592,
+                "net": 581,
+                "io": 529,
+                "ru": 465,
+                "info": 455
+              },
+              "referring_links_types": {
+                "image": 276734,
+                "redirect": 79024,
+                "anchor": 19223,
+                "canonical": 4
+              },
+              "referring_links_attributes": {
+                "nofollow": 7037,
+                "noopener": 4609,
+                "noreferrer": 1941,
+                "ugc": 749,
+                "external": 210,
+                "sponsored": 56,
+                "bookmark": 4,
+                "author": 2
+              },
+              "referring_links_platform_types": {
+                "unknown": 284817,
+                "blogs": 8445,
+                "cms": 4480,
+                "organization": 4145,
+                "news": 1199,
+                "ecommerce": 439,
+                "wikis": 297,
+                "message-boards": 147
+              },
+              "referring_links_semantic_locations": {
+                "": 363312,
+                "article": 4817,
+                "footer": 3273,
+                "main": 1786,
+                "section": 1390,
+                "header": 231,
+                "aside": 75,
+                "details": 51,
+                "figure": 39,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 277670,
+                "DE": 90874,
+                "US": 1930,
+                "WW": 691,
+                "CC": 592,
+                "IO": 539,
+                "RU": 470,
+                "AI": 397,
+                "UA": 322,
+                "CA": 239
+              }
+            },
+            {
+              "type": "backlinks_history",
+              "date": "2026-03-31 00:00:00 +00:00",
+              "rank": 329,
+              "backlinks": 378728,
+              "new_backlinks": 852,
+              "lost_backlinks": 716,
+              "new_referring_domains": 91,
+              "lost_referring_domains": 80,
+              "crawled_pages": 3313,
+              "info": {
+                "server": "nginx",
+                "cms": "wordpress",
+                "platform_type": [
+                  "cms",
+                  "blogs"
+                ],
+                "ip_address": "178.63.191.57",
+                "country": null,
+                "is_ip": false,
+                "target_spam_score": 0
+              },
+              "internal_links_count": 587606,
+              "external_links_count": 12140,
+              "broken_backlinks": 1539,
+              "broken_pages": 74,
+              "referring_domains": 3513,
+              "referring_domains_nofollow": 989,
+              "referring_main_domains": 3084,
+              "referring_main_domains_nofollow": 726,
+              "referring_ips": 2488,
+              "referring_subnets": 1695,
+              "referring_pages": 374979,
+              "referring_pages_nofollow": 7201,
+              "referring_links_tld": {
+                "jetzt": 271176,
+                "de": 90357,
+                "com": 5817,
+                "org": 1095,
+                "blogspot.com": 1046,
+                "cc": 550,
+                "io": 515,
+                "net": 505,
+                "ai": 488,
+                "ru": 462
+              },
+              "referring_links_types": {
+                "image": 276825,
+                "redirect": 78912,
+                "anchor": 19238,
+                "canonical": 4
+              },
+              "referring_links_attributes": {
+                "nofollow": 7201,
+                "noopener": 4520,
+                "noreferrer": 1959,
+                "ugc": 751,
+                "external": 190,
+                "sponsored": 55,
+                "bookmark": 4,
+                "author": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 284822,
+                "blogs": 8404,
+                "cms": 4397,
+                "organization": 4284,
+                "news": 1190,
+                "ecommerce": 470,
+                "wikis": 292,
+                "message-boards": 147
+              },
+              "referring_links_semantic_locations": {
+                "": 363213,
+                "article": 4643,
+                "footer": 3291,
+                "main": 1948,
+                "section": 1479,
+                "header": 223,
+                "aside": 73,
+                "details": 58,
+                "figure": 40,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 277801,
+                "DE": 90888,
+                "US": 1758,
+                "WW": 788,
+                "CC": 550,
+                "IO": 525,
+                "AI": 489,
+                "RU": 466,
+                "UA": 319,
+                "CA": 239
+              }
+            },
+            {
+              "type": "backlinks_history",
+              "date": "2026-04-30 00:00:00 +00:00",
+              "rank": 332,
+              "backlinks": 889168,
+              "new_backlinks": 1481,
+              "lost_backlinks": 17655,
+              "new_referring_domains": 165,
+              "lost_referring_domains": 104,
+              "crawled_pages": 20340,
+              "info": {
+                "server": "nginx",
+                "cms": "wordpress",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization"
+                ],
+                "ip_address": "178.63.191.61",
+                "country": null,
+                "is_ip": false,
+                "target_spam_score": 0
+              },
+              "internal_links_count": 776617,
+              "external_links_count": 721114,
+              "broken_backlinks": 1528,
+              "broken_pages": 76,
+              "referring_domains": 3595,
+              "referring_domains_nofollow": 1007,
+              "referring_main_domains": 3167,
+              "referring_main_domains_nofollow": 745,
+              "referring_ips": 2559,
+              "referring_subnets": 1724,
+              "referring_pages": 358770,
+              "referring_pages_nofollow": 7255,
+              "referring_links_tld": {
+                "jetzt": 254112,
+                "de": 90329,
+                "com": 6207,
+                "org": 1109,
+                "blogspot.com": 1050,
+                "ai": 770,
+                "cc": 539,
+                "net": 536,
+                "io": 466,
+                "ru": 462
+              },
+              "referring_links_types": {
+                "image": 259814,
+                "redirect": 78954,
+                "anchor": 19999,
+                "canonical": 3
+              },
+              "referring_links_attributes": {
+                "nofollow": 7255,
+                "noopener": 4976,
+                "noreferrer": 2358,
+                "ugc": 757,
+                "external": 185,
+                "sponsored": 59,
+                "bookmark": 4,
+                "author": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 268293,
+                "blogs": 8486,
+                "organization": 4665,
+                "cms": 4475,
+                "news": 1202,
+                "ecommerce": 477,
+                "wikis": 288,
+                "message-boards": 149
+              },
+              "referring_links_semantic_locations": {
+                "": 346254,
+                "article": 4732,
+                "footer": 3356,
+                "section": 2056,
+                "main": 1979,
+                "header": 223,
+                "aside": 72,
+                "details": 57,
+                "figure": 30,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 260894,
+                "DE": 90926,
+                "US": 2013,
+                "WW": 880,
+                "AI": 771,
+                "CC": 539,
+                "IO": 476,
+                "RU": 466,
+                "UA": 310,
+                "CA": 239
+              }
+            },
+            {
+              "type": "backlinks_history",
+              "date": "2026-05-31 00:00:00 +00:00",
+              "rank": 331,
+              "backlinks": 366962,
+              "new_backlinks": 27400,
+              "lost_backlinks": 19835,
+              "new_referring_domains": 211,
+              "lost_referring_domains": 108,
+              "crawled_pages": 21061,
+              "info": {
+                "server": "nginx",
+                "cms": "wordpress",
+                "platform_type": [
+                  "cms",
+                  "blogs",
+                  "organization"
+                ],
+                "ip_address": "178.63.191.61",
+                "country": null,
+                "is_ip": false,
+                "target_spam_score": 0
+              },
+              "internal_links_count": 777181,
+              "external_links_count": 748563,
+              "broken_backlinks": 1437,
+              "broken_pages": 85,
+              "referring_domains": 3647,
+              "referring_domains_nofollow": 1018,
+              "referring_main_domains": 3230,
+              "referring_main_domains_nofollow": 764,
+              "referring_ips": 2620,
+              "referring_subnets": 1724,
+              "referring_pages": 363200,
+              "referring_pages_nofollow": 7267,
+              "referring_links_tld": {
+                "jetzt": 253031,
+                "de": 96093,
+                "com": 6026,
+                "org": 1065,
+                "blogspot.com": 1043,
+                "ai": 870,
+                "net": 530,
+                "io": 477,
+                "cc": 476,
+                "ru": 463
+              },
+              "referring_links_types": {
+                "image": 258648,
+                "anchor": 69843,
+                "redirect": 34706,
+                "canonical": 3
+              },
+              "referring_links_attributes": {
+                "nofollow": 7267,
+                "noopener": 4945,
+                "noreferrer": 2314,
+                "ugc": 757,
+                "external": 183,
+                "sponsored": 95,
+                "author": 3,
+                "bookmark": 3
+              },
+              "referring_links_platform_types": {
+                "unknown": 264207,
+                "organization": 57673,
+                "blogs": 8258,
+                "cms": 4254,
+                "news": 1178,
+                "ecommerce": 484,
+                "wikis": 283,
+                "message-boards": 153
+              },
+              "referring_links_semantic_locations": {
+                "": 350524,
+                "article": 4807,
+                "footer": 3367,
+                "section": 2146,
+                "main": 1969,
+                "header": 224,
+                "aside": 73,
+                "details": 54,
+                "figure": 25,
+                "nav": 5
+              },
+              "referring_links_countries": {
+                "": 259696,
+                "DE": 96664,
+                "US": 1972,
+                "AI": 871,
+                "WW": 799,
+                "IO": 488,
+                "CC": 476,
+                "RU": 468,
+                "UA": 303,
+                "CA": 239
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

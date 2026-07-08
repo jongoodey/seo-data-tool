@@ -1,0 +1,858 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "4.9589 sec.",
+  "cost": 0.02436,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081449-6835-0268-0000-520008756b95",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "4.9262 sec.",
+      "cost": 0.02436,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "domain_intersection",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "domain_intersection",
+        "targets": {
+          "1": "dataforseo.com",
+          "2": "ahrefs.com"
+        },
+        "exclude_targets": null,
+        "filters": null,
+        "order_by": null,
+        "offset": null,
+        "limit": 10,
+        "internal_list_limit": null,
+        "backlinks_status_type": null,
+        "backlinks_filters": null,
+        "include_subdomains": null,
+        "exclude_internal_backlinks": null,
+        "intersection_mode": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "targets": {
+            "1": "dataforseo.com",
+            "2": "ahrefs.com"
+          },
+          "total_count": 1501,
+          "items_count": 10,
+          "items": [
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "latenode.com",
+                  "rank": 193,
+                  "backlinks": 333,
+                  "first_seen": "2026-04-16 07:42:42 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 2,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 332,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 332
+                  },
+                  "referring_links_types": {
+                    "anchor": 332
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 332,
+                    "noreferrer": 332
+                  },
+                  "referring_links_platform_types": {
+                    "unknown": 331,
+                    "ecommerce": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 276,
+                    "": 55,
+                    "article": 1
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "latenode.com",
+                  "rank": 218,
+                  "backlinks": 634,
+                  "first_seen": "2025-05-26 23:53:06 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 4,
+                  "broken_pages": 1,
+                  "referring_domains": 3,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 633,
+                  "referring_pages_nofollow": 19,
+                  "referring_links_tld": {
+                    "com": 633
+                  },
+                  "referring_links_types": {
+                    "anchor": 633
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 623,
+                    "noreferrer": 623,
+                    "nofollow": 19
+                  },
+                  "referring_links_platform_types": {
+                    "unknown": 616,
+                    "message-boards": 10,
+                    "organization": 6,
+                    "ecommerce": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 600,
+                    "": 26,
+                    "article": 7
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "seroundtable.com",
+                  "rank": 151,
+                  "backlinks": 105,
+                  "first_seen": "2024-08-05 12:30:41 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 105,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 105
+                  },
+                  "referring_links_types": {
+                    "anchor": 105
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "news": 105,
+                    "organization": 105
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 105
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "seroundtable.com",
+                  "rank": 196,
+                  "backlinks": 713,
+                  "first_seen": "2019-01-16 10:16:17 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 4,
+                  "broken_pages": 4,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 710,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 710
+                  },
+                  "referring_links_types": {
+                    "anchor": 710
+                  },
+                  "referring_links_attributes": {
+                    "sponsored": 4
+                  },
+                  "referring_links_platform_types": {
+                    "organization": 710,
+                    "news": 703
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 710
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "n8nworkflows.xyz",
+                  "rank": 141,
+                  "backlinks": 130,
+                  "first_seen": "2025-06-01 11:00:10 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 90,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "xyz": 90
+                  },
+                  "referring_links_types": {
+                    "anchor": 90
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 36,
+                    "noreferrer": 36
+                  },
+                  "referring_links_platform_types": {
+                    "organization": 48,
+                    "ecommerce": 41,
+                    "unknown": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 56,
+                    "main": 34
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "n8nworkflows.xyz",
+                  "rank": 0,
+                  "backlinks": 4,
+                  "first_seen": "2025-08-04 15:36:47 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 2,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "xyz": 2
+                  },
+                  "referring_links_types": {
+                    "anchor": 2
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "ecommerce": 1,
+                    "organization": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "section": 2
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "seoinsider.com",
+                  "rank": 126,
+                  "backlinks": 5,
+                  "first_seen": "2025-05-30 03:48:37 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 5,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 5
+                  },
+                  "referring_links_types": {
+                    "anchor": 5
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 3
+                  },
+                  "referring_links_platform_types": {
+                    "blogs": 5,
+                    "cms": 5
+                  },
+                  "referring_links_semantic_locations": {
+                    "article": 3,
+                    "section": 2
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "seoinsider.com",
+                  "rank": 0,
+                  "backlinks": 7,
+                  "first_seen": "2025-05-30 03:48:37 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 1,
+                  "broken_pages": 1,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 7,
+                  "referring_pages_nofollow": 6,
+                  "referring_links_tld": {
+                    "com": 7
+                  },
+                  "referring_links_types": {
+                    "anchor": 7
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 7,
+                    "nofollow": 6
+                  },
+                  "referring_links_platform_types": {
+                    "blogs": 7,
+                    "cms": 7
+                  },
+                  "referring_links_semantic_locations": {
+                    "article": 7
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "pipedream.com",
+                  "rank": 123,
+                  "backlinks": 145,
+                  "first_seen": "2025-09-22 23:20:35 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 10,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 5,
+                  "referring_subnets": 5,
+                  "referring_pages": 145,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 145
+                  },
+                  "referring_links_types": {
+                    "anchor": 145
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 145,
+                    "noreferrer": 145
+                  },
+                  "referring_links_platform_types": {
+                    "unknown": 145
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 145
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "pipedream.com",
+                  "rank": 101,
+                  "backlinks": 183,
+                  "first_seen": "2025-11-18 21:02:04 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 14,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 2,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 4,
+                  "referring_subnets": 4,
+                  "referring_pages": 116,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 116
+                  },
+                  "referring_links_types": {
+                    "anchor": 116
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 116,
+                    "noreferrer": 116
+                  },
+                  "referring_links_platform_types": {
+                    "unknown": 116
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 115,
+                    "main": 1
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "explinks.com",
+                  "rank": 120,
+                  "backlinks": 13,
+                  "first_seen": "2024-07-15 17:02:24 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 12,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 12
+                  },
+                  "referring_links_types": {
+                    "anchor": 11,
+                    "redirect": 1
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "unknown": 10,
+                    "organization": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 11,
+                    "main": 1
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "explinks.com",
+                  "rank": 85,
+                  "backlinks": 9,
+                  "first_seen": "2024-07-15 16:27:46 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 2,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 2,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 8,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 8
+                  },
+                  "referring_links_types": {
+                    "anchor": 7,
+                    "redirect": 1
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "unknown": 6,
+                    "organization": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 6,
+                    "main": 1,
+                    "section": 1
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "orvus.net",
+                  "rank": 119,
+                  "backlinks": 32,
+                  "first_seen": "2025-12-18 09:32:57 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 2,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 16,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "net": 16
+                  },
+                  "referring_links_types": {
+                    "anchor": 16
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 16
+                  },
+                  "referring_links_platform_types": {
+                    "cms": 16,
+                    "organization": 16
+                  },
+                  "referring_links_semantic_locations": {
+                    "main": 16
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "orvus.net",
+                  "rank": 195,
+                  "backlinks": 1030,
+                  "first_seen": "2025-12-18 07:22:02 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 1,
+                  "broken_backlinks": 61,
+                  "broken_pages": 41,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 230,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "net": 230
+                  },
+                  "referring_links_types": {
+                    "anchor": 230
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 230
+                  },
+                  "referring_links_platform_types": {
+                    "cms": 230,
+                    "organization": 230
+                  },
+                  "referring_links_semantic_locations": {
+                    "main": 230
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "sellm.io",
+                  "rank": 118,
+                  "backlinks": 4,
+                  "first_seen": "2026-04-28 09:40:39 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 2,
+                  "referring_subnets": 2,
+                  "referring_pages": 4,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "io": 4
+                  },
+                  "referring_links_types": {
+                    "anchor": 4
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 4,
+                    "noreferrer": 4
+                  },
+                  "referring_links_platform_types": {
+                    "ecommerce": 4
+                  },
+                  "referring_links_semantic_locations": {
+                    "article": 4
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "sellm.io",
+                  "rank": 3,
+                  "backlinks": 5,
+                  "first_seen": "2026-04-15 23:23:21 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 2,
+                  "referring_subnets": 2,
+                  "referring_pages": 3,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "io": 3
+                  },
+                  "referring_links_types": {
+                    "anchor": 3
+                  },
+                  "referring_links_attributes": {
+                    "noopener": 2,
+                    "noreferrer": 2
+                  },
+                  "referring_links_platform_types": {
+                    "ecommerce": 3
+                  },
+                  "referring_links_semantic_locations": {
+                    "article": 3
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "flowhunt.io",
+                  "rank": 118,
+                  "backlinks": 42,
+                  "first_seen": "2025-06-21 18:33:26 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 4,
+                  "referring_subnets": 4,
+                  "referring_pages": 42,
+                  "referring_pages_nofollow": 21,
+                  "referring_links_tld": {
+                    "io": 42
+                  },
+                  "referring_links_types": {
+                    "anchor": 42
+                  },
+                  "referring_links_attributes": {
+                    "nofollow": 21,
+                    "noopener": 21,
+                    "noreferrer": 21
+                  },
+                  "referring_links_platform_types": {
+                    "message-boards": 21,
+                    "organization": 21
+                  },
+                  "referring_links_semantic_locations": {
+                    "main": 42
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "flowhunt.io",
+                  "rank": 0,
+                  "backlinks": 1,
+                  "first_seen": "2025-10-04 19:40:55 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 0,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 1,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 1,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 1,
+                  "referring_pages_nofollow": 1,
+                  "referring_links_tld": {
+                    "io": 1
+                  },
+                  "referring_links_types": {
+                    "anchor": 1
+                  },
+                  "referring_links_attributes": {
+                    "nofollow": 1,
+                    "noopener": 1,
+                    "noreferrer": 1
+                  },
+                  "referring_links_platform_types": {
+                    "organization": 1
+                  },
+                  "referring_links_semantic_locations": {
+                    "main": 1
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            },
+            {
+              "domain_intersection": {
+                "1": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "robuta.com",
+                  "rank": 113,
+                  "backlinks": 188,
+                  "first_seen": "2026-04-16 10:14:47 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 27,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 188,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 188
+                  },
+                  "referring_links_types": {
+                    "anchor": 188
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "unknown": 188
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 188
+                  },
+                  "referring_links_countries": null
+                },
+                "2": {
+                  "type": "backlinks_domain_intersection",
+                  "target": "robuta.com",
+                  "rank": 165,
+                  "backlinks": 412,
+                  "first_seen": "2026-03-16 20:32:24 +00:00",
+                  "lost_date": null,
+                  "backlinks_spam_score": 24,
+                  "broken_backlinks": 0,
+                  "broken_pages": 0,
+                  "referring_domains": 1,
+                  "referring_domains_nofollow": 0,
+                  "referring_main_domains": 1,
+                  "referring_main_domains_nofollow": 0,
+                  "referring_ips": 1,
+                  "referring_subnets": 1,
+                  "referring_pages": 380,
+                  "referring_pages_nofollow": 0,
+                  "referring_links_tld": {
+                    "com": 380
+                  },
+                  "referring_links_types": {
+                    "anchor": 348,
+                    "image": 32
+                  },
+                  "referring_links_attributes": null,
+                  "referring_links_platform_types": {
+                    "unknown": 380
+                  },
+                  "referring_links_semantic_locations": {
+                    "": 380
+                  },
+                  "referring_links_countries": null
+                }
+              },
+              "summary": {
+                "intersections_count": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

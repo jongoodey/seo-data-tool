@@ -113,6 +113,19 @@ def items_table(items: list[dict]) -> list[dict]:
             for it in items]
 
 
+def first_result(resp: Any) -> dict:
+    """The response's tasks[0].result[0] dict, or {} if absent.
+
+    Summary metrics live here directly, and intersection endpoints keep their
+    target map here, so renderers need it alongside the flattened items.
+    """
+    try:
+        result0 = resp["tasks"][0]["result"][0]
+    except (KeyError, IndexError, TypeError):
+        return {}
+    return result0 if isinstance(result0, dict) else {}
+
+
 def looks_like_html(value: Any) -> bool:
     """Heuristic: a longish string with several closing tags is renderable HTML."""
     return (

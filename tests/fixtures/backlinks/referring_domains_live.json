@@ -1,0 +1,424 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "1.5582 sec.",
+  "cost": 0.02436,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0273-0000-f6eab747464e",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "1.4953 sec.",
+      "cost": 0.02436,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "referring_domains",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "referring_domains",
+        "target": "dataforseo.com",
+        "limit": 10,
+        "offset": null,
+        "internal_list_limit": null,
+        "backlinks_status_type": null,
+        "filters": null,
+        "order_by": null,
+        "backlinks_filters": null,
+        "include_subdomains": null,
+        "exclude_internal_backlinks": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "total_count": 3173,
+          "items_count": 10,
+          "items": [
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "caglrc.cc",
+              "rank": 244,
+              "backlinks": 404,
+              "first_seen": "2023-08-02 14:38:24 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 0,
+              "broken_backlinks": 404,
+              "broken_pages": 1,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 404,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "cc": 404
+              },
+              "referring_links_types": {
+                "redirect": 404
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": null,
+              "referring_links_semantic_locations": {
+                "": 404
+              },
+              "referring_links_countries": {
+                "CC": 404
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "km4dev.org",
+              "rank": 216,
+              "backlinks": 246,
+              "first_seen": "2024-08-04 01:22:55 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 40,
+              "broken_backlinks": 126,
+              "broken_pages": 2,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 126,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "org": 126
+              },
+              "referring_links_types": {
+                "anchor": 126
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 126
+              },
+              "referring_links_semantic_locations": {
+                "": 126
+              },
+              "referring_links_countries": {
+                "": 126
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "useragentstring.com",
+              "rank": 210,
+              "backlinks": 10,
+              "first_seen": "2022-09-10 06:52:29 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 45,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 10,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 10
+              },
+              "referring_links_types": {
+                "anchor": 10
+              },
+              "referring_links_attributes": {
+                "external": 10
+              },
+              "referring_links_platform_types": {
+                "unknown": 10
+              },
+              "referring_links_semantic_locations": {
+                "": 10
+              },
+              "referring_links_countries": {
+                "US": 9,
+                "WW": 1
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "302.ai",
+              "rank": 199,
+              "backlinks": 327,
+              "first_seen": "2026-03-13 21:01:28 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 51,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 2,
+              "referring_subnets": 2,
+              "referring_pages": 327,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "ai": 327
+              },
+              "referring_links_types": {
+                "anchor": 327
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 327
+              },
+              "referring_links_semantic_locations": {
+                "section": 327
+              },
+              "referring_links_countries": {
+                "AI": 327
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "latenode.com",
+              "rank": 193,
+              "backlinks": 333,
+              "first_seen": "2026-04-16 07:42:42 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 0,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 332,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 332
+              },
+              "referring_links_types": {
+                "anchor": 332
+              },
+              "referring_links_attributes": {
+                "noopener": 332,
+                "noreferrer": 332
+              },
+              "referring_links_platform_types": {
+                "unknown": 331,
+                "ecommerce": 1
+              },
+              "referring_links_semantic_locations": {
+                "section": 276,
+                "": 55,
+                "article": 1
+              },
+              "referring_links_countries": {
+                "US": 331,
+                "": 1
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "beesbuzz.biz",
+              "rank": 192,
+              "backlinks": 223,
+              "first_seen": "2026-03-03 09:15:12 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 50,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 223,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "biz": 223
+              },
+              "referring_links_types": {
+                "anchor": 223
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "blogs": 159,
+                "unknown": 64
+              },
+              "referring_links_semantic_locations": {
+                "": 221,
+                "article": 2
+              },
+              "referring_links_countries": {
+                "": 221,
+                "US": 2
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "qewc.com",
+              "rank": 180,
+              "backlinks": 45,
+              "first_seen": "2021-10-19 17:28:01 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 55,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 2,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 2,
+              "referring_subnets": 1,
+              "referring_pages": 45,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 45
+              },
+              "referring_links_types": {
+                "anchor": 45
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 45
+              },
+              "referring_links_semantic_locations": {
+                "": 45
+              },
+              "referring_links_countries": {
+                "": 45
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "softoria.com",
+              "rank": 167,
+              "backlinks": 164,
+              "first_seen": "2022-09-28 09:38:40 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 0,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 158,
+              "referring_pages_nofollow": 7,
+              "referring_links_tld": {
+                "com": 158
+              },
+              "referring_links_types": {
+                "anchor": 158
+              },
+              "referring_links_attributes": {
+                "nofollow": 7,
+                "noopener": 7,
+                "noreferrer": 7
+              },
+              "referring_links_platform_types": {
+                "blogs": 136,
+                "cms": 136,
+                "organization": 25,
+                "ecommerce": 8,
+                "unknown": 5
+              },
+              "referring_links_semantic_locations": {
+                "footer": 150,
+                "section": 7,
+                "article": 1
+              },
+              "referring_links_countries": {
+                "UA": 128,
+                "": 30
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "feycsa.com",
+              "rank": 152,
+              "backlinks": 2,
+              "first_seen": "2022-01-18 12:19:36 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 70,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 2,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 2
+              },
+              "referring_links_types": {
+                "anchor": 2
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "unknown": 2
+              },
+              "referring_links_semantic_locations": {
+                "": 2
+              },
+              "referring_links_countries": {
+                "": 2
+              }
+            },
+            {
+              "type": "backlinks_referring_domain",
+              "domain": "seroundtable.com",
+              "rank": 151,
+              "backlinks": 105,
+              "first_seen": "2024-08-05 12:30:41 +00:00",
+              "lost_date": null,
+              "backlinks_spam_score": 0,
+              "broken_backlinks": 0,
+              "broken_pages": 0,
+              "referring_domains": 1,
+              "referring_domains_nofollow": 0,
+              "referring_main_domains": 1,
+              "referring_main_domains_nofollow": 0,
+              "referring_ips": 1,
+              "referring_subnets": 1,
+              "referring_pages": 105,
+              "referring_pages_nofollow": 0,
+              "referring_links_tld": {
+                "com": 105
+              },
+              "referring_links_types": {
+                "anchor": 105
+              },
+              "referring_links_attributes": null,
+              "referring_links_platform_types": {
+                "news": 105,
+                "organization": 105
+              },
+              "referring_links_semantic_locations": {
+                "section": 105
+              },
+              "referring_links_countries": {
+                "US": 65,
+                "WW": 40
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

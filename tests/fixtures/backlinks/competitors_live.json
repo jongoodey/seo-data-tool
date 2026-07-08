@@ -1,0 +1,107 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "3.5967 sec.",
+  "cost": 0.02436,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0461-0000-4c30a2768045",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "3.5419 sec.",
+      "cost": 0.02436,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "competitors",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "competitors",
+        "target": "dataforseo.com",
+        "limit": 10,
+        "offset": null,
+        "filters": null,
+        "order_by": null,
+        "main_domain": null,
+        "exclude_large_domains": null,
+        "exclude_internal_backlinks": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "total_count": 1607,
+          "items_count": 10,
+          "items": [
+            {
+              "type": "backlinks_competitors",
+              "target": "ibm.com",
+              "rank": 9,
+              "intersections": 2576
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "guetsel.de",
+              "rank": 361,
+              "intersections": 1146
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "w.org",
+              "rank": 60,
+              "intersections": 1030
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "welt.de",
+              "rank": 95,
+              "intersections": 700
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "seroundtable.com",
+              "rank": 196,
+              "intersections": 519
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "semrush.com",
+              "rank": 188,
+              "intersections": 481
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "sueddeutsche.de",
+              "rank": 69,
+              "intersections": 463
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "ahrefs.com",
+              "rank": 177,
+              "intersections": 399
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "neilpatel.com",
+              "rank": 130,
+              "intersections": 396
+            },
+            {
+              "type": "backlinks_competitors",
+              "target": "focus.de",
+              "rank": 80,
+              "intersections": 384
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

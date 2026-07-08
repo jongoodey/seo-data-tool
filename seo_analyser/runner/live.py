@@ -46,8 +46,30 @@ def run_live(meta: EndpointMeta, payload: dict, creds: Credentials) -> dict:
 
 
 def _to_dict(response) -> dict:
-    if hasattr(response, "to_dict"):
-        return response.to_dict()
-    if isinstance(response, dict):
-        return response
-    return {"result": str(response)}
+    plain = _deep_plain(response)
+    if isinstance(plain, dict):
+        return plain
+    return {"result": plain}
+
+
+def _deep_plain(node):
+    """Recursively convert SDK model objects into plain dicts/lists/scalars.
+
+    The SDK's own ``to_dict()`` does not recurse into ``Dict[str, Model]`` fields
+    (the intersection endpoints nest referring-domain/page models under numbered
+    keys), so those values arrive as model objects. Left alone they render as an
+    empty table and are stringified when the response is saved as JSON, losing
+    the data. Walking the whole tree once normalises every shape to JSON-safe
+    values before it reaches the store or the renderer.
+    """
+    if isinstance(node, dict):
+        return {k: _deep_plain(v) for k, v in node.items()}
+    if isinstance(node, (list, tuple)):
+        return [_deep_plain(v) for v in node]
+    if isinstance(node, (str, int, float, bool)) or node is None:
+        return node
+    if hasattr(node, "to_dict"):
+        return _deep_plain(node.to_dict())
+    if hasattr(node, "model_dump"):
+        return _deep_plain(node.model_dump())
+    return str(node)

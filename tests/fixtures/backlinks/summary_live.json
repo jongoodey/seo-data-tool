@@ -1,0 +1,91 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0744 sec.",
+  "cost": 0.024036,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0265-0000-c176ec5944f6",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0185 sec.",
+      "cost": 0.024036,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "summary",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "summary",
+        "target": "dataforseo.com",
+        "include_subdomains": null,
+        "exclude_internal_backlinks": null,
+        "internal_list_limit": 1,
+        "backlinks_status_type": null,
+        "backlinks_filters": null,
+        "rank_scale": null,
+        "tag": null
+      },
+      "result": [
+        {
+          "target": "dataforseo.com",
+          "first_seen": "2019-01-15 23:54:14 +00:00",
+          "lost_date": null,
+          "rank": 323,
+          "backlinks": 347018,
+          "backlinks_spam_score": 14,
+          "crawled_pages": 21722,
+          "info": {
+            "server": "nginx",
+            "cms": "wordpress",
+            "platform_type": [
+              "cms",
+              "blogs",
+              "organization"
+            ],
+            "ip_address": "178.63.191.61",
+            "country": "US",
+            "is_ip": false,
+            "target_spam_score": 1
+          },
+          "internal_links_count": 852119,
+          "external_links_count": 761183,
+          "broken_backlinks": 2296,
+          "broken_pages": 98,
+          "referring_domains": 3565,
+          "referring_domains_nofollow": 1000,
+          "referring_main_domains": 3173,
+          "referring_main_domains_nofollow": 754,
+          "referring_ips": 2576,
+          "referring_subnets": 1667,
+          "referring_pages": 343045,
+          "referring_pages_nofollow": 5988,
+          "referring_links_tld": {
+            "jetzt": 234757
+          },
+          "referring_links_types": {
+            "image": 239757
+          },
+          "referring_links_attributes": {
+            "nofollow": 5988
+          },
+          "referring_links_platform_types": {
+            "unknown": 245199
+          },
+          "referring_links_semantic_locations": {
+            "": 331635
+          },
+          "referring_links_countries": {
+            "": 241896
+          }
+        }
+      ]
+    }
+  ]
+}

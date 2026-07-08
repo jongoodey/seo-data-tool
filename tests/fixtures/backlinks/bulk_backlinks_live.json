@@ -1,0 +1,49 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0172 sec.",
+  "cost": 0.024072,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0348-0000-97d988a0f61f",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0077 sec.",
+      "cost": 0.024072,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "bulk_backlinks",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "bulk_backlinks",
+        "targets": [
+          "dataforseo.com",
+          "ahrefs.com"
+        ],
+        "tag": null
+      },
+      "result": [
+        {
+          "items_count": 2,
+          "items": [
+            {
+              "target": "dataforseo.com",
+              "backlinks": 45618
+            },
+            {
+              "target": "ahrefs.com",
+              "backlinks": 4006876
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

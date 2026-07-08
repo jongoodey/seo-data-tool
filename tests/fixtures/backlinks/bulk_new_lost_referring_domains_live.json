@@ -1,0 +1,56 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "2.3342 sec.",
+  "cost": 0.024072,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081447-6835-0350-0000-621aa92c283c",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "2.3221 sec.",
+      "cost": 0.024072,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "bulk_new_lost_referring_domains",
+        "live"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "bulk_new_lost_referring_domains",
+        "targets": [
+          "dataforseo.com",
+          "ahrefs.com"
+        ],
+        "date_from": "2026-06-01",
+        "tag": null
+      },
+      "result": [
+        {
+          "items_count": 2,
+          "items": [
+            {
+              "target": "dataforseo.com",
+              "new_referring_domains": 331,
+              "lost_referring_domains": 48,
+              "new_referring_main_domains": 162,
+              "lost_referring_main_domains": 23
+            },
+            {
+              "target": "ahrefs.com",
+              "new_referring_domains": 7190,
+              "lost_referring_domains": 1742,
+              "new_referring_main_domains": 3408,
+              "lost_referring_main_domains": 835
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

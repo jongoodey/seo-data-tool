@@ -1,0 +1,33 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0310 sec.",
+  "cost": 0.0,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0409-0000-6de21cd6769d",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0210 sec.",
+      "cost": 0.0,
+      "result_count": 0,
+      "path": [
+        "v3",
+        "backlinks",
+        "errors"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "errors",
+        "limit": 10,
+        "offset": null,
+        "filtered_function": null,
+        "datetime_from": null,
+        "datetime_to": null
+      }
+    }
+  ]
+}

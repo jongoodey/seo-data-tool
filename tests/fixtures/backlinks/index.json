@@ -1,0 +1,96 @@
+{
+  "version": "0.1.20260610",
+  "status_code": 20000,
+  "status_message": "Ok.",
+  "time": "0.0555 sec.",
+  "cost": 0.0,
+  "tasks_count": 1,
+  "tasks_error": 0,
+  "tasks": [
+    {
+      "id": "07081446-6835-0352-0000-498de897c23f",
+      "status_code": 20000,
+      "status_message": "Ok.",
+      "time": "0.0001 sec.",
+      "cost": 0.0,
+      "result_count": 1,
+      "path": [
+        "v3",
+        "backlinks",
+        "index"
+      ],
+      "data": {
+        "api": "backlinks",
+        "function": "index"
+      },
+      "result": [
+        {
+          "total_backlinks": 1879784430067,
+          "total_pages": 186437147072,
+          "index_history": [
+            {
+              "date": "2026-07-01",
+              "total_backlinks": 1972267427844,
+              "total_pages": 199663956493
+            },
+            {
+              "date": "2026-06-01",
+              "total_backlinks": 2013500913319,
+              "total_pages": 204189949897
+            },
+            {
+              "date": "2026-05-01",
+              "total_backlinks": 2032743726882,
+              "total_pages": 209102372147
+            },
+            {
+              "date": "2026-04-01",
+              "total_backlinks": 2145939030107,
+              "total_pages": 223212196774
+            },
+            {
+              "date": "2026-03-01",
+              "total_backlinks": 2108928218069,
+              "total_pages": 234258065336
+            },
+            {
+              "date": "2026-02-01",
+              "total_backlinks": 1887776684653,
+              "total_pages": 245570531517
+            },
+            {
+              "date": "2026-01-01",
+              "total_backlinks": 1918527444221,
+              "total_pages": 253341217861
+            },
+            {
+              "date": "2025-12-01",
+              "total_backlinks": 1939550670580,
+              "total_pages": 258928259417
+            },
+            {
+              "date": "2025-11-01",
+              "total_backlinks": 1992110175887,
+              "total_pages": 268391515019
+            },
+            {
+              "date": "2025-10-01",
+              "total_backlinks": 2024917068086,
+              "total_pages": 274980637079
+            },
+            {
+              "date": "2025-09-01",
+              "total_backlinks": 2180896787041,
+              "total_pages": 306657184328
+            },
+            {
+              "date": "2025-08-02",
+              "total_backlinks": 2144622509511,
+              "total_pages": 294765302648
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
