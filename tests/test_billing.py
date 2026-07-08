@@ -36,3 +36,9 @@ def test_gate_requires_exact_match():
     assert check_app_password("right-horse", "right-horse") is True
     assert check_app_password("wrong", "right-horse") is False
     assert check_app_password("", "right-horse") is False
+
+
+def test_backlinks_estimate_matches_july_2026_pricing():
+    # $0.024/request base fee since 1 July 2026 (IND-19 audit)
+    from seo_analyser.billing.cost import estimate_cost
+    assert estimate_cost("backlinks") == 0.024

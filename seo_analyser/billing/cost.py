@@ -14,7 +14,7 @@ _PER_FAMILY_USD = {
     "app_data": 0.003,
     "merchant": 0.003,
     "on_page": 0.0015,
-    "backlinks": 0.02,
+    "backlinks": 0.024,  # $0.024/request + $0.000036/row since 1 July 2026
     "domain_analytics": 0.05,
     "content_analysis": 0.01,
     "content_generation": 0.01,

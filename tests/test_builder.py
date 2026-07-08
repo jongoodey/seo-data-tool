@@ -32,3 +32,9 @@ def test_code_stays_upfront_without_name_twin():
     specs = [_named_spec("language_code", "required")]
     common, _advanced = split_common_advanced(specs)
     assert [s.name for s in common] == ["language_code"]
+
+
+def test_numbered_targets_builds_dataforseo_dict():
+    from seo_analyser.forms.builder import numbered_targets
+    assert numbered_targets(["a.com", "b.com"]) == {"1": "a.com", "2": "b.com"}
+    assert numbered_targets([]) == {}

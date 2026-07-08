@@ -22,7 +22,7 @@ _DEFAULT_RE = re.compile(r"default value:?\s*(true|false|\d+)", re.I)
 @dataclass
 class FieldSpec:
     name: str
-    kind: str            # "text" | "int" | "float" | "bool" | "select" | "list" | "nested"
+    kind: str            # "text" | "int" | "float" | "bool" | "select" | "list" | "dict" | "nested"
     description: str = ""
     default: Any = None
     choices: list[str] = field(default_factory=list)
@@ -108,6 +108,8 @@ def _kind_for(annotation: Any) -> tuple[str, Any]:
     origin = typing.get_origin(inner)
     if origin in (list, typing.List):
         return "list", inner
+    if origin is dict:
+        return "dict", inner
     name = getattr(inner, "__name__", str(inner)).lower()
     if "bool" in name:
         return "bool", inner

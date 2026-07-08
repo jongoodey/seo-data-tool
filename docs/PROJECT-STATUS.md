@@ -231,7 +231,23 @@ paid Backlinks endpoints returned `20000 Ok.` via the app's `run_live` path
 
 ## 11. Session log (most recent first)
 
-- 2026-07-08 (latest): **Backlinks API audit (Linear IND-19)** — see §8 for the
+- 2026-07-08 (later): **Backlinks validation helpers (Linear IND-21).**
+  forms/validators.py gains looks_like_domain/looks_like_target/parse_targets,
+  validate_backlinks (blocks: www./malformed targets, bad targets-array entries,
+  count caps 1000 bulk / 20 intersection / 10 exclude, yyyy-mm-dd date format
+  and ordering) and backlinks_advisories (non-blocking st.info cost notes for
+  limit>100 or >100 targets). Dict-typed fields get kind "dict"; numbered-target
+  fields (targets/pages/app_ids/asins) render as one-per-line textareas and
+  submit {"1": ...} dicts — domain/page_intersection were previously unusable
+  (typed string always failed Pydantic). forms/hints.py prepends plain-English
+  help for filters/backlinks_filters/order_by/targets/exclude_targets.
+  Backlinks cost estimate corrected 0.02 -> 0.024. Verified in the browser:
+  www. target and bad targets entry block with no call; limit 1000 shows the
+  ~$0.060 advisory; live domain_intersection ran OK (10 rows, $0.0244).
+  136 tests passing. Gotcha: intersection results table renders empty (nested
+  per-target objects) — that's IND-25's rendering work.
+
+- 2026-07-08: **Backlinks API audit (Linear IND-19)** — see §8 for the
   full findings. Access confirmed under the BYOK pay-as-you-go account (the
   $100/month commitment was removed 1 July 2026, prices +20%); all 24 catalogue
   keys pinned by tests/test_backlinks_catalogue.py; scripts/backlinks_smoke.py

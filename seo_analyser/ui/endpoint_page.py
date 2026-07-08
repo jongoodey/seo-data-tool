@@ -8,7 +8,8 @@ from seo_analyser.auth import Credentials
 from seo_analyser.billing.cost import format_estimate
 from seo_analyser.forms.builder import render_form
 from seo_analyser.forms.validators import (
-    validate_payload, validate_required_fields, validate_required_ids,
+    backlinks_advisories, validate_backlinks, validate_payload,
+    validate_required_fields, validate_required_ids,
 )
 from seo_analyser.forms.widgets import fields_for
 from seo_analyser.labels import family_label, titleize
@@ -104,11 +105,16 @@ def render_endpoint_page(creds: Credentials, family: str, endpoint_name: str) ->
         meta.request_model,
         key_prefix=key_prefix,
         dynamic_choices=dynamic_choices,
+        family=family,
     )
 
     problems = (validate_payload(payload)
                 + validate_required_ids(specs, payload)
                 + validate_required_fields(specs, payload))
+    if family == "backlinks":
+        problems += validate_backlinks(endpoint_name, payload)
+        for note in backlinks_advisories(payload):  # cost heads-up, doesn't block
+            st.info(note)
     for problem in problems:
         st.warning(problem)
 

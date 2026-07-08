@@ -78,3 +78,22 @@ def test_additional_properties_excluded():
     names = [f.name for f in fields_for(_WithCatchAll)]
     assert "keyword" in names
     assert "additional_properties" not in names
+
+
+def test_dict_fields_get_dict_kind():
+    from typing import Dict
+    class _WithDict(BaseModel):
+        targets: Optional[Dict[str, Optional[str]]] = Field(default=None)
+        keyword: Optional[StrictStr] = Field(default=None)
+
+    kinds = {f.name: f.kind for f in fields_for(_WithDict)}
+    assert kinds["targets"] == "dict"
+    assert kinds["keyword"] == "text"
+
+
+def test_real_intersection_targets_is_dict_kind():
+    from seo_analyser.registry.introspect import build_catalogue
+    inter = next(e for e in build_catalogue()["backlinks"]
+                 if e.name == "domain_intersection_live")
+    kinds = {f.name: f.kind for f in fields_for(inter.request_model)}
+    assert kinds["targets"] == "dict"

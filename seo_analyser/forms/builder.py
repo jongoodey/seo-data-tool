@@ -5,6 +5,7 @@ from typing import Any
 
 import streamlit as st
 
+from seo_analyser.forms.hints import hint_for
 from seo_analyser.forms.widgets import FieldSpec, fields_for
 from seo_analyser.labels import humanize
 from seo_analyser.presets import presets_for
@@ -24,11 +25,13 @@ def render_form(
     model: type,
     key_prefix: str,
     dynamic_choices: dict[str, list[str]] | None = None,
+    family: str = "",
 ) -> dict[str, Any]:
     """Render common fields up front and the rest behind an expander.
 
     `dynamic_choices` maps a field name to a list of options sourced at runtime
     (e.g. model_name from the models endpoint); such fields render as dropdowns.
+    `family` lets fields pick up plain-English hints (forms/hints.py).
     Returns {field_name: value} with empty values dropped.
     """
     dynamic_choices = dynamic_choices or {}
@@ -37,11 +40,11 @@ def render_form(
 
     payload: dict[str, Any] = {}
     for spec in common:
-        _collect(spec, key_prefix, payload, dynamic_choices)
+        _collect(spec, key_prefix, payload, dynamic_choices, family)
     if advanced:
         with st.expander(f"Advanced options ({len(advanced)})"):
             for spec in advanced:
-                _collect(spec, key_prefix, payload, dynamic_choices)
+                _collect(spec, key_prefix, payload, dynamic_choices, family)
     return payload
 
 
@@ -72,17 +75,28 @@ def _collect(
     key_prefix: str,
     payload: dict[str, Any],
     dynamic_choices: dict[str, list[str]],
+    family: str = "",
 ) -> None:
     value = _render_field(
         spec,
         key=f"{key_prefix}.{spec.name}",
         choices_override=dynamic_choices.get(spec.name),
+        hint=hint_for(family, spec.name),
     )
     if value not in (None, "", []):
         payload[spec.name] = value
 
 
 _BOOL_OPTIONS = ["", "true", "false"]
+
+# Dict-typed API fields that are really numbered lists ({"1": ..., "2": ...}):
+# the DataForSEO intersection-style inputs. Other dict fields stay non-editable.
+_NUMBERED_DICT_FIELDS = {"targets", "pages", "app_ids", "asins"}
+
+
+def numbered_targets(entries: list[str]) -> dict[str, str]:
+    """Build the {"1": target, "2": target} dict intersection endpoints expect."""
+    return {str(i): entry for i, entry in enumerate(entries, start=1)}
 
 
 def decorate_label(spec: FieldSpec) -> str:
@@ -144,8 +158,9 @@ def _render_combobox(spec: FieldSpec, label: str, help_text, key: str,
     return None
 
 
-def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None) -> Any:
-    help_text = spec.description or None
+def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None = None,
+                  hint: str | None = None) -> Any:
+    help_text = f"{hint}\n\n{spec.description}" if hint else (spec.description or None)
     label = decorate_label(spec)
     if choices_override:
         return st.selectbox(label, [""] + list(choices_override), help=help_text, key=key) or None
@@ -164,6 +179,13 @@ def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None 
     if spec.kind == "list":
         raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)
         return [line.strip() for line in raw.splitlines() if line.strip()]
+    if spec.kind == "dict":
+        if spec.name in _NUMBERED_DICT_FIELDS:
+            raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)
+            return numbered_targets(
+                [line.strip() for line in raw.splitlines() if line.strip()]) or None
+        st.caption(f"{label}: advanced nested field — not editable in this view yet.")
+        return None
     if spec.kind == "nested":
         st.caption(f"{label}: advanced nested field — not editable in this view yet.")
         return None
