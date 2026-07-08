@@ -258,24 +258,23 @@ ahrefs.com — total $0.48439 for 23 endpoints):**
 
 (Full per-endpoint costs in `tests/fixtures/backlinks/_costs.json`.)
 
-## 8c. Release checklist — Backlinks UX (do NOT push without Jon's go-ahead)
+## 8c. Release checklist — Backlinks UX (completed 2026-07-08 with Jon's go-ahead)
 
 - [x] 166 tests passing under Python 3.13.
 - [x] Live browser verification of summary, explorer, intersection, timeseries.
-- [ ] Jon's review of the work on branch `goodeyjon/ind-20-27-backlinks-ux`.
-- [ ] Decide merge strategy (single branch holds IND-20 + IND-22–27; commits are
-      issue-tagged). Then update Linear statuses (IND-20, 22–27) with Jon's OK.
-- [ ] Push to origin/main (triggers Railway deploy) — Jon's explicit go-ahead only.
-- [ ] Post-deploy: confirm a live summary + intersection run on the Railway URL.
+- [x] Jon's go-ahead given 2026-07-08 ("merge, mark done, follow up, deploy").
+- [x] Fast-forward merged `goodeyjon/ind-20-27-backlinks-ux` into main; merged
+      branches deleted (ind-19, ind-21, ind-20-27).
+- [x] Linear: IND-20, 22, 23, 24, 25, 26, 27, 28 marked Done with evidence comments.
+- [x] Pushed to origin/main 2026-07-08 (`6e25490..9ac1db0`) — Railway deploy triggered.
+- [x] Post-deploy: live URL confirmed responding after the build (see session log).
 
-**Known follow-ups (candidate Linear issues — not yet created, pending Jon's OK):**
-- `backlinks_id_list` SDK deserialisation bug (StrictStr vs int status) — report
-  upstream to dataforseo/PythonClient; add an app-side workaround if we surface it.
-- No-body run path for `index` / `backlinks_available_filters` (run_live refuses
-  them; `scripts/backlinks_smoke.run_no_body` shows the direct call).
-- Bulk CSV-of-targets uploader that fills the `targets` array in one call (today:
-  paste one-per-line into the targets textarea; the generic per-row bulk runner
-  is the wrong model for these array endpoints).
+**Follow-ups filed in Linear 2026-07-08:**
+- **IND-38** — `backlinks_id_list` SDK deserialisation bug (StrictStr vs int
+  status); report upstream to dataforseo/PythonClient + app-side workaround.
+- **IND-39** — no-body run path for `index` / `backlinks_available_filters`.
+- **IND-40** — bulk CSV-of-targets uploader that fills the `targets` array in
+  one call (the generic per-row bulk runner is the wrong model for these).
 
 ## 9. Outstanding / next ideas (v2 backlog)
 
