@@ -188,3 +188,62 @@ def test_items_table_drops_machine_noise_columns():
     from seo_analyser.results.detect import items_table
     rows = items_table([{"title": "t", "xpath": "/div[1]/div[2]", "rank_group": 1}])
     assert rows == [{"title": "t", "rank_group": 1}]
+
+
+# --- extract_time_series (timeline charts) --------------------------------------
+
+def _envelope(item):
+    return {"status_code": 20000, "tasks": [{"status_code": 20000,
+            "result": [{"items": [item]}]}]}
+
+
+def test_ai_keyword_volume_monthly_series_detected():
+    # The exact shape from ai_keyword_data_keywords_search_volume_live.
+    from seo_analyser.results.detect import extract_time_series
+    item = {"keyword": "best running shoes",
+            "ai_monthly_searches": [
+                {"year": 2026, "month": 1, "ai_search_volume": 4486},
+                {"year": 2025, "month": 12, "ai_search_volume": 4766},
+                {"year": 2025, "month": 11, "ai_search_volume": 4170},
+            ]}
+    series = extract_time_series(_envelope(item))
+    assert len(series) == 1
+    s = series[0]
+    assert s["label"] == "best running shoes · ai_search_volume"
+    assert s["points"][0] == ("2025-11-01", 4170.0)   # sorted chronologically
+    assert s["points"][-1] == ("2026-01-01", 4486.0)
+
+
+def test_google_ads_monthly_searches_detected():
+    from seo_analyser.results.detect import extract_time_series
+    item = {"keyword": "cashmere jumper",
+            "monthly_searches": [
+                {"year": 2026, "month": m, "search_volume": 1000 + m} for m in (1, 2, 3, 4)
+            ]}
+    series = extract_time_series(_envelope(item))
+    assert series and series[0]["label"] == "cashmere jumper · search_volume"
+    assert len(series[0]["points"]) == 4
+
+
+def test_dated_timeseries_rows_detected():
+    # backlinks timeseries shape: date string + several numeric metrics.
+    from seo_analyser.results.detect import extract_time_series
+    rows = [{"date": f"2026-0{m}-01 00:00:00 +00:00", "backlinks": 100 * m,
+             "referring_domains": 10 * m} for m in (1, 2, 3)]
+    series = extract_time_series({"tasks": [{"result": [{"items": rows}]}]})
+    labels = {s["label"] for s in series}
+    assert labels == {"backlinks", "referring_domains"}
+    assert series[0]["points"][0][0] == "2026-01-01"
+
+
+def test_non_series_rows_ignored():
+    from seo_analyser.results.detect import extract_time_series
+    serp_rows = [{"rank_group": i, "title": f"r{i}", "url": "https://x"} for i in range(10)]
+    assert extract_time_series({"tasks": [{"result": [{"items": serp_rows}]}]}) == []
+
+
+def test_series_capped_and_two_point_series_skipped():
+    from seo_analyser.results.detect import extract_time_series
+    item = {"keyword": "k",
+            "short": [{"year": 2026, "month": 1, "v": 1}, {"year": 2026, "month": 2, "v": 2}]}
+    assert extract_time_series(_envelope(item)) == []

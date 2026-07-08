@@ -107,6 +107,91 @@ def friendly_error(status_message: str, status_code: int | None = None) -> str:
 _NOISE_FIELDS = {"xpath", "rectangle"}
 
 
+_ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}")
+_SERIES_DATE_KEYS = ("date", "date_from")
+_CONTEXT_KEYS = ("keyword", "target", "title")
+
+
+def extract_time_series(resp: Any, max_series: int = 6, min_points: int = 3) -> list[dict]:
+    """Find plottable time series anywhere in a response, however nested.
+
+    Recognises two row shapes inside arrays of dicts:
+      {"year": 2025, "month": 7, "<metric>": <number>}          -> monthly points
+      {"date"/"date_from": "2025-07-01...", "<metric>": <number>} -> dated points
+
+    This covers monthly_searches (Google Ads / Labs keyword data), the AI keyword
+    search-volume series, backlinks timeseries rows, and anything future-shaped
+    the same way. Returns [{"label", "points": [(iso_date, value), ...]}] with
+    points sorted chronologically; labels are prefixed with the nearest ancestor
+    keyword/target so multi-keyword responses stay tellable-apart.
+    """
+    found: list[dict] = []
+    seen_labels: set[str] = set()
+
+    def context_label(stack: list) -> str:
+        for node in reversed(stack):
+            for key in _CONTEXT_KEYS:
+                value = node.get(key)
+                if isinstance(value, str) and value.strip():
+                    return value.strip()[:40]
+        return ""
+
+    def add_series(rows: list[dict], stack: list) -> None:
+        sample = rows[0]
+        has_ym = isinstance(sample.get("year"), int) and isinstance(sample.get("month"), int)
+        date_key = None
+        if not has_ym:
+            date_key = next((k for k in _SERIES_DATE_KEYS
+                             if isinstance(sample.get(k), str)
+                             and _ISO_DATE_RE.match(sample[k])), None)
+        if not (has_ym or date_key):
+            return
+        metric_keys = [k for k, v in sample.items()
+                       if k not in ("year", "month") and k != date_key
+                       and isinstance(v, (int, float)) and not isinstance(v, bool)]
+        prefix = context_label(stack)
+        for metric in metric_keys[:3]:
+            if len(found) >= max_series:
+                return
+            points = []
+            for row in rows:
+                value = row.get(metric)
+                if isinstance(value, bool) or not isinstance(value, (int, float)):
+                    continue
+                if has_ym and isinstance(row.get("year"), int):
+                    month = row.get("month")
+                    if not (isinstance(month, int) and 1 <= month <= 12):
+                        continue
+                    when = f"{row['year']:04d}-{month:02d}-01"
+                elif date_key and isinstance(row.get(date_key), str):
+                    when = str(row[date_key])[:10]
+                else:
+                    continue
+                points.append((when, float(value)))
+            if len(points) >= min_points:
+                label = f"{prefix} · {metric}" if prefix else metric
+                if label in seen_labels:
+                    label = f"{label} ({len(found) + 1})"
+                seen_labels.add(label)
+                found.append({"label": label, "points": sorted(points)})
+
+    def walk(node: Any, stack: list) -> None:
+        if len(found) >= max_series:
+            return
+        if isinstance(node, dict):
+            for value in node.values():
+                walk(value, stack + [node])
+        elif isinstance(node, list):
+            dict_rows = [r for r in node if isinstance(r, dict)]
+            if len(dict_rows) >= min_points and len(dict_rows) == len(node):
+                add_series(dict_rows, stack)
+            for value in node[:50]:
+                walk(value, stack)
+
+    walk(resp, [])
+    return found
+
+
 def items_table(items: list[dict]) -> list[dict]:
     """Reduce each item to its scalar fields so it renders as a flat table."""
     return [{k: v for k, v in _scalars(it).items() if k not in _NOISE_FIELDS}

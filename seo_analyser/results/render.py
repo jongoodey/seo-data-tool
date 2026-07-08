@@ -9,10 +9,14 @@ import streamlit.components.v1 as components
 
 from seo_analyser.results import backlinks as bl
 from seo_analyser.results.detect import (
-    extract_html, extract_links, extract_message_text, first_result,
-    friendly_error, items_table, parse_response, sanitize_for_preview,
+    extract_html, extract_links, extract_message_text, extract_time_series,
+    first_result, friendly_error, items_table, parse_response, sanitize_for_preview,
 )
 from seo_analyser.results.export import to_csv_bytes, to_json_bytes
+
+# Fixed categorical order (dataviz reference palette, validated for light mode;
+# the two sub-3:1 hues are covered by the data table always rendered below).
+_SERIES_COLOURS = ["#2a78d6", "#1baf7a", "#eda100", "#008300", "#4a3aa7", "#e34948"]
 
 # Columns that, when present, read best left-to-right.
 _PRIORITY_COLS = [
@@ -48,6 +52,20 @@ def render_result(resp: dict, endpoint: str = "result") -> None:
     ]
     if meta_bits:
         st.caption("  ·  ".join(meta_bits))
+
+    # Time series hidden in the response (monthly volumes, timeseries rows...)
+    # get a chart before anything else — trends read far better drawn than listed.
+    series = extract_time_series(resp)
+    if series:
+        st.markdown("#### 📈 Timeline")
+        merged: dict[str, dict[str, float]] = {}
+        for s in series:
+            for when, value in s["points"]:
+                merged.setdefault(when, {})[s["label"]] = value
+        df_series = pd.DataFrame.from_dict(merged, orient="index").sort_index()
+        df_series.index = pd.to_datetime(df_series.index)
+        st.line_chart(df_series, color=_SERIES_COLOURS[:len(df_series.columns)])
+        st.caption("Auto-detected from this response: " + ", ".join(s["label"] for s in series))
 
     # LLM / AI overview answers nest their text — surface it prominently.
     answer = extract_message_text(parsed.items)
