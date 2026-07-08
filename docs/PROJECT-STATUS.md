@@ -31,11 +31,12 @@ streamlit run app.py --server.port 8501
 ## 3. Test it
 
 ```bash
-source .venv/bin/activate && python -m pytest -q     # 107 tests, all passing
+source .venv/bin/activate && python -m pytest -q     # 166 tests, all passing
 ```
 Pure logic is unit-tested (introspection, widgets, detect, store, validators,
-billing, search, export, tasks, lookups, presets, share/bulk). Streamlit
-rendering is verified manually in the browser.
+billing, search, export, tasks, lookups, presets, share/bulk, backlinks
+rendering, overrides/nav). Streamlit rendering is verified manually in the
+browser (and, for backlinks, against real captured fixtures via the free View path).
 
 ## 4. Current status
 
@@ -205,6 +206,77 @@ paid Backlinks endpoints returned `20000 Ok.` via the app's `run_live` path
     `run_no_body` in scripts/backlinks_smoke.py). UI needs a no-body run path
     for them.
 
+## 8b. Backlinks UX build (IND-20, 22–27, 2026-07-08)
+
+**Backlinks are now first-class agency workflows, not raw API rows.** All render
+paths verified live in the browser against real captured responses.
+
+- **Discoverability (IND-20):** `overrides.yml` now covers the whole Backlinks
+  family with friendly titles, descriptions and a new `keywords` field feeding
+  the search haystack (`catalogue._haystack`), so "backlink audit", "link gap",
+  "spam score", "new lost backlinks", "bulk backlinks" all resolve. Five home
+  shortcuts (Summary, Explorer, Link gap, New/lost, Bulk). `test_overrides_and_nav.py`
+  pins every override key + shortcut to a real endpoint (kills dead keys).
+- **Rendering (`results/backlinks.py`, dispatched from `render.py`):**
+  - *Summary (IND-22)* → profile metric grid (backlinks, ref. domains, derived
+    dofollow/nofollow split, rank, spam…) + "All summary fields" table; nested
+    breakdowns (referring_links_*) stay in raw JSON.
+  - *Explorer (IND-23)* → stable audit column order (url_from, url_to, anchor,
+    dofollow, ranks, seen dates…); machine-noise columns dropped; list cells
+    joined; CSV uses the same cleaned rows.
+  - *Anchors / referring domains / networks / pages (IND-24)* → ordered clean
+    tables keyed by the natural identifier.
+  - *Intersection / link gap (IND-25)* → nested per-target objects flattened to
+    one opportunity row each (`referring_domain` + `backlinks → <target>` cols).
+  - *History / timeseries (IND-26)* → `st.line_chart` + date-first table; new vs
+    lost series separated.
+  - *Bulk (IND-27)* → target-first tables; blank/duplicate targets deduped before
+    the paid call with a heads-up note.
+- **Root-cause fix (IND-25):** `run_live._to_dict` now deep-converts SDK model
+  objects (`_deep_plain`). The SDK's own `to_dict()` leaves `Dict[str, Model]`
+  fields (the intersection endpoints) as model objects, which rendered as an
+  empty table AND were stringified when the store saved the response as JSON
+  (data loss on View). Deep-converting once at the source fixes both.
+- **Fixtures:** `scripts/backlinks_capture.py` saved 23 real responses to
+  `tests/fixtures/backlinks/` (kept via a `.gitignore` negation); 30 new tests
+  build against them. `backlinks_id_list` still can't be captured (SDK typing
+  bug, IND-19).
+
+**Smoke costs (captured live 2026-07-08, `limit=10`, targets dataforseo.com /
+ahrefs.com — total $0.48439 for 23 endpoints):**
+
+| Endpoint | Status | Cost |
+|---|---|---|
+| summary_live | 20000 | $0.02404 |
+| backlinks_live | 20000 | $0.02436 |
+| anchors_live | 20000 | $0.02436 |
+| referring_domains_live | 20000 | $0.02436 |
+| domain_intersection_live | 20000 | $0.02436 |
+| timeseries_new_lost_summary_live | 20000 | $0.02422 |
+| bulk_pages_summary_live | 20000 | $0.02407 |
+| index / available_filters / errors | 20000 | $0.00000 |
+
+(Full per-endpoint costs in `tests/fixtures/backlinks/_costs.json`.)
+
+## 8c. Release checklist — Backlinks UX (do NOT push without Jon's go-ahead)
+
+- [x] 166 tests passing under Python 3.13.
+- [x] Live browser verification of summary, explorer, intersection, timeseries.
+- [ ] Jon's review of the work on branch `goodeyjon/ind-20-27-backlinks-ux`.
+- [ ] Decide merge strategy (single branch holds IND-20 + IND-22–27; commits are
+      issue-tagged). Then update Linear statuses (IND-20, 22–27) with Jon's OK.
+- [ ] Push to origin/main (triggers Railway deploy) — Jon's explicit go-ahead only.
+- [ ] Post-deploy: confirm a live summary + intersection run on the Railway URL.
+
+**Known follow-ups (candidate Linear issues — not yet created, pending Jon's OK):**
+- `backlinks_id_list` SDK deserialisation bug (StrictStr vs int status) — report
+  upstream to dataforseo/PythonClient; add an app-side workaround if we surface it.
+- No-body run path for `index` / `backlinks_available_filters` (run_live refuses
+  them; `scripts/backlinks_smoke.run_no_body` shows the direct call).
+- Bulk CSV-of-targets uploader that fills the `targets` array in one call (today:
+  paste one-per-line into the targets textarea; the generic per-row bulk runner
+  is the wrong model for these array endpoints).
+
 ## 9. Outstanding / next ideas (v2 backlog)
 
 - **Form pre-fill mechanism** so preset-load / shared links / override default_params
@@ -230,6 +302,21 @@ paid Backlinks endpoints returned `20000 Ok.` via the app's `run_live` path
   — original analysis.
 
 ## 11. Session log (most recent first)
+
+- 2026-07-08 (latest): **Backlinks UX build — IND-20 + IND-22–27** (branch
+  `goodeyjon/ind-20-27-backlinks-ux`, not pushed). See §8b for the full summary.
+  New `results/backlinks.py` renders every Backlinks shape (summary metrics,
+  explorer column order, clean supporting tables, intersection flatten, timeseries
+  chart, target-first bulk); dispatched from `render.py`. `overrides.yml` +
+  `keywords` search + 5 home shortcuts make them discoverable. Root cause of the
+  empty intersection table fixed at source: `run_live._deep_plain` deep-converts
+  SDK model objects the SDK's `to_dict()` leaves in `Dict[str, Model]` fields
+  (also stops the store stringifying them on save). 23 live fixtures captured
+  ($0.48) via `scripts/backlinks_capture.py`; 30 new tests; 166 passing. Verified
+  live in-browser via the free View path: summary metric grid, explorer columns,
+  intersection opportunity table, new/lost trend chart all correct. IND-25's
+  empty-table gotcha resolved. Held for Jon: merge, push/deploy, Linear updates,
+  and creating the follow-up issues in §8c.
 
 - 2026-07-08 (later): **Backlinks validation helpers (Linear IND-21).**
   forms/validators.py gains looks_like_domain/looks_like_target/parse_targets,
