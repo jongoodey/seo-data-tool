@@ -35,8 +35,12 @@ def all_endpoints() -> list[EndpointMeta]:
 
 
 def _haystack(e: EndpointMeta) -> tuple[list[str], str]:
-    title = override_for(e.family, e.name).get("title", "")
-    words = _WORD_RE.findall(f"{e.family} {e.name} {title}".lower())
+    override = override_for(e.family, e.name)
+    title = override.get("title", "")
+    # `keywords` lets an override add search synonyms (e.g. "link gap", "audit")
+    # without cluttering the visible title.
+    keywords = override.get("keywords", "")
+    words = _WORD_RE.findall(f"{e.family} {e.name} {title} {keywords}".lower())
     return words, " ".join(words)
 
 

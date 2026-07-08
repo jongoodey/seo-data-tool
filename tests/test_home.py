@@ -11,4 +11,7 @@ def test_shortcuts_resolve_to_runnable_endpoints():
 
 
 def test_shortcut_count_fits_grid():
-    assert 6 <= len(SHORTCUTS) <= 8
+    # 2-column grid; keep the count even and not overwhelming. Backlinks added
+    # a workflow cluster (IND-20), so the ceiling is 12.
+    assert 6 <= len(SHORTCUTS) <= 12
+    assert len(SHORTCUTS) % 2 == 0, "odd shortcut count leaves a lonely column"

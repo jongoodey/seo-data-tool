@@ -26,9 +26,120 @@ keywords_data.google_ads_search_volume_live:
   title: "Google Ads Search Volume"
   description: "Monthly search volume, competition and CPC from Google Ads."
 
+# --- Backlinks family (Linear IND-20) -------------------------------------
+# `keywords` adds search synonyms without cluttering the visible title.
 backlinks.summary_live:
   title: "Backlink Summary"
-  description: "Top-level backlink metrics for a domain or URL."
+  description: "Top-level backlink profile for a domain or URL — total backlinks,
+    referring domains, dofollow/nofollow split, rank and spam score."
+  keywords: "backlink audit profile overview link authority"
+
+backlinks.backlinks_live:
+  title: "Backlink Explorer"
+  description: "Individual backlinks pointing at a target — source page, anchor,
+    dofollow, first/last seen. The core link-audit list."
+  keywords: "backlink audit link list explorer anchors dofollow"
+
+backlinks.anchors_live:
+  title: "Anchor Text"
+  description: "Anchor texts used in backlinks to a target, with backlink and
+    referring-domain counts per anchor."
+  keywords: "anchors anchor text backlink audit"
+
+backlinks.referring_domains_live:
+  title: "Referring Domains"
+  description: "Domains linking to a target, with backlink counts, rank and spam
+    score per domain."
+  keywords: "referring domains linking sites backlink audit"
+
+backlinks.referring_networks_live:
+  title: "Referring Networks"
+  description: "Referring IP networks / subnets linking to a target — useful for
+    spotting link networks."
+  keywords: "referring networks subnets ip backlink audit"
+
+backlinks.domain_pages_live:
+  title: "Backlinked Pages"
+  description: "Pages on the target domain that have backlinks, with crawl status
+    and metadata."
+  keywords: "domain pages backlinked pages backlink audit"
+
+backlinks.domain_pages_summary_live:
+  title: "Top Pages by Backlinks"
+  description: "The target's pages ranked by backlink and referring-domain counts."
+  keywords: "top pages backlinks referring domains audit"
+
+backlinks.competitors_live:
+  title: "Backlink Competitors"
+  description: "Domains whose backlink profiles overlap most with the target —
+    your link-building competitors."
+  keywords: "competitors link gap overlap backlink"
+
+backlinks.domain_intersection_live:
+  title: "Link Gap (Domains)"
+  description: "Referring domains that link to competitor targets — find domains
+    linking to rivals but not to you. Up to 20 targets."
+  keywords: "link gap intersection competitors referring domains prospecting"
+
+backlinks.page_intersection_live:
+  title: "Link Gap (Pages)"
+  description: "Referring pages that link to a set of target pages — page-level
+    link gap analysis. Up to 20 targets."
+  keywords: "link gap intersection pages competitors prospecting"
+
+backlinks.history_live:
+  title: "Backlink History"
+  description: "Backlink and referring-domain totals over time for a target,
+    as a trend chart. Needs a date range."
+  keywords: "history trend over time new lost backlinks chart"
+
+backlinks.timeseries_summary_live:
+  title: "Backlink Trends"
+  description: "Time series of backlink profile metrics for a target. Needs a date
+    range and a group range (day/week/month)."
+  keywords: "timeseries trends over time chart backlinks"
+
+backlinks.timeseries_new_lost_summary_live:
+  title: "New & Lost Backlinks (Trend)"
+  description: "New vs lost backlinks and referring domains over time. Needs a date
+    range and a group range."
+  keywords: "new lost backlinks referring domains trend timeseries velocity"
+
+backlinks.bulk_backlinks_live:
+  title: "Bulk Backlink Counts"
+  description: "Total backlinks for many targets at once (up to 1,000). One row
+    per target."
+  keywords: "bulk backlinks many targets counts prospecting"
+
+backlinks.bulk_ranks_live:
+  title: "Bulk Rank Check"
+  description: "Backlink rank for many targets at once (up to 1,000)."
+  keywords: "bulk rank many targets"
+
+backlinks.bulk_referring_domains_live:
+  title: "Bulk Referring Domains"
+  description: "Referring-domain counts for many targets at once (up to 1,000)."
+  keywords: "bulk referring domains many targets"
+
+backlinks.bulk_spam_score_live:
+  title: "Bulk Spam Score"
+  description: "Backlink spam score for many targets at once (up to 1,000)."
+  keywords: "bulk spam score many targets toxic"
+
+backlinks.bulk_new_lost_backlinks_live:
+  title: "Bulk New/Lost Backlinks"
+  description: "New and lost backlink counts for many targets since a date."
+  keywords: "bulk new lost backlinks many targets velocity"
+
+backlinks.bulk_new_lost_referring_domains_live:
+  title: "Bulk New/Lost Referring Domains"
+  description: "New and lost referring-domain counts for many targets since a date."
+  keywords: "bulk new lost referring domains many targets velocity"
+
+backlinks.bulk_pages_summary_live:
+  title: "Bulk Pages Summary"
+  description: "Backlink summary metrics for many pages/targets at once."
+  keywords: "bulk pages summary many targets"
 
 dataforseo_labs.google_ranked_keywords_live:
   title: "Ranked Keywords"

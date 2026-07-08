@@ -29,6 +29,18 @@ _HINTS: dict[str, dict[str, str]] = {
             'Sorting rules as field,direction — e.g. rank,desc — one per line, up to three. '
             "Direction is asc or desc."
         ),
+        "date_from": (
+            "Start date as yyyy-mm-dd (e.g. 2026-01-01). Required for history and "
+            "new/lost trend endpoints; earliest supported is 2019-01-01."
+        ),
+        "date_to": (
+            "End date as yyyy-mm-dd (e.g. 2026-06-30). Defaults to today if left blank. "
+            "Must be on or after the start date."
+        ),
+        "group_range": (
+            "How to bucket the trend: day, week, or month. Use month for long ranges "
+            "so the chart stays readable."
+        ),
     },
 }
 
