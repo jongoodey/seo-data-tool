@@ -1,7 +1,7 @@
 # SEO Analyzer Tool — Working Document (read this first)
 
 **This is the living status doc for the project. Read it at the start of every session.**
-Last updated: 2026-06-10.
+Last updated: 2026-07-08.
 
 ---
 
@@ -160,7 +160,52 @@ seo_analyser/
 - **Cost awareness:** every run records cost; `View` is free; validation blocks
   obviously-bad calls before they're billed.
 
-## 8. Outstanding / next ideas (v2 backlog)
+## 8. Backlinks API audit (IND-19, 2026-07-08)
+
+**Access: confirmed working under the BYOK pay-as-you-go account.** DataForSEO
+removed the Backlinks monthly subscription requirement on 1 July 2026; all 20
+paid Backlinks endpoints returned `20000 Ok.` via the app's `run_live` path
+(audit spend $0.48 total, ~$0.024/request at `limit=10`).
+
+- **Catalogue coverage:** all 24 Backlinks endpoints present under the
+  `backlinks` family — pinned by `tests/test_backlinks_catalogue.py`.
+- **Smoke script:** `python scripts/backlinks_smoke.py` (free endpoints only)
+  or `--paid` (all endpoints, ~$0.50). Safe targets used: `dataforseo.com` /
+  `ahrefs.com` (`https://dataforseo.com/` for page endpoints), `limit=10`,
+  `internal_list_limit=1` on summary.
+- **Pricing (confirmed live 2026-07-08 from dataforseo.com/pricing/backlinks/backlinks):**
+  the 1 July 2026 change (dataforseo.com/update/pricing-update-in-dataforseo-apis)
+  removed the $100/month Backlinks commitment (now standard pay-as-you-go) but
+  **raised prices +20%**. One blanket rate for the whole family, Live mode only:
+  - **$0.024 per request + $0.000036 per returned row** (~$0.06 per 1,000 rows).
+    Base fee applies even for 0–1 rows. Filtering/sorting is free.
+  - **Free endpoints:** `index`, `backlinks_errors`, `backlinks_id_list`,
+    `backlinks_available_filters` ($0, confirmed in the smoke run).
+  - Observed live: summary (1 row) $0.02404; 10-row list calls $0.02436;
+    bulk with 2 targets $0.02407 — matches the published formula exactly.
+- **Request limits that affect validation** (docs.dataforseo.com/v3/backlinks-overview):
+  - `limit`: default **100**, max **1,000** on all list endpoints (backlinks,
+    anchors, referring_domains, referring_networks, domain_pages,
+    domain_pages_summary, competitors, domain_intersection, page_intersection).
+    Default 100 means a careless run bills ~100 rows — forms should set a low default.
+  - `targets`: max **20** (object, keys "1"…"20") on domain_intersection /
+    page_intersection; max **1,000** (array) on all bulk_* endpoints.
+    bulk_pages_summary needs absolute http(s) URLs for pages.
+  - Rate limits: 2,000 calls/min, max 30 simultaneous; `id_list` only 10 calls/min.
+  - summary/history/timeseries_* have no row `limit` (date ranges govern rows);
+    deep pulls paginate via offset/search_after_token, each page re-billing $0.024.
+- **Gotchas / unavailable endpoints:**
+  - `backlinks_id_list`: API responds fine but the SDK (2.0.25 AND latest
+    2.0.27) fails deserialisation — `BacklinksIdListResultInfo.status` is
+    `StrictStr`, API returns int `20000`. Next action: report upstream to
+    dataforseo/PythonClient; app-side workaround needed if we surface id_list.
+  - `index` and `backlinks_available_filters` have **no request model**
+    (GET-style, no body), so `run_live` refuses them ("not runnable yet").
+    Both work when the SDK method is called with no arguments (see
+    `run_no_body` in scripts/backlinks_smoke.py). UI needs a no-body run path
+    for them.
+
+## 9. Outstanding / next ideas (v2 backlog)
 
 - **Form pre-fill mechanism** so preset-load / shared links / override default_params
   populate the editable form (currently they re-run stored params directly; the
@@ -171,7 +216,7 @@ seo_analyser/
   every override key to a catalogue endpoint would prevent that.)
 - Client workspaces (nullable `workspace` column already in the schema).
 
-## 9. Where the planning docs live
+## 10. Where the planning docs live
 
 - `docs/PROJECT-STATUS.md` — this file (the working doc).
 - `docs/superpowers/specs/2026-06-11-indexify-seo-platform-spec.md` — **the
@@ -184,9 +229,18 @@ seo_analyser/
 - `docs/{seo-analyser-overview,current-app-audit,sdk-technical-analysis,endpoint-inventory}.md`
   — original analysis.
 
-## 10. Session log (most recent first)
+## 11. Session log (most recent first)
 
-- 2026-06-11 (latest): **App password gate + server-side credentials** (ui/gate.py).
+- 2026-07-08 (latest): **Backlinks API audit (Linear IND-19)** — see §8 for the
+  full findings. Access confirmed under the BYOK pay-as-you-go account (the
+  $100/month commitment was removed 1 July 2026, prices +20%); all 24 catalogue
+  keys pinned by tests/test_backlinks_catalogue.py; scripts/backlinks_smoke.py
+  runs every endpoint with safe low-cost params (audit spend $0.48). Found:
+  `backlinks_id_list` broken by an SDK typing bug (still in 2.0.27 — report
+  upstream); `index`/`backlinks_available_filters` need a no-body run path
+  before the UI can run them.
+
+- 2026-06-11: **App password gate + server-side credentials** (ui/gate.py).
   Deploys/disconnects were logging Jon out (Streamlit sessions die on every app
   restart and websocket drop, wiping typed creds). Now: set APP_PASSWORD on the
   Railway web service to gate the public site behind one passphrase, and set
