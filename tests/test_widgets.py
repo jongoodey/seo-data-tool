@@ -97,3 +97,26 @@ def test_real_intersection_targets_is_dict_kind():
                  if e.name == "domain_intersection_live")
     kinds = {f.name: f.kind for f in fields_for(inter.request_model)}
     assert kinds["targets"] == "dict"
+
+
+def test_requirement_polarity_dont_specify_vs_choose_to_specify():
+    from seo_analyser.forms.widgets import extract_requirement
+    assert extract_requirement(
+        "required field if you don't specify location_code") == "conditional"
+    assert extract_requirement(
+        "required field if you choose to specify custom_mode") == "dependent"
+    assert extract_requirement(
+        "required field if you specify custom_mode") == "dependent"
+    assert extract_requirement("required field") == "required"
+    assert extract_requirement("optional field") == "optional"
+
+
+def test_backlinks_live_field_value_classified_dependent():
+    from seo_analyser.registry import catalogue
+    from seo_analyser.forms.widgets import fields_for
+    meta = catalogue.find_endpoint("backlinks", "backlinks_live")
+    by_name = {s.name: s for s in fields_for(meta.request_model)}
+    assert by_name["field"].requirement == "dependent"
+    assert by_name["field"].partner == "custom_mode"
+    assert by_name["value"].requirement == "dependent"
+    assert by_name["target"].requirement == "required"

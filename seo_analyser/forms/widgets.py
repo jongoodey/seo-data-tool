@@ -34,18 +34,24 @@ class FieldSpec:
 
 
 def extract_requirement(description: str) -> str:
-    """Classify a field as required / conditional (one-of-a-pair) / optional.
+    """Classify a field: required / conditional (one-of-a-pair) / dependent / optional.
 
-    DataForSEO phrases conditional fields as 'required field if you don't specify
-    <partner>', which we treat as conditional rather than hard-required so we don't
-    falsely block valid calls (e.g. location_name OR location_code).
+    DataForSEO uses two OPPOSITE 'required field if' phrasings that must not be
+    conflated (learned from backlinks_live blocking valid calls, 2026-07-09):
+      "required field if you DON'T specify <partner>"  -> conditional: one of the
+        pair is genuinely needed (location_name OR location_code).
+      "required field if you (choose to) specify <partner>" -> dependent: needed
+        only WHEN the optional partner is used (custom_mode's field/value);
+        leaving both empty is a perfectly valid call.
     """
     low = (description or "").lower()
     if "optional field" in low:
         return "optional"
     if "required field" in low:
-        if "required field if" in low or "don't specify" in low or "don’t specify" in low:
+        if "don't specify" in low or "don’t specify" in low:
             return "conditional"
+        if "required field if" in low:
+            return "dependent"
         return "required"
     return ""
 
@@ -132,7 +138,8 @@ def fields_for(model: type) -> list[FieldSpec]:
         choices = extract_choices(desc)
         lo, hi = extract_range(desc)
         requirement = extract_requirement(desc)
-        partner = resolve_partner(desc, siblings) if requirement == "conditional" else None
+        partner = (resolve_partner(desc, siblings)
+                   if requirement in ("conditional", "dependent") else None)
         if kind == "text" and choices:
             kind = "select"
         specs.append(

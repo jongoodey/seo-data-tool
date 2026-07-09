@@ -106,6 +106,8 @@ def decorate_label(spec: FieldSpec) -> str:
         bits.append("required")
     elif spec.requirement == "conditional":
         bits.append(f"required unless {humanize(spec.partner)} set" if spec.partner else "conditional")
+    elif spec.requirement == "dependent":
+        bits.append(f"only with {humanize(spec.partner)}" if spec.partner else "optional")
     elif spec.requirement == "optional":
         bits.append("optional")
     if spec.default_hint:

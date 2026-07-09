@@ -183,6 +183,12 @@ def validate_required_fields(specs, payload: dict) -> list[str]:
             seen_pairs.add(pair)
             warnings.append(
                 f"Provide either '{spec.name}' or '{spec.partner}' before running.")
+        elif spec.requirement == "dependent" and spec.partner:
+            # Needed only WHEN its optional partner is used (e.g. custom_mode's
+            # field/value) — an empty pair is a valid call, so never block that.
+            if spec.partner in filled and spec.name not in filled:
+                warnings.append(
+                    f"'{spec.name}' is required when '{spec.partner}' is set.")
     return warnings
 
 

@@ -177,3 +177,27 @@ def test_empty_target_blocks_on_real_summary_model():
     summary = next(e for e in build_catalogue()["backlinks"] if e.name == "summary_live")
     warnings = validate_required_fields(fields_for(summary.request_model), {})
     assert any("target" in w for w in warnings)
+
+
+# --- dependent fields (required only WHEN an optional partner is used) ----------
+
+def test_dependent_pair_does_not_block_when_both_empty():
+    # backlinks_live: field/value are only needed if custom_mode is used —
+    # target alone is a valid call (this blocked Jon's Backlink Explorer run).
+    specs = [_spec("target", "required"),
+             _spec("field", "dependent", partner="custom_mode"),
+             _spec("value", "dependent", partner="custom_mode")]
+    problems = validate_required_fields(specs, {"target": "indexify.co.uk"})
+    assert problems == []
+
+
+def test_dependent_field_blocks_only_when_partner_set():
+    specs = [_spec("field", "dependent", partner="custom_mode")]
+    assert validate_required_fields(specs, {"custom_mode": {"x": 1}}) != []
+    assert validate_required_fields(specs, {}) == []
+
+
+def test_location_language_pairs_still_block():
+    specs = [_spec("location_name", "conditional", partner="location_code"),
+             _spec("location_code", "conditional", partner="location_name")]
+    assert len(validate_required_fields(specs, {})) == 1
