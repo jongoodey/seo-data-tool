@@ -68,7 +68,8 @@ def run_task(meta: EndpointMeta, payload: dict, creds: Credentials,
 
     conf = cfg.Configuration(username=creds.login, password=creds.password)
     try:
-        request_obj = meta.request_model(**payload)
+        # from_dict, matching run_live — see the note there about nested unions.
+        request_obj = meta.request_model.from_dict(payload)
         with prov.ApiClient(conf) as client:
             api = _api_class_for(meta.family)(client)
             posted = _to_dict(getattr(api, post_method)([request_obj]))

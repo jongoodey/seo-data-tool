@@ -33,7 +33,10 @@ def run_live(meta: EndpointMeta, payload: dict, creds: Credentials) -> dict:
 
     config = dfs_config.Configuration(username=creds.login, password=creds.password)
     try:
-        request_obj = meta.request_model(**payload)
+        # from_dict (not **payload): it routes discriminated-union members like
+        # the LLM Mentions target elements to the right subclass, where plain
+        # construction validates them into the base model and drops their data.
+        request_obj = meta.request_model.from_dict(payload)
         with dfs_api_provider.ApiClient(config) as client:
             api = _api_class_for(meta.family)(client)
             method = getattr(api, meta.name)

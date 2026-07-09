@@ -1,12 +1,14 @@
 """Render FieldSpecs as Streamlit widgets and collect a payload dict."""
 from __future__ import annotations
 
+import re
 from typing import Any
 
 import streamlit as st
 
 from seo_analyser.forms.hints import hint_for
-from seo_analyser.forms.widgets import FieldSpec, fields_for
+from seo_analyser.forms.validators import looks_like_domain
+from seo_analyser.forms.widgets import RENDERABLE_ITEM_MODELS, FieldSpec, fields_for
 from seo_analyser.labels import humanize
 from seo_analyser.presets import presets_for
 
@@ -99,6 +101,24 @@ def numbered_targets(entries: list[str]) -> dict[str, str]:
     return {str(i): entry for i, entry in enumerate(entries, start=1)}
 
 
+def llm_mention_target(entry: str) -> dict:
+    """Build the typed target object the AI-visibility (LLM Mentions) API expects.
+
+    The API wants a list of {"type": "domain"|"keyword", ...} objects, but a
+    junior shouldn't have to know that: anything that looks like a domain
+    (however pasted — with https://, www., or a trailing path) becomes a domain
+    target; everything else is searched as a keyword phrase.
+    """
+    cleaned = entry.strip()
+    host = re.sub(r"^https?://", "", cleaned, flags=re.I)
+    host = host.split("/", 1)[0].split("?", 1)[0]
+    if host.lower().startswith("www."):
+        host = host[4:]
+    if looks_like_domain(host):
+        return {"type": "domain", "domain": host}
+    return {"type": "keyword", "keyword": cleaned}
+
+
 def decorate_label(spec: FieldSpec) -> str:
     """Append a plain-language requirement/default marker to a field label."""
     bits: list[str] = []
@@ -181,6 +201,12 @@ def _render_field(spec: FieldSpec, key: str, choices_override: list[str] | None 
     if spec.kind == "list":
         raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)
         return [line.strip() for line in raw.splitlines() if line.strip()]
+    if spec.kind == "list_nested":
+        if spec.item_model in RENDERABLE_ITEM_MODELS:
+            raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)
+            return [llm_mention_target(line) for line in raw.splitlines() if line.strip()]
+        st.caption(f"{label}: advanced nested field — not editable in this view yet.")
+        return None
     if spec.kind == "dict":
         if spec.name in _NUMBERED_DICT_FIELDS:
             raw = st.text_area(f"{label} (one per line)", help=help_text, key=key)

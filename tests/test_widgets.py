@@ -120,3 +120,30 @@ def test_backlinks_live_field_value_classified_dependent():
     assert by_name["field"].partner == "custom_mode"
     assert by_name["value"].requirement == "dependent"
     assert by_name["target"].requirement == "required"
+
+
+def test_list_of_models_classified_list_nested():
+    class _Element(BaseModel):
+        domain: Optional[StrictStr] = Field(default=None)
+
+    class _WithNestedList(BaseModel):
+        target: Optional[List[Optional[_Element]]] = Field(default=None)
+        keywords: Optional[List[StrictStr]] = Field(default=None)
+
+    by_name = {s.name: s for s in fields_for(_WithNestedList)}
+    assert by_name["target"].kind == "list_nested"
+    assert by_name["target"].item_model == "_Element"
+    assert by_name["keywords"].kind == "list"
+    assert by_name["keywords"].item_model is None
+
+
+def test_real_llm_mentions_target_is_renderable_list_nested():
+    from seo_analyser.forms.widgets import RENDERABLE_ITEM_MODELS
+    from seo_analyser.registry import catalogue
+    for name in ("llm_mentions_search_live", "llm_mentions_top_domains_live",
+                 "llm_mentions_top_pages_live", "llm_mentions_aggregated_metrics_live"):
+        meta = catalogue.find_endpoint("ai_optimization", name)
+        spec = next(s for s in fields_for(meta.request_model) if s.name == "target")
+        assert spec.kind == "list_nested", name
+        assert spec.item_model in RENDERABLE_ITEM_MODELS, name
+        assert spec.requirement == "required", name

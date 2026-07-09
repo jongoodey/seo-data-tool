@@ -302,7 +302,33 @@ ahrefs.com — total $0.48439 for 23 endpoints):**
 
 ## 11. Session log (most recent first)
 
-- 2026-07-08 (latest): **Backlinks UX build — IND-20 + IND-22–27** (branch
+- 2026-07-09 (latest): **AI-visibility target objects — LLM Mentions endpoints
+  runnable.** Jon's screenshot: llm_mentions_search_live rejected every run with
+  a Pydantic error. Two-layer cause: (1) `target` is a list of discriminated
+  objects ({"type": "domain"|"keyword", ...}) but the generic form rendered every
+  list as one-per-line strings; (2) even with dicts, `run_live` built requests
+  via `model(**payload)`, which validates union members into the *base* element
+  and silently drops domain/keyword keys. Fix: widgets classify list-of-model
+  fields as kind `list_nested` (FieldSpec.item_model carries the element class);
+  builder auto-converts each line via `llm_mention_target()` (domain-looking
+  entries — however pasted, with https://www./path — become domain targets,
+  anything else a keyword phrase); runners (live + tasks) now construct via the
+  SDK's `from_dict`, which routes the union correctly. Non-renderable nested
+  lists (message_chain, stop_crawl_on_match, cross-aggregated targets) show a
+  "not editable yet" caption instead of sending strings that always fail, and
+  the required-field check skips them. Fixes all 4 LLM Mentions endpoints;
+  plain-English hint added. 183 tests passing.
+
+- 2026-07-09: **Dependent-field polarity fix deployed and live-verified**
+  (9542b86). "required field if you specify X" now classifies as `dependent`
+  (never blocks an empty pair) vs "if you DON'T specify X" = `conditional`;
+  unblocked ~60 endpoints incl. Backlink Explorer. Verified on production:
+  backlinks_live with just a target ran OK (100 rows, $0.0276); Timeline chart
+  confirmed live on Google Ads Search Volume ($0.09). Watch item: the backlinks
+  result later re-rendered as 926 rows/$0.0573 — possible duplicate execution
+  on a Streamlit rerun, worth a guard on Run re-firing.
+
+- 2026-07-08 (earlier): **Backlinks UX build — IND-20 + IND-22–27** (branch
   `goodeyjon/ind-20-27-backlinks-ux`, not pushed). See §8b for the full summary.
   New `results/backlinks.py` renders every Backlinks shape (summary metrics,
   explorer column order, clean supporting tables, intersection flatten, timeseries

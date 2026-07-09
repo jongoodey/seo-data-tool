@@ -6,6 +6,13 @@ needs to type. Keyed by family so other families' fields are untouched.
 from __future__ import annotations
 
 _HINTS: dict[str, dict[str, str]] = {
+    "ai_optimization": {
+        "target": (
+            "What to look for in AI answers — one entry per line, up to 10. "
+            "A domain (e.g. example.com, with or without https://) finds mentions "
+            "of that site; anything else is searched as a keyword phrase."
+        ),
+    },
     "backlinks": {
         "targets": (
             "One target per line. Domains and subdomains go without https:// or www. "

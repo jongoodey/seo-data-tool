@@ -22,7 +22,7 @@ _DEFAULT_RE = re.compile(r"default value:?\s*(true|false|\d+)", re.I)
 @dataclass
 class FieldSpec:
     name: str
-    kind: str            # "text" | "int" | "float" | "bool" | "select" | "list" | "dict" | "nested"
+    kind: str            # "text" | "int" | "float" | "bool" | "select" | "list" | "list_nested" | "dict" | "nested"
     description: str = ""
     default: Any = None
     choices: list[str] = field(default_factory=list)
@@ -31,6 +31,13 @@ class FieldSpec:
     requirement: str = ""        # "required" | "conditional" | "optional" | ""
     partner: str | None = None   # for conditional fields, the alternative field name
     default_hint: str | None = None  # default value parsed from the description
+    item_model: str | None = None    # for list_nested, the element model's class name
+
+
+# list_nested element models the form knows how to build from plain text lines.
+# Everything else renders as a "not editable yet" caption instead of silently
+# sending strings the SDK rejects (the AI-visibility target bug, 2026-07-09).
+RENDERABLE_ITEM_MODELS = {"BaseAiOptimizationLLmMentionsTargetElement"}
 
 
 def extract_requirement(description: str) -> str:
@@ -109,10 +116,14 @@ def _base_type(annotation: Any) -> Any:
 
 
 def _kind_for(annotation: Any) -> tuple[str, Any]:
-    """Return (kind, inner_for_list)."""
+    """Return (kind, inner). For list_nested, inner is the element model class."""
     inner = _base_type(annotation)
     origin = typing.get_origin(inner)
     if origin in (list, typing.List):
+        args = typing.get_args(inner)
+        element = _base_type(args[0]) if args else None
+        if hasattr(element, "model_fields"):  # list of pydantic models, not scalars
+            return "list_nested", element
         return "list", inner
     if origin is dict:
         return "dict", inner
@@ -134,7 +145,7 @@ def fields_for(model: type) -> list[FieldSpec]:
             continue  # pydantic catch-all on every SDK model, not a real API field
         desc = finfo.description or ""
         default = finfo.default
-        kind, _inner = _kind_for(finfo.annotation)
+        kind, inner = _kind_for(finfo.annotation)
         choices = extract_choices(desc)
         lo, hi = extract_range(desc)
         requirement = extract_requirement(desc)
@@ -148,6 +159,8 @@ def fields_for(model: type) -> list[FieldSpec]:
                 default=default, choices=choices, min=lo, max=hi,
                 requirement=requirement, partner=partner,
                 default_hint=extract_default(desc),
+                item_model=(getattr(inner, "__name__", None)
+                            if kind == "list_nested" else None),
             )
         )
     return specs

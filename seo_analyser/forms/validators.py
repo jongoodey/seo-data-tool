@@ -4,6 +4,8 @@ from __future__ import annotations
 import re
 from datetime import date
 
+from seo_analyser.forms.widgets import RENDERABLE_ITEM_MODELS
+
 # Scheme + a host containing a dot, then anything (path optional).
 _URL_RE = re.compile(r"^https?://[^\s/]+\.[^\s]+$", re.IGNORECASE)
 # Bare hostname: dot-separated labels of letters/digits/hyphens, no scheme/path.
@@ -174,6 +176,8 @@ def validate_required_fields(specs, payload: dict) -> list[str]:
     for spec in specs:
         if spec.name in _ID_FIELDS or spec.kind == "nested" or spec.default_hint:
             continue
+        if spec.kind == "list_nested" and spec.item_model not in RENDERABLE_ITEM_MODELS:
+            continue  # the form can't build it, so don't tell the user to fill it in
         if spec.requirement == "required" and spec.name not in filled:
             warnings.append(f"'{spec.name}' is required. Fill it in before running.")
         elif spec.requirement == "conditional" and spec.partner:

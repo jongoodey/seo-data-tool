@@ -201,3 +201,18 @@ def test_location_language_pairs_still_block():
     specs = [_spec("location_name", "conditional", partner="location_code"),
              _spec("location_code", "conditional", partner="location_name")]
     assert len(validate_required_fields(specs, {})) == 1
+
+
+def test_unbuildable_required_nested_list_does_not_block():
+    specs = [FieldSpec(name="targets", kind="list_nested", requirement="required",
+                       item_model="SomeDeeplyNestedInfo")]
+    assert validate_required_fields(specs, {}) == []
+
+
+def test_renderable_required_nested_list_still_blocks_when_empty():
+    specs = [FieldSpec(name="target", kind="list_nested", requirement="required",
+                       item_model="BaseAiOptimizationLLmMentionsTargetElement")]
+    warnings = validate_required_fields(specs, {})
+    assert warnings and "target" in warnings[0]
+    assert validate_required_fields(
+        specs, {"target": [{"type": "keyword", "keyword": "x"}]}) == []
